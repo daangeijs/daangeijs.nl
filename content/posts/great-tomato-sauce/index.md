@@ -2,6 +2,18 @@
 title: "Ultimate Homemade Tomato Sauce Puree"
 date: 2023-01-23T12:48:00+01:00
 draft: false
+
+tags:
+- cooking
+- ingredient
+- sherry
+- tomato
+- zatar
+- balsamic vinegar
+
+cover:
+  absolute: false
+  image: cover.jpg
 ---
 
 Are you tired of using store-bought tomato sauce for your pizzas? Look no further because we have the ultimate homemade tomato sauce recipe that will elevate your pizza game to the next level. This sauce is not only perfect for pizza crusts, but it can also be used as a base for pasta dishes or even as a marinade for meats.
