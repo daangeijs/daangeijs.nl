@@ -1,6 +1,6 @@
 ---
 title: "Hello world"
-date: 2023-01-23T12:48:00+01:00
+date: 2023-01-22T12:48:00+01:00
 draft: false
 ---
 ## Welcome to my blog
