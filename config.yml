@@ -54,7 +54,6 @@ params:
       distance: 1000
       threshold: 0.4
       minMatchCharLength: 0
-      keys: ["title", "permalink", "summary", "content"]
 
   assets:
     disableHLJS: false # to disable highlight.js
@@ -65,9 +64,9 @@ params:
 paginate: 5
 menu:
   main:
-  - name: About me
-    url: /about/
-    weight: -140
   - name: Recipes
     url: /posts/
     weight: -120
+  - name: Search
+    url: /search/
+    weight: -110
