@@ -70,3 +70,6 @@ menu:
   - name: Search
     url: /search/
     weight: -110
+  - name: Tags
+    url: /tags/
+    weight: -110

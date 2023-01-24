@@ -2,8 +2,17 @@
 title: "A Delicious Raisin and Nut Spice Cake Recipe"
 date: 2023-01-24T12:48:00+01:00
 draft: false
----
 
+tags:
+- baking
+- cake
+- nuts
+- pumpkin spice
+
+cover:
+  absolute: false
+  image: cover.jpg
+---
 Warm spices, plump raisins, and crunchy nuts make this cake the perfect treat for a chilly fall day. Whether you're enjoying it with a cup of coffee or tea, or sharing it with friends and family, this cake is sure to be a hit.
 
 One of the great things about this recipe is that it's easy to make and uses simple, everyday ingredients. The plant-based margarine makes it a suitable option for vegans, and the self-rising flour means you don't need any special ingredients or equipment.
