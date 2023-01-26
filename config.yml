@@ -21,7 +21,7 @@ pluralizelisttitles: "false"
 
 params:
   title: Daan Geijs
-  description: "Daan Geijs' personal website "
+  description: "Daan Geijs' personal website"
   author: "Daan Geijs"
   DateFormat: " 2 January, 2006"
   defaultTheme: auto # dark, light
@@ -69,7 +69,4 @@ menu:
     weight: -120
   - name: Search
     url: /search/
-    weight: -110
-  - name: Tags
-    url: /tags/
     weight: -110
