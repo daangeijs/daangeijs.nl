@@ -4,10 +4,15 @@ date: 2023-01-24T12:48:00+01:00
 draft: false
 
 tags:
-- baking
-- cake
 - nuts
 - pumpkin spice
+- raisins
+- 
+categories:
+- baking
+- cake
+- vegetarian
+- vegan
 
 cover:
   absolute: false

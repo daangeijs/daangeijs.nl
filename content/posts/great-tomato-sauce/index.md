@@ -4,13 +4,15 @@ date: 2023-01-23T12:48:00+01:00
 draft: false
 
 tags:
-- cooking
-- ingredient
 - sherry
 - tomato
 - zatar
 - balsamic vinegar
 
+categories:
+- cooking
+- ingredient
+- vegetarian
 cover:
   absolute: false
   image: cover.jpg

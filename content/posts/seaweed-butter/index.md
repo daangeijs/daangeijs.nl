@@ -4,11 +4,14 @@ date: 2023-01-25T12:48:00+01:00
 draft: false
 
 tags:
-- cooking
-- vegetarian
 - butter
-- dip
 - seaweed
+- furikake
+
+categories:
+- cooking
+- dip
+- vegetarian
 
 
 cover:

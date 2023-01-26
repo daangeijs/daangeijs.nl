@@ -4,10 +4,12 @@ date: 2023-01-26T11:08:00+01:00
 draft: false
 
 tags:
-- Balsamic Vinegar
-- Wild stock
-- Meat
-- Sauce
+- balsamic Vinegar
+- wild stock
+
+categories:
+- cooking
+- sauce
 
 cover:
   absolute: false
