@@ -1,7 +1,7 @@
 baseURL: https://www.daangeijs.nl
 languageCode: en-us
 title: Daan Geijs
-theme: "PaperMod"
+theme: "PaperModX"
 
 outputs:
   home:
@@ -34,17 +34,17 @@ params:
   ShowPostNavLinks: true
   ShowBreadCrumbs: true
   ShowAuthor: true
-  ShowCommentNumber: true
+  ShowCommentNumber: false
   ShowCodeCopyButtons: true
   ShowWordCount: true
   ShowRssButtonInSectionTermList: false
   UseHugoToc: false
-  disableSpecial1stPost: false
+  disableSpecial1stPost: true
   disableScrollToTop: false
   comments: false
   hidemeta: false
   hideSummary: false
-  showtoc: true
+  showtoc: false
   TocSide: 'left'
   tocopen: true
   fuseOpts:
@@ -61,6 +61,9 @@ params:
     favicon: "favicon.ico"
     appleTouchIcon: "favicon-152.png"
 
+  profileMode:
+    enabled: true
+
 paginate: 5
 menu:
   main:
@@ -73,3 +76,6 @@ menu:
   - name: Tags
     url: /tags/
     weight: -110
+  - name: Archive
+    url: /archives/
+    weight: -130

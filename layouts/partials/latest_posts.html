@@ -1,0 +1,36 @@
+<div class="latest-posts">
+    <h2>Latest Posts</h2>
+    <div class="post-grid">
+        {{ $numRecipes := .Scratch.Get "latest_post_count" | default 9 }}
+        {{ $paginator := .Paginate (where .Site.RegularPages "Type" "posts" | first $numRecipes ) }}
+        {{ range $paginator.Pages }}
+        <article class="post-box">
+            {{- $isHidden := (site.Params.cover.hidden | default site.Params.cover.hiddenInList) }}
+            {{- partial "cover.html" (dict "cxt" . "IsHome" true "isHidden" $isHidden) }}
+            <div>
+            <header class="entry-header">
+                <h2>
+                    <a href="{{ .Permalink }}">{{ .Title }}</a>
+                    {{- if .Draft }}<sup><span class="entry-isdraft">&nbsp;&nbsp;[Draft]</span></sup>{{- end }}
+                    {{- if .Weight }}<sup><span class="entry-isdraft">&nbsp;&nbsp;[Pinned]</span></sup>{{- end }}
+                </h2>
+            </header>
+            {{- if (ne (.Param "hideSummary") true) }}
+            <section class="entry-content">
+                {{ if .Description }}
+                <p>{{ .Description | plainify | htmlUnescape }}</p>
+                {{ else }}
+                <p>{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}</p>
+                {{ end }}
+            </section>
+            {{- end }}
+            {{- if not (.Param "hideMeta") }}
+            <footer class="entry-footer">
+                {{- partial "post_meta.html" . -}}
+            </footer>
+                </div>
+            {{- end }}
+        </article>
+        {{ end }}
+    </div>
+</div>

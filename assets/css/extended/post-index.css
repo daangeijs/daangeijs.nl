@@ -1,0 +1,94 @@
+.post-entry {
+    display: grid;
+    grid-template-areas: "header" "figure" "content" "footer";
+    grid-template-rows: auto 1fr auto;
+    row-gap: 1rem;
+    transition: transform .1s;
+}
+
+@media (min-width: 720px) {
+    .post-entry {
+        grid-template-areas: "figure header" "figure content" "figure footer";
+        grid-template-columns: minmax(30%, 150px) 1fr;
+        grid-template-rows: auto 1fr auto;
+        row-gap: 0;
+        column-gap: 2rem;
+    }
+}
+
+.entry-cover {
+    position: relative;
+    height: 20rem;
+    width: 20rem;
+    float: left;
+    margin-right: 1%;
+}
+
+.entry-cover img {
+
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 1200px) {
+    .entry-cover {
+        width: 100%;
+    }
+}
+
+
+.cover-text {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 24px;
+    color: white;
+    text-shadow: 2px 2px 2px #998;
+}
+
+.post-entry .entry-cover {
+    grid-area: figure;
+}
+
+.post-entry .entry-header {
+    grid-area: header;
+}
+
+.post-entry .entry-content {
+    grid-area: content;
+}
+
+.post-entry .entry-footer {
+    grid-area: footer;
+}
+
+.tag-entry .entry-cover {
+    display: block;
+}
+
+.inline-links {
+    display: none;
+}
+
+/* Small effect on clicking the box */
+.post-entry:active {
+    transform: scale(.96);
+}
+
+/* Proper typography for the headers */
+.post-entry:hover .entry-header h2 {
+    box-shadow: none;
+    text-decoration: underline;
+    text-underline-position: from-font;
+    text-decoration-thickness: 2px;
+}
+
+/* Hide "Add comment" on list pages */
+.list-page .meta-add-comment {
+    display: none;
+}
+
+.entry-cover:hover img {
+transform: scale(0.98);
+transition: transform 0.2s;
+}

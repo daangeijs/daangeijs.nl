@@ -1,0 +1,17 @@
+<div class="latest-media">
+    <h2>In the Media</h2>
+    <div class="post-grid">
+        {{ range (where .Site.RegularPages "Type" "posts" | first 3) }}
+        <article class="news-item">
+            <a aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}">
+                {{- $isHidden := (site.Params.cover.hidden | default site.Params.cover.hiddenInList) }}
+                {{- partial "cover.html" (dict "cxt" . "IsHome" true "isHidden" $isHidden) }}
+            </a>
+            <div class="news-item-info">
+                <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+                <span class="news-date">{{ .Date.Format "January 2, 2006" }}</span>
+            </div>
+        </article>
+        {{ end }}
+    </div>
+</div>
