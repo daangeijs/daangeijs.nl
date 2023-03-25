@@ -9,10 +9,12 @@
     <li>
         {{ $currentPublication := . }}
         <a href="{{ .Permalink }}">{{ .Title }}</a> ({{ .Date.Format "2006" }})
+        <p>
         {{ range $i, $author := .Params.authors }}
         {{ if lt $i 1 }}{{ $author }}{{ if lt $i (sub (len $currentPublication.Params.authors) 1) }}, {{ end }}{{ end }}
         {{ if eq $i 1 }}{{ $author }} et al.{{ end }}
         {{ end }}
+        </p>
     </li>
     {{- end }}
 </ul>
