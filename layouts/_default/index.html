@@ -9,6 +9,10 @@
 <!--{{ .Scratch.Set "latest_post_count" 3 }}-->
 {{ partial "latest_media.html" . }}
 
+<!-- Add a partials div for latest publications -->
+<!--{{ .Scratch.Set "latest_post_count" 3 }}-->
+{{ partial "latest_publications.html" . }}
+
 
 <div class="profile">
     {{- with site.Params.profileMode }}

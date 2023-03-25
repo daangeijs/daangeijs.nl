@@ -1,0 +1,47 @@
+{{ define "main" }}
+
+{{- $pages := .Pages }}
+{{- $pages = where $pages "Params.hidden" "!=" true }}
+
+{{/* related issue: https://github.com/gohugoio/hugo/issues/9003 */}}
+{{ $paginator := "" }}
+{{ if (.Param "paginate") }}
+{{- $paginator = .Paginate $pages (.Param "paginate") }}
+{{ else }}
+{{- $paginator = .Paginate $pages }}
+{{ end }}
+
+
+<h1>Publications</h1>
+{{- range $index, $page := $paginator.Pages }}
+<div class="publication-entry">
+    <a href="{{ .Permalink }}">
+        <h2>{{ .Title }}</h2>
+    </a>
+
+    {{ $currentPublication := . }}
+    <p>
+        {{ range $i, $author := .Params.authors }}
+        {{ if lt $i 2 }}{{ $author }}{{ if lt $i (sub (len $currentPublication.Params.authors) 1) }}, {{ end }}{{ end }}
+        {{ if eq $i 2 }}{{ $author }} et al.{{ end }}
+        {{ end }}
+    </p>
+    <p>({{ .Date.Format "2006" }}). - {{
+        .Params.publication }}</p>
+</div>
+{{ end }}
+
+{{- if gt $paginator.TotalPages 1 }}
+<footer class="page-footer">
+    <nav class="pagination">
+        {{- if $paginator.HasPrev }}
+        <a class="prev" href="{{ $paginator.Prev.URL | absURL }}">« {{ i18n "prev_page" }}</a>
+        {{- end }}
+        {{- if $paginator.HasNext }}
+        <a class="next" href="{{ $paginator.Next.URL | absURL }}">{{ i18n "next_page" }} »</a>
+        {{- end }}
+    </nav>
+</footer>
+{{- end }}
+
+{{ end }}

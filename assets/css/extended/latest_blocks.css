@@ -35,10 +35,7 @@
 
 @media (max-width: 600px) {
     .latest-media .entry-cover {
-        width: 100%;
-    }
-    .latest-media .post-grid {
-        grid-template-columns: 1fr;
+        height: 10rem;
     }
 }
 
@@ -55,3 +52,12 @@
     -webkit-box-orient: vertical;
 }
 
+.latest-publications {
+        position: relative;
+    margin-bottom: var(--gap);
+    padding: var(--gap);
+    background: var(--entry);
+    border-radius: var(--radius);
+    transition: transform 0.1s;
+    border: 1px solid var(--border);
+}

@@ -79,3 +79,6 @@ menu:
   - name: Archive
     url: /archives/
     weight: -130
+  - name: Publications
+    url: /publications/
+    weight: -140
