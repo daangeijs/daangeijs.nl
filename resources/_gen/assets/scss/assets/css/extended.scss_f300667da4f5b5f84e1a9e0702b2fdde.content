@@ -289,6 +289,7 @@ body.type-newsletter.kind-page .newsletter-sub {
   padding: var(--content-gap) var(--gap); }
   body.type-newsletter.kind-page .newsletter-sub .notice {
     font-size: .9em;
+    font-weight: bold;
     color: var(--signature);
     line-height: 1.6; }
   body.type-newsletter.kind-page .newsletter-sub .subscribe-form {

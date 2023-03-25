@@ -61,3 +61,20 @@
     transition: transform 0.1s;
     border: 1px solid var(--border);
 }
+
+.latest-publications ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.latest-publications li {
+    padding: 0.5rem;
+}
+
+.latest-publications li.even {
+    background-color: #f0f0f0;
+}
+
+.latest-publications li.odd {
+    background-color: #ffffff;
+}
