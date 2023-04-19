@@ -15,17 +15,17 @@
 .latest-media .post-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 1;
+    grid-column-gap: 10px;
 }
 
 .latest-media .news-item {
     display: flex;
     flex-direction: column;
-    padding: 1%;
 }
 
 .latest-media .entry-cover {
     height: 20rem;
+    width: 19rem;
 }
 @media (max-width: 1000px) {
     .latest-media .entry-cover {
