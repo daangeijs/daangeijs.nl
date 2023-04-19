@@ -25,17 +25,13 @@
 }
 
 .entry-cover img {
-
     height: 100%;
     object-fit: cover;
 }
 
-@media (max-width: 1200px) {
-    .entry-cover {
-        width: 100%;
-    }
+.post-entry .entry-cover {
+    width: 15rem;
 }
-
 
 .cover-text {
     position: absolute;
