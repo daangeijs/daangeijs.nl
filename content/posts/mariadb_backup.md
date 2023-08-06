@@ -11,17 +11,20 @@ tags:
 
 ---
 
-## Automating MariaDB Backups in Docker with a Shell Script
+Of course! Here's the complete article:
+
+---
+
+## Automating MariaDB Backups and Restoration in Docker with Shell Scripts
 
 ### Introduction
 
-Backing up your data regularly is essential, especially for critical applications like Home Assistant running MariaDB in a Docker container. This article will guide you through creating a script that automates this backup process and is flexible enough to take arguments for the password and the backup folder path.
+Backing up your data regularly is essential, especially for critical applications like Home Assistant running MariaDB in a Docker container. This article will guide you through creating scripts that automate the backup and restoration processes, designed to be flexible by accepting arguments for the password and paths.
 
 ### Prerequisites
 
 - Docker installed and running.
 - MariaDB container running with your data.
-- Basic understanding of the Linux command line.
 
 ### Backup Script with Arguments
 
@@ -33,13 +36,13 @@ To make our backup process versatile and reusable, we'll create a shell script t
 
 1. Create and open a new script:
 
-```
+```bash
 nano /path_to_scripts_folder/backup_mariadb.sh
 ```
 
 2. Copy and paste the following content:
 
-```
+```bash
 #!/bin/bash
 
 # Check if the right number of arguments are provided
@@ -58,13 +61,13 @@ docker exec mariadb /usr/bin/mysqldump -u homeassistant --password=$PASSWORD --a
 
 4. Make the script executable:
 
-```
+```bash
 chmod +x /path_to_scripts_folder/backup_mariadb.sh
 ```
 
-Now you can run the script, passing the password and backup folder path as arguments:
+Now, run the script, passing the password and backup folder path as arguments:
 
-```
+```bash
 /path_to_scripts_folder/backup_mariadb.sh your_password /path_to_backup_folder/
 ```
 
@@ -74,7 +77,7 @@ To automate the backup process daily:
 
 1. Open the crontab:
 
-```
+```bash
 crontab -e
 ```
 
@@ -83,3 +86,58 @@ crontab -e
 ```
 0 3 * * * /path_to_scripts_folder/backup_mariadb.sh your_password /path_to_backup_folder/
 ```
+
+### Restoring the Database from Backup
+
+
+#### Restoration Script with Arguments
+
+To simplify the restoration process, we'll create a separate shell script that accepts two arguments:
+
+1. MariaDB password
+2. Path to the backup file you want to restore
+
+##### Script Creation
+
+1. Create and open a new script:
+
+```bash
+nano /path_to_scripts_folder/restore_mariadb.sh
+```
+
+2. Copy and paste the following content:
+
+```bash
+#!/bin/bash
+
+# Check if the right number of arguments are provided
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <password> <backup_file_path>"
+    exit 1
+fi
+
+PASSWORD=$1
+BACKUP_FILE=$2
+
+gunzip < "$BACKUP_FILE" | docker exec -i mariadb /usr/bin/mysql -u homeassistant --password=$PASSWORD
+```
+
+3. Save and exit the editor.
+
+4. Make the script executable:
+
+```bash
+chmod +x /path_to_scripts_folder/restore_mariadb.sh
+```
+
+Now, run the script, passing the password and the path to the backup file as arguments:
+
+```bash
+/path_to_scripts_folder/restore_mariadb.sh your_password /path_to_backup_folder/database_backup_YOUR_DATE.sql.gz
+```
+
+#### Notes on Restoration
+
+1. **Backup before restore**: Always take a fresh backup before starting the restoration process. This ensures you have a fallback if the restore doesn't go as planned.
+2. **Check Compatibility**: Ensure the MariaDB version you are restoring to is compatible with the version from which you took the backup.
+3. **Downtime Considerations**: Depending on the size of your database and the restoration environment's performance, the restoration process might take some time. Plan accordingly.
