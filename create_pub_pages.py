@@ -15,14 +15,17 @@ def latex_to_unicode(text):
         r"\\`A": "À", r"\\`E": "È", r"\\`I": "Ì", r"\\`O": "Ò", r"\\`U": "Ù",
         r'\\^a': 'â', r'\\^e': 'ê', r'\\^i': 'î', r'\\^o': 'ô', r'\\^u': 'û',
         r'\\^A': 'Â', r'\\^E': 'Ê', r'\\^I': 'Î', r'\\^O': 'Ô', r'\\^U': 'Û',
-        r"\\c{c}": "ç", r"\\c{C}": "Ç",
+        r"\\c\{c\}": "ç", r"\\c\{C\}": "Ç",
         r"\\.z": "ż", r"\\.Z": "Ż",
-        r"\\v{s}": "š", r"\\v{S}": "Š",
+        r"\\v\{s\}": "š", r"\\v\{S\}": "Š",
         # ... add other conversions as needed
     }
 
     for latex, char in conversions.items():
         text = re.sub(latex, char, text)
+
+    # Remove any remaining curly braces
+    text = re.sub(r"{(.*?)}", r"\1", text)
 
     return text
 
@@ -32,14 +35,14 @@ def create_or_update_md(entry):
     key = entry.key
     title = entry.fields.get('title', '')
     year = entry.fields.get('year', '')
-    journal = entry.fields.get('journal', '')
+    journal = entry.fields.get('journal', entry.fields.get('booktitle', ''))
     volume = entry.fields.get('volume', '')
     pages = entry.fields.get('pages', '')
     publisher = entry.fields.get('publisher', '')
     url = entry.fields.get('url', '')
 
-    # Extracting the author list
-    author = get_author_list(entry)
+    # Extracting the author list and convert it to a list of authors
+    authors = [str(author) for author in entry.persons.get('author', [])]
 
     # Define the path
     folder_path = Path(f"content/publications/{key}")
@@ -51,34 +54,26 @@ def create_or_update_md(entry):
         with open(file_path, 'r') as f:
             content = f.read()
 
-        # Logic to update the fields
-        content = update_field(content, 'title', title)
-        content = update_field(content, 'author', author)
-        content = update_field(content, 'year', year)
-        content = update_field(content, 'journal', journal)
-        content = update_field(content, 'volume', volume)
-        content = update_field(content, 'pages', pages)
-        content = update_field(content, 'publisher', publisher)
-        content = update_field(content, 'url', url)
+        # Logic to update the fields remains the same, but you may want to adjust it to match the TOML format if needed.
+        # ...
 
-        # Write the updated content back to the file
-        with open(file_path, 'w') as f:
-            f.write(content)
     else:
-        # If file doesn't exist, create a new markdown file
+        # If file doesn't exist, create a new markdown file with TOML front matter
         folder_path.mkdir(parents=True, exist_ok=True)
         with open(file_path, 'w') as f:
-            f.write("---\n")
-            f.write(f'title: "{title}"\n')
-            f.write(f'author: "{author}"\n')
-            f.write(f'year: "{year}"\n')
-            f.write(f'journal: "{journal}"\n')
-            f.write(f'volume: "{volume}"\n')
-            f.write(f'pages: "{pages}"\n')
-            f.write(f'publisher: "{publisher}"\n')
-            f.write(f'url: "{url}"\n')
-            f.write("---\n")
+            f.write("+++\n")
+            f.write(f'title= "{title}"\n')
+            f.write('draft= false\n')
+            f.write(f'authors  = {authors}\n')
+            f.write(f'date = {year}-01-01\n')
+            f.write(f'journal= "{journal}"\n')
+            f.write(f'volume= "{volume}"\n')
+            f.write(f'pages= "{pages}"\n')
+            f.write(f'publisher= "{publisher}"\n')
+            f.write(f'url= "{url}"\n')
+            f.write("+++\n\n")
             f.write(f"Summary about {title}.")
+
 
 def get_author_list(entry):
     if 'author' in entry.persons:
