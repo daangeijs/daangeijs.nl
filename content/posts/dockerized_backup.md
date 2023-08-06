@@ -1,6 +1,7 @@
-  ## Dockerized Backup and Restore System for Home Directory
 
-Managing backups is an essential part of maintaining any computer system. With the rise of Docker, encapsulating complex operations within containers has never been easier. In this article, we'll guide you through creating a Docker-based system for backing up and restoring your `/home/user` directory, storing backups on a mounted HDD, and implementing a 30-day data retention policy.
+## Dockerized Backup and Restore System for Home Directory
+
+Managing backups is an essential part of maintaining any computer system. With the rise of Docker, encapsulating complex operations within containers has never been easier. In this article, we'll guide you through creating a Docker-based system for backing up and restoring your `/home/user` directory, storing backups on a mounted HDD, and implementing a 30-day data retention policy. Later, we will discuss how to automate this backup process using `crontab`.
 
 ### Prerequisites
 
@@ -97,6 +98,55 @@ Replace `your_tarball_filename.tar.gz` with the desired backup tarball's filenam
 docker run --rm -v /path/to/restore:/restore -v /mnt/storage:/mnt/storage userbackuprestore:latest restore your_tarball_filename.tar.gz /restore
 ```
 
-### Concluding Thoughts:
+### Automating Backups Using Crontab:
 
-With this Dockerized backup and restore system, you have a reliable method to safeguard your home directory. The system ensures backups are neatly stored on a mounted HDD and follows a 30-day retention policy. As an added benefit, the containerized nature of this solution means it's portable and can be implemented on any system with Docker. Whether you're a novice just starting with Docker or a seasoned professional, this solution offers a blend of simplicity and utility for backup management.
+After setting up the Docker-based backup system, automating the process ensures that backups are taken regularly without manual intervention. The `cron` job scheduler is an excellent tool for this. Here’s how you can schedule the backup task using `crontab`.
+
+#### 1. Open Crontab:
+
+To edit the current user's `crontab` entries, use:
+
+```bash
+crontab -e
+```
+
+This will open up the default editor, often `vi` or `nano`, depending on the system setup.
+
+#### 2. Add a Cron Job:
+
+To run the backup daily at, say, 2:30 AM, add the following line:
+
+```bash
+30 2 * * * docker run --rm -v /home/user:/home/user -v /mnt/storage:/mnt/storage userbackuprestore:latest backup
+```
+
+The general format of a cron job is:
+
+```bash
+[min] [hour] [day of month] [month] [day of week] [command]
+```
+
+For this job:
+
+- `30` is the minute (30 minutes past the hour).
+- `2` is the hour (2 AM).
+- `*` for day of month, month, and day of week indicates "every" or "any."
+
+Therefore, `30 2 * * *` means "2:30 AM, every day."
+
+#### 3. Save and Exit:
+
+After adding the line:
+
+- If you're in `vi`, press `Esc`, type `:wq`, and press `Enter`.
+- If you're in `nano`, press `CTRL + X`, press `Y` to confirm changes, and press `Enter` to save.
+
+#### 4. Verify the Cron Job:
+
+To ensure your cron job has been set correctly, you can display the current user's `crontab` entries:
+
+```bash
+crontab -l
+```
+
+You should see the line you added for the backup
