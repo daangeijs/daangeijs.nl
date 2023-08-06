@@ -1,6 +1,18 @@
+---
+title: "Proxmox: how to Expand Storage in a Linux VM with LVM"
+date: 2023-05-25T12:48:00+01:00
+draft: false
 
-### How to Expand Storage in a Linux VM with LVM: A Comprehensive Guide
+tags:
+- ubuntu
+- docker
+- proxmox
+- lvm
 
+cover:
+    image: "cover.png"
+    alt: "Proxmox Logo"
+---
 #### Introduction
 
 **Problem**: 

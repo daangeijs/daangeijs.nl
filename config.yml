@@ -67,7 +67,7 @@ params:
 paginate: 5
 menu:
   main:
-  - name: Recipes
+  - name: Posts
     url: /posts/
     weight: -120
   - name: Search

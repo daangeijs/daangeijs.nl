@@ -1,6 +1,20 @@
+---
+title: "Dockerized Backup and Restore System for Home Directory"
+date: 2023-05-25T12:48:00+01:00
+draft: false
 
-## Dockerized Backup and Restore System for Home Directory
+tags:
+- ubuntu
+- docker
+- home automation
+- backup
 
+cover:
+    image: "cover.jpg"
+    alt: "Docker Logo"
+
+---
+### Introduction
 Managing backups is an essential part of maintaining any computer system. With the rise of Docker, encapsulating complex operations within containers has never been easier. In this article, we'll guide you through creating a Docker-based system for backing up and restoring your `/home/user` directory, storing backups on a mounted HDD, and implementing a 30-day data retention policy. Later, we will discuss how to automate this backup process using `crontab`.
 
 ### Prerequisites
@@ -24,7 +38,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /backup
-COPY . .
+COPY .. .
 RUN chmod +x backup_restore.sh
 ENTRYPOINT ["./backup_restore.sh"]
 ```

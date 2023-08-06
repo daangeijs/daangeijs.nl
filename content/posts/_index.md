@@ -1,4 +1,4 @@
 ---
-title: Recipes 
-description: My favorite recipes and creations
+title: Posts 
+description: Tech posts
 ---

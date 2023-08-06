@@ -2,7 +2,7 @@
   command = "hugo"
   publish = "public"
 
-[context.deploy-preview]
+[context.deploy-pre§view]
 command = "hugo -b $DEPLOY_PRIME_URL"
 [context.branch-deploy]
 command = "hugo -b $DEPLOY_PRIME_URL"

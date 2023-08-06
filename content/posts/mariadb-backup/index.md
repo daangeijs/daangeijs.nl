@@ -9,14 +9,14 @@ tags:
 - mariadb
 - backup
 
+cover:
+    image: "cover.png"
+    alt: "MariaDB Logo"
+
+summary:
+    Backing up your data regularly is essential, especially for critical applications like Home Assistant running MariaDB in a Docker container. This article will guide you through creating scripts that automate the backup and restoration processes, designed to be flexible by accepting arguments for the password and paths.
+
 ---
-
-Of course! Here's the complete article:
-
----
-
-## Automating MariaDB Backups and Restoration in Docker with Shell Scripts
-
 ### Introduction
 
 Backing up your data regularly is essential, especially for critical applications like Home Assistant running MariaDB in a Docker container. This article will guide you through creating scripts that automate the backup and restoration processes, designed to be flexible by accepting arguments for the password and paths.
