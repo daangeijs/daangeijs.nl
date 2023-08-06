@@ -1,87 +1,93 @@
-Certainly! Here's the revised article:
+
+Certainly! Here's a comprehensive article about creating and automating a backup for MariaDB running in Docker using a script that accepts arguments:
 
 ---
 
-## Daily Backup of Home Assistant MariaDB Database in Docker
+## Automating MariaDB Backups in Docker with a Shell Script
 
 ### Introduction
 
-This guide will show you how to create daily backups of the MariaDB database used by Home Assistant running inside a Docker container. Regular backups are essential to prevent potential data loss, and automating the process ensures you always have a fresh backup.
+Backing up your data regularly is essential, especially for critical applications like Home Assistant running MariaDB in a Docker container. This article will guide you through creating a script that automates this backup process and is flexible enough to take arguments for the password and the backup folder path.
 
 ### Prerequisites
 
 - Docker installed and running.
-- MariaDB container running with your Home Assistant data.
-- Familiarity with the Linux command line.
+- MariaDB container running with your data.
+- Basic understanding of the Linux command line.
 
-### Backup the Database
+### Backup Script with Arguments
 
-To backup your MariaDB database running in Docker, we'll use the `mysqldump` tool. This tool creates a logical backup of the database, which you can use to restore your data later.
+To make our backup process versatile and reusable, we'll create a shell script that accepts two arguments:
+1. MariaDB password
+2. Backup folder path
 
-Execute the following command:
+#### Script Creation
 
-```bash
-docker exec mariadb /usr/bin/mysqldump -u homeassistant --password=your_password --all-databases | gzip > /path_to_backup_folder/database_backup.sql.gz
-```
-
-Replace `your_password` with your MariaDB password and `/path_to_backup_folder/` with the location where you want to save your backup.
-
-### Restore from Backup
-
-If you need to restore your data from the backup, use the following command:
-
-```bash
-gunzip < /path_to_backup_folder/database_backup.sql.gz | docker exec -i mariadb /usr/bin/mysql -u homeassistant --password=your_password
-```
-
-Replace `/path_to_backup_folder/` with the location of your backup and `your_password` with your MariaDB password.
-
-### Automating the Backup Using a Shell Script
-
-To simplify the backup process and make the crontab more readable, you can create a shell script that contains the backup command.
-
-1. Create a new script:
+1. Create and open a new script:
 
 ```bash
 nano /path_to_scripts_folder/backup_mariadb.sh
 ```
 
-2. Add the following content:
+2. Copy and paste the following content:
 
 ```bash
 #!/bin/bash
 
-docker exec mariadb /usr/bin/mysqldump -u homeassistant --password=your_password --all-databases | gzip > /path_to_backup_folder/database_backup_$(date +\%F).sql.gz
+# Check if the right number of arguments are provided
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <password> <backup_folder_path>"
+    exit 1
+fi
+
+PASSWORD=$1
+BACKUP_PATH=$2
+
+docker exec mariadb /usr/bin/mysqldump -u homeassistant --password=$PASSWORD --all-databases | gzip > "$BACKUP_PATH/database_backup_$(date +\%F).sql.gz"
 ```
 
-3. Make the script executable:
+3. Save and exit the editor.
+
+4. Make the script executable:
 
 ```bash
 chmod +x /path_to_scripts_folder/backup_mariadb.sh
 ```
 
-### Scheduling with Crontab
+Now you can run the script, passing the password and backup folder path as arguments:
 
-Now, instead of adding the entire command to the crontab, you can simply reference this script.
+```bash
+/path_to_scripts_folder/backup_mariadb.sh your_password /path_to_backup_folder/
+```
 
-1. Open the crontab with:
+### Scheduling Backups with Crontab
+
+To automate the backup process daily:
+
+1. Open the crontab:
 
 ```bash
 crontab -e
 ```
 
-2. Add the following line to schedule the backup script to run every day at 3 am:
+2. Add the following line to run the script every day at 3 am:
 
 ```
-0 3 * * * /path_to_scripts_folder/backup_mariadb.sh
+0 3 * * * /path_to_scripts_folder/backup_mariadb.sh your_password /path_to_backup_folder/
 ```
 
-This approach keeps the crontab clean and allows you to easily modify the backup process in the future by just updating the script.
+### Advantages of Using Arguments
+
+By using arguments in our backup script, we introduce the following advantages:
+
+1. **Flexibility**: The same script can be used in various scenarios without any modifications.
+2. **Readability**: Anyone who looks at the script can understand its purpose and usage quickly.
+3. **Security**: While not a foolproof method, using arguments can slightly obfuscate sensitive information, making it less apparent in scripts or logs.
 
 ### Conclusion
 
-It's crucial to maintain regular backups of your data, especially for vital applications like Home Assistant. This guide offers a streamlined method to backup and restore your MariaDB data within Docker, along with a way to automate the process neatly. With the automation in place, you can rest assured, knowing your data is backed up daily.
+Backing up data is an integral part of any system's maintenance. By leveraging a shell script that accepts arguments, you can automate backups for MariaDB running in Docker, ensuring that your data remains safe and up-to-date. As always, handle sensitive information, such as database passwords, with caution, and consider other security measures like Docker secrets or environment variables to further enhance protection.
 
 ---
 
-Please adjust paths such as `/path_to_backup_folder/` and `/path_to_scripts_folder/` as per your requirements. As always, handle your database password with caution. Consider Docker secrets, environment variables, or other secure methods to manage sensitive data.
+Make sure to adjust any paths such as `/path_to_scripts_folder/` or `/path_to_backup_folder/` to fit your environment.
