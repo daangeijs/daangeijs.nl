@@ -18,6 +18,8 @@ permalinks:
 
 pluralizelisttitles: "false"
 
+mainSections:
+  - posts
 
 params:
   title: Daan Geijs
@@ -26,8 +28,7 @@ params:
   DateFormat: " 2 January, 2006"
   defaultTheme: auto # dark, light
   disableThemeToggle: false
-
-  hideFooter: true
+  hideFooter: false
   ShowReadingTime: true
   ShowShareButtons: true
   EnableImageZoom: true
@@ -69,10 +70,10 @@ menu:
   main:
   - name: Posts
     url: /posts/
-    weight: -120
+    weight: -150
   - name: Search
     url: /search/
-    weight: -110
+    weight: -90
   - name: Tags
     url: /tags/
     weight: -110
