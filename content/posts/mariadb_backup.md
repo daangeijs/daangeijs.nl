@@ -1,5 +1,13 @@
+---
+title: "Automating MariaDB Backups in Docker with a Shell Script"
+date: 2023-04-25T12:48:00+01:00
+draft: false
 
-Certainly! Here's a comprehensive article about creating and automating a backup for MariaDB running in Docker using a script that accepts arguments:
+tags:
+- home automation
+- docker
+- mariadb
+- backup
 
 ---
 
@@ -75,19 +83,3 @@ crontab -e
 ```
 0 3 * * * /path_to_scripts_folder/backup_mariadb.sh your_password /path_to_backup_folder/
 ```
-
-### Advantages of Using Arguments
-
-By using arguments in our backup script, we introduce the following advantages:
-
-1. **Flexibility**: The same script can be used in various scenarios without any modifications.
-2. **Readability**: Anyone who looks at the script can understand its purpose and usage quickly.
-3. **Security**: While not a foolproof method, using arguments can slightly obfuscate sensitive information, making it less apparent in scripts or logs.
-
-### Conclusion
-
-Backing up data is an integral part of any system's maintenance. By leveraging a shell script that accepts arguments, you can automate backups for MariaDB running in Docker, ensuring that your data remains safe and up-to-date. As always, handle sensitive information, such as database passwords, with caution, and consider other security measures like Docker secrets or environment variables to further enhance protection.
-
----
-
-Make sure to adjust any paths such as `/path_to_scripts_folder/` or `/path_to_backup_folder/` to fit your environment.
