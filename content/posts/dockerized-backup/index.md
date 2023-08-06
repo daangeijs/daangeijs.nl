@@ -12,6 +12,9 @@ tags:
 cover:
     image: "cover.jpg"
     alt: "Docker Logo"
+    
+summary:
+  Managing backups is an essential part of maintaining any computer system. With the rise of Docker, encapsulating complex operations within containers has never been easier. In this article, we'll guide you through creating a Docker-based system for backing up and restoring your `/home/user` directory, storing backups on a mounted HDD, and implementing a 30-day data retention policy. Later, we will discuss how to automate this backup process using `crontab`.
 
 ---
 ### Introduction

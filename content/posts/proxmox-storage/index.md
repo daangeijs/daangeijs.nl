@@ -12,6 +12,9 @@ tags:
 cover:
     image: "cover.png"
     alt: "Proxmox Logo"
+
+summary:
+   After bolstering the storage capacity of a Linux VM within Proxmox or another hypervisor, you'll discover that the operating system inside the VM doesn't automatically recognize or utilize this newly added space.
 ---
 #### Introduction
 
