@@ -1,22 +1,31 @@
-{{- $pages := where (where .Site.RegularPages "Section" "publications") "Params.hidden" "!=" true }}
+{{- $pages := where .Site.RegularPages "Section" "publications"}}
 {{- $sortedPages := $pages.ByDate.Reverse }}
 {{- $latestPublications := $sortedPages | first 5 }}
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
 <div class="latest-publications">
-<h2>Latest Publications</h2>
+    <h2>Latest Publications</h2>
 
-<ul class="">
-    {{- range $latestPublications }}
-    <li>
-        {{ $currentPublication := . }}
-        <a href="{{ .Permalink }}">{{ .Title }}</a> ({{ .Date.Format "2006" }})
-        <p>
-        {{ range $i, $author := .Params.authors }}
-        {{ if lt $i 1 }}{{ $author }}{{ if lt $i (sub (len $currentPublication.Params.authors) 1) }}, {{ end }}{{ end }}
-        {{ if eq $i 1 }}{{ $author }} et al.{{ end }}
-        {{ end }}
-        </p>
-    </li>
-    {{- end }}
-</ul>
+    <ul class="">
+        {{- range $latestPublications }}
+        <li>
+            {{ $currentPublication := . }}
+
+            {{ if ne .Params.hidden true }}
+            <a href="{{ .Permalink }}">{{ .Title }} <i class="fas fa-file-alt"></i></a> ({{ .Date.Format "2006" }})
+            {{ else }}
+            {{ .Title }} ({{ .Date.Format "2006" }})
+            {{ end }}
+            <p>
+                {{ range $i, $author := .Params.authors }}
+                {{ if lt $i 1 }}{{ $author }}{{ if lt $i (sub (len $currentPublication.Params.authors) 1) }} and {{ end
+                }}{{ end }}
+                {{ if eq $i 1 }}{{ $author }} et al.{{ end }}
+                {{ end }}
+            </p>
+        </li>
+        {{- end }}
+    </ul>
 
 </div>

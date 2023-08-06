@@ -18,6 +18,7 @@ def latex_to_unicode(text):
         r"\\c\{c\}": "ç", r"\\c\{C\}": "Ç",
         r"\\.z": "ż", r"\\.Z": "Ż",
         r"\\v\{s\}": "š", r"\\v\{S\}": "Š",
+         r"\\'S": "Ś",
         # ... add other conversions as needed
     }
 
@@ -42,35 +43,27 @@ def create_or_update_md(entry):
     url = entry.fields.get('url', '')
 
     # Extracting the author list and convert it to a list of authors
-    authors = [str(author) for author in entry.persons.get('author', [])]
+    authors = [latex_to_unicode(str(author)) for author in entry.persons.get('author', [])]
 
     # Define the path
     folder_path = Path(f"content/publications/{key}")
     file_path = folder_path / "index.md"
 
     # Check if file exists
-    if file_path.exists():
-        # Read the content and update
-        with open(file_path, 'r') as f:
-            content = f.read()
-
-        # Logic to update the fields remains the same, but you may want to adjust it to match the TOML format if needed.
-        # ...
-
-    else:
+    if not file_path.exists():
         # If file doesn't exist, create a new markdown file with TOML front matter
         folder_path.mkdir(parents=True, exist_ok=True)
         with open(file_path, 'w') as f:
             f.write("+++\n")
-            f.write(f'title= "{title}"\n')
-            f.write('draft= true\n')
+            f.write(f'title = "{title}"\n')
+            f.write('hidden = true\n')
             f.write(f'authors  = {authors}\n')
             f.write(f'date = {year}-01-01\n')
-            f.write(f'journal= "{journal}"\n')
-            f.write(f'volume= "{volume}"\n')
-            f.write(f'pages= "{pages}"\n')
-            f.write(f'publisher= "{publisher}"\n')
-            f.write(f'url= "{url}"\n')
+            f.write(f'journal = "{journal}"\n')
+            f.write(f'volume = "{volume}"\n')
+            f.write(f'pages = "{pages}"\n')
+            f.write(f'publisher = "{publisher}"\n')
+            f.write(f'url = "{url}"\n')
             f.write("+++\n\n")
             f.write(f"Summary about {title}.")
 
