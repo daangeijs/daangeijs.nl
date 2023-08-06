@@ -1,34 +1,12 @@
 import os
 from pybtex.database.input import bibtex
 from pathlib import Path
-
+from pylatexenc.latex2text import LatexNodes2Text
 import re
 
 
 def latex_to_unicode(text):
-    conversions = {
-        r"\\'a": "á", r"\\'e": "é", r"\\'i": "í", r"\\'o": "ó", r"\\'u": "ú",
-        r"\\'A": "Á", r"\\'E": "É", r"\\'I": "Í", r"\\'O": "Ó", r"\\'U": "Ú",
-        r'\\"a': 'ä', r'\\"e': 'ë', r'\\"i': 'ï', r'\\"o': 'ö', r'\\"u': 'ü',
-        r'\\"A': 'Ä', r'\\"E': 'Ë', r'\\"I': 'Ï', r'\\"O': 'Ö', r'\\"U': 'Ü',
-        r"\\`a": "à", r"\\`e": "è", r"\\`i": "ì", r"\\`o": "ò", r"\\`u": "ù",
-        r"\\`A": "À", r"\\`E": "È", r"\\`I": "Ì", r"\\`O": "Ò", r"\\`U": "Ù",
-        r'\\^a': 'â', r'\\^e': 'ê', r'\\^i': 'î', r'\\^o': 'ô', r'\\^u': 'û',
-        r'\\^A': 'Â', r'\\^E': 'Ê', r'\\^I': 'Î', r'\\^O': 'Ô', r'\\^U': 'Û',
-        r"\\c\{c\}": "ç", r"\\c\{C\}": "Ç",
-        r"\\.z": "ż", r"\\.Z": "Ż",
-        r"\\v\{s\}": "š", r"\\v\{S\}": "Š",
-         r"\\'S": "Ś",
-        # ... add other conversions as needed
-    }
-
-    for latex, char in conversions.items():
-        text = re.sub(latex, char, text)
-
-    # Remove any remaining curly braces
-    text = re.sub(r"{(.*?)}", r"\1", text)
-
-    return text
+    return LatexNodes2Text().latex_to_text(text)
 
 
 def create_or_update_md(entry):
@@ -75,11 +53,13 @@ def get_author_list(entry):
         return latex_to_unicode(author_str)
     return ''
 
+
 def update_field(content, field, value):
     # If the field exists, update it. If not, just return the content as is.
     if f"{field}:" in content:
         content = re.sub(f'{field}:.*', f'{field}: "{value}"', content)
     return content
+
 
 def main():
     parser = bibtex.Parser()
@@ -87,6 +67,7 @@ def main():
 
     for entry in bib_data.entries.values():
         create_or_update_md(entry)
+
 
 if __name__ == "__main__":
     main()
