@@ -24,7 +24,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /backup
-COPY backup_restore.sh .
+COPY . .
+RUN chmod +x backup_restore.sh
 ENTRYPOINT ["./backup_restore.sh"]
 ```
 
@@ -38,10 +39,11 @@ The core logic resides in our `backup_restore.sh` script, where we define the ba
 #!/bin/bash
 
 # Destination directory on the mounted HDD
-BACKUP_DEST="/mnt/storage"
+BACKUP_DEST="/mnt/storage/backup"
+BACKUP_TARGET_PATH="/home/daan"
 
 function backup() {
-    tar czf ${BACKUP_DEST}/home_user_backup_$(date +%Y%m%d).tar.gz -C /home/user .
+    tar czf ${BACKUP_DEST}/homeserver_backup_$(date +%Y%m%d).tar.gz -C ${BACKUP_TARGET_PATH} .
 }
 
 function restore() {
@@ -51,7 +53,7 @@ function restore() {
 }
 
 function cleanup() {
-    find ${BACKUP_DEST} -name 'home_user_backup_*.tar.gz' -mtime +30 -exec rm {} \;
+    find ${BACKUP_DEST} -name 'homeserver_backup_*.tar.gz' -mtime +30 -exec rm {} \;
 }
 
 if [ "$1" == "backup" ]; then
