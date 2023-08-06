@@ -33,13 +33,13 @@ To make our backup process versatile and reusable, we'll create a shell script t
 
 1. Create and open a new script:
 
-```bash
+```
 nano /path_to_scripts_folder/backup_mariadb.sh
 ```
 
 2. Copy and paste the following content:
 
-```bash
+```
 #!/bin/bash
 
 # Check if the right number of arguments are provided
@@ -58,13 +58,13 @@ docker exec mariadb /usr/bin/mysqldump -u homeassistant --password=$PASSWORD --a
 
 4. Make the script executable:
 
-```bash
+```
 chmod +x /path_to_scripts_folder/backup_mariadb.sh
 ```
 
 Now you can run the script, passing the password and backup folder path as arguments:
 
-```bash
+```
 /path_to_scripts_folder/backup_mariadb.sh your_password /path_to_backup_folder/
 ```
 
@@ -74,7 +74,7 @@ To automate the backup process daily:
 
 1. Open the crontab:
 
-```bash
+```
 crontab -e
 ```
 
