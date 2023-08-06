@@ -1,4 +1,4 @@
-.latest-posts{
+.latest-posts {
     position: relative;
 
 }
@@ -12,9 +12,10 @@
 .latest-media {
     position: relative;
 }
+
 .latest-media .post-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 33% 33% 33%;
     grid-column-gap: 10px;
 }
 
@@ -25,8 +26,8 @@
 
 .latest-media .entry-cover {
     height: 20rem;
-    width: 19rem;
 }
+
 @media (max-width: 1000px) {
     .latest-media .entry-cover {
         height: 15rem;
@@ -36,6 +37,15 @@
 @media (max-width: 600px) {
     .latest-media .entry-cover {
         height: 10rem;
+    }
+    .latest-media {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .latest-media .post-grid {
+        display: flex;
+        flex-direction: column;
     }
 }
 
@@ -53,7 +63,7 @@
 }
 
 .latest-publications {
-        position: relative;
+    position: relative;
     margin-bottom: var(--gap);
     padding: var(--gap);
     background: var(--entry);
