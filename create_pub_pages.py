@@ -63,7 +63,7 @@ def create_or_update_md(entry):
         with open(file_path, 'w') as f:
             f.write("+++\n")
             f.write(f'title= "{title}"\n')
-            f.write('draft= false\n')
+            f.write('draft= true\n')
             f.write(f'authors  = {authors}\n')
             f.write(f'date = {year}-01-01\n')
             f.write(f'journal= "{journal}"\n')
