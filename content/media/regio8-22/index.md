@@ -5,7 +5,7 @@ draft: false
 
 tags:
 - deep learning
-- article
+- webinar
 - skin cancer
 - academic
 
