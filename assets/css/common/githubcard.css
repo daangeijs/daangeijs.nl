@@ -5,6 +5,7 @@
     border-radius: 5px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12);
     background: var(--git-bg);
+
 }
 
 .github-card h2 {
@@ -18,12 +19,22 @@
 }
 .github-card p {
     margin-bottom: 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
 }
 .card-details {
     display: flex;
     gap: 10px;
     font-size: 0.9em;
 }
+@media (max-width: 440px) {
+    .card-details {
+        flex-direction: column;
+    }
+}
+
 .language {
     color: #586069;
 }

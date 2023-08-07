@@ -10,7 +10,7 @@ tags:
 - backup
 
 cover:
-    image: "cover.jpg"
+    image: "cover.png"
     alt: "Docker Logo"
     
 summary:
