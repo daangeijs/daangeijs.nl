@@ -4,10 +4,9 @@
         {{ $numRecipes := .Scratch.Get "latest_post_count" | default 9 }}
         {{ $paginator := .Paginate (where .Site.RegularPages "Type" "posts" | first $numRecipes ) }}
         {{ range $paginator.Pages }}
-        <article class="post-box">
+        <article class="post-entry">
             {{- $isHidden := (site.Params.cover.hidden | default site.Params.cover.hiddenInList) }}
             {{- partial "cover.html" (dict "cxt" . "IsHome" true "isHidden" $isHidden) }}
-            <div>
             <header class="entry-header">
                 <h2>
                     <a href="{{ .Permalink }}">{{ .Title }}</a>
@@ -28,7 +27,7 @@
             <footer class="entry-footer">
                 {{- partial "post_meta.html" . -}}
             </footer>
-                </div>
+                </article>
             {{- end }}
         </article>
         {{ end }}

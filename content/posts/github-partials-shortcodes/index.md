@@ -14,14 +14,11 @@ cover:
     alt: "GitHub Logo"
     
 summary:
-   "Since I code a lot of stuff and want to make this public on GitHub more I decided that I also wanted to showcase it on this website. In this article, we'll explore two ways to showcase your GitHub repositories on your Hugo blog:"
+    "I code a lot, and GitHub is where I share my work. But I wanted to take it a step further and feature my projects on my own website, as you can see on my main page. If you're in the same boat and want to showcase your GitHub repositories on your Hugo blog, have a look at this article. We'll explore two straightforward ways to make it happen."
 ---
-
-
-Since I code a lot of stuff and want to make this public on GitHub more I decided that I also wanted to showcase it on this website. In this article, we'll explore two ways to showcase your GitHub repositories on your Hugo blog:
-
+I code a lot, and GitHub is where I share my work. But I wanted to take it a step further and feature my projects on my own website, as you can see on my main [page](https://daangeijs.nl). If you're in the same boat and want to showcase your GitHub repositories on your Hugo blog, have a look at this article. We'll explore two straightforward ways to make it happen.
 1. **Shortcodes**: For manually embedding specific repositories in markdown.
-2. **Partials with Python**: For automating the display of selected repositories using a Python script.
+2. **Partials with Python**: For automatically fetching and displaying selected repositories using a Python script.
 
 ## 1. Embedding a GitHub Repo Using Shortcodes
 
