@@ -224,6 +224,9 @@ To add the partial to a page simply use this in your html template:
 `{{ partial "github.html" }}`
 
 ---
-So thats it, two ways I implemented partials and shortcodes to add my GitHub repo's to this Hugo generated website. To find the source have a look at the repo of this website, which I added here with our usefull shortcode.
+So that is it, two ways I implemented partials and shortcodes to add my GitHub repo's to this Hugo generated website. Here the final result together with the already existing gist shortcode from Hugo. Stacked on each other it looks great! For the latest version have a look at the source of my website. Or you can copy the code for the python script below:
 
 {{< githubRepoCard url="https://github.com/daangeijs/daangeijs.nl" name="daangeijs.nl" description="This repo contains the sourcecode of the website https://daangeijs.nl/, my personal website. It is built using Hugo, a static site generator. The theme is based on PapermodX." language="HTML" stars="1" forks="0" >}}
+
+
+{{< gist daangeijs e00759f976d6d8df96a89761d772ee2d >}}
