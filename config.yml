@@ -20,6 +20,7 @@ pluralizelisttitles: "false"
 
 mainSections:
   - posts
+  - media
 
 params:
   title: Daan Geijs
@@ -71,6 +72,9 @@ menu:
   - name: Posts
     url: /posts/
     weight: -150
+  - name: Media
+    url: /media/
+    weight: -135
   - name: Search
     url: /search/
     weight: -90

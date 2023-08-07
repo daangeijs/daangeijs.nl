@@ -1,7 +1,7 @@
 <div class="latest-media">
     <h2>In the Media</h2>
     <div class="post-grid">
-        {{ range (where .Site.RegularPages "Type" "posts" | first 3) }}
+        {{ range (where .Site.RegularPages "Type" "media" | first 3) }}
         <article class="news-item">
             <a aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}">
                 {{- $isHidden := (site.Params.cover.hidden | default site.Params.cover.hiddenInList) }}
