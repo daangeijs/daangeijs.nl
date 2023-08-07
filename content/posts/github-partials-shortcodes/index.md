@@ -30,25 +30,36 @@ Since I code a lot of stuff and want to make this public on GitHub more I decide
 For a consistent appearance between shortcodes and partials, we're employing a basic CSS design. Here's a style snippet that you can add to your site's CSS file:
 
 ```css
-.github-repo-card {
+.github-card {
     border: 1px solid #e1e4e8;
     padding: 15px;
-    margin: 10px 0;
-    border-radius: 6px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    background: #f6f8fa;
 }
-
-.github-repo-card a {
+.github-card h2 {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+    margin: auto;
+}
+.github-card h2 a {
     text-decoration: none;
     color: #0366d6;
 }
-
-.github-repo-card h3 {
-    margin-top: 0;
+.github-card p {
+    margin-bottom: 10px;
 }
-
-.github-repo-card p {
-    margin: 5px 0;
+.card-details {
+    display: flex;
+    gap: 10px;
+    font-size: 0.9em;
+}
+.language {
+    color: #586069;
+}
+.stars, .forks {
+    color: #586069;
 }
 ```
 
