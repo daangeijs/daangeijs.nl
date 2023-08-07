@@ -46,7 +46,7 @@ params:
   comments: false
   hidemeta: false
   hideSummary: false
-  showtoc: false
+  showtoc: true
   TocSide: 'left'
   tocopen: true
   fuseOpts:
