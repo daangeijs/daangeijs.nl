@@ -1,0 +1,9 @@
+<div class="github-card">
+    <h2><a href="{{ .Get "url" }}" target="_blank">{{ .Get "name" }}</a></h2>
+    <p>{{ .Get "description" }}</p>
+    <div class="card-details">
+        <span class="language">{{ .Get "language" }}</span>
+        <span class="stars">⭐ {{ .Get "stars" }}</span>
+        <span class="forks">🍴 {{ .Get "forks" }}</span>
+    </div>
+</div>

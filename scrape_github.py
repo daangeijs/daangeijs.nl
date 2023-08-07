@@ -15,21 +15,31 @@ specified_repos = ['daangeijs.nl', 'dekeukenvandael.nl']
 
 # Extracting data and creating partials
 partials = []
-nl = '\n'
+nl = '\n' # Newline character since it is not possible to use newlines in formatted strings
 for repo in repos:
-
     name = repo.find('a', itemprop='name codeRepository').text.strip()
+
+    # Only process the repo if its name is in the specified list
     if name in specified_repos:
+        # Extract base info
         repo_url = f"https://github.com{repo.find('a', itemprop='name codeRepository')['href']}"
         description_elem = repo.find('p', itemprop='description')
         description = description_elem.text.strip() if description_elem else "No description provided."
         language_elem = repo.find('span', itemprop='programmingLanguage')
         language = language_elem.text.strip() if language_elem else "Not specified"
+        last_updated = repo.find('relative-time').attrs.get('datetime', 'Unknown Date')
 
-        # Fetching the "last updated time" using the `relative-time` class
-        last_updated = repo.find('relative-time').attrs['datetime']
+        # Fetch repo-specific page to extract stars and forks
+        repo_response = requests.get(repo_url, headers=HEADERS)
+        repo_soup = BeautifulSoup(repo_response.content, 'html.parser')
 
-        partial = f'{{{{ partial "githubRepoCard.html" (dict "url" "{repo_url}" "name" "{name}" "description" "{description}" "language" "{language}" "lastUpdated" "{last_updated}") }}}}'
+        stars_elem = repo_soup.find('span', id="repo-stars-counter-star")
+        forks_elem = repo_soup.find('span', id="repo-network-counter")
+
+        stars = stars_elem['title'] if stars_elem and 'title' in stars_elem.attrs else '0'
+        forks = forks_elem['title'] if forks_elem and 'title' in forks_elem.attrs else '0'
+
+        partial = f'''{{{{ partial "githubRepoCard.html" (dict "url" "{repo_url}" "name" "{name}" "description" "{description}" "language" "{language}" "stars" "{stars}" "forks" "{forks}" "lastUpdated" "{last_updated}") }}}}'''
         partials.append(partial)
 
 # Wrapping all partials in a div and saving to an HTML file
