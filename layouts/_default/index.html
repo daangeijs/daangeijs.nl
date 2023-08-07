@@ -13,6 +13,8 @@
 <!--{{ .Scratch.Set "latest_post_count" 3 }}-->
 {{ partial "latest_publications.html" . }}
 
+<!-- Add a partials div for latest github repos -->
+{{ partial "github.html" }}
 
 <div class="profile">
     {{- with site.Params.profileMode }}

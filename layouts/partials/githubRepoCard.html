@@ -1,0 +1,9 @@
+<div class="github-card">
+    <h2><a href="{{ .url }}" target="_blank">{{ .name }}</a></h2>
+    <p>{{ .description }}</p>
+    <div class="card-details">
+        <span class="language">{{ .language }}</span>
+        <!-- Split the datetime string at 'T' and take the first part (the date) -->
+        <span class="last-updated">Last updated: {{ index (split .lastUpdated "T") 0 }}</span>
+    </div>
+</div>
