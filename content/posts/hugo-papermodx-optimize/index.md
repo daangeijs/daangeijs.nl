@@ -64,11 +64,12 @@ collections:
     label_singular: "Recipe"
     folder: 'content/recipes'
     create: true
-    slug: '{{year}}-{{month}}-{{day}}-{{slug}}/index'  # Note the /index here
     # Support Hugo page bundles that puts index.md and images in folders named by slug
     path: "{{year}}-{{month}}-{{day}}-{{slug}}/index"
-    preview_path: 'recipes/{{year}}-{{month}}-{{day}}-{{slug}}'
+    # Note the usage of title here instead of slug
+    preview_path: 'recipes/{{year}}-{{month}}-{{day}}-{{title}}'
     preview_path_date_field: date
+    filter: {field: "ignore", value: false}
     editor:
       preview: true
     fields:
