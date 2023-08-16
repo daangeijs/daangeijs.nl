@@ -19,13 +19,6 @@ summary:
 ### Introduction
 In this article, I'll guide you through creating a Docker-based system for backing up and restoring your `/home/user` directory, storing backups on a mounted HDD, and implementing a 30-day data retention policy. Later, we will discuss how to automate this backup process using `crontab`.
 
-### Prerequisites
-
-1. Docker installed on your system.
-2. A mounted HDD, for this tutorial, located at `/mnt/storage`.
-
-### Step-by-Step Guide
-
 #### 1. Set Up the Docker Environment:
 
 ##### Dockerfile:
