@@ -14,7 +14,7 @@ cover:
     alt: "Docker Logo"
     
 summary:
-In this article, I'll guide you through creating a Docker-based system for backing up and restoring your `/home/user` directory, storing backups on a mounted HDD, and implementing a 30-day data retention policy. Later, we will discuss how to automate this backup process using `crontab`.
+    In this article, I'll guide you through creating a Docker-based system for backing up and restoring your `/home/user` directory, storing backups on a mounted HDD, and implementing a 30-day data retention policy. Later, we will discuss how to automate this backup process using `crontab`.
 ---
 ### Introduction
 In this article, I'll guide you through creating a Docker-based system for backing up and restoring your `/home/user` directory, storing backups on a mounted HDD, and implementing a 30-day data retention policy. Later, we will discuss how to automate this backup process using `crontab`.
