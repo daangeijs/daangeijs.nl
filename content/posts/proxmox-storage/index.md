@@ -24,8 +24,6 @@ After bolstering the storage capacity of a Linux VM within Proxmox or another hy
 **Solution**: 
 To harness this additional storage, you need to resize both the partitions and the filesystems within the Linux environment. If you've configured your VM with Logical Volume Management (LVM), this entails adjusting the physical volume, the logical volume, and subsequently, the filesystem.
 
-#### Step-by-step Expansion
-
 1. **Ensure the Partition Covers the New Space**:
    
    To observe the current partitions:
