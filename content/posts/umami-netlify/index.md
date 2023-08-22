@@ -36,7 +36,6 @@ In this case I like having autonomy and control of hosting my own data, but I al
 
 For me these where the resources that I had available, but you can adjust these to your own needs.
 
-
 3. **Complete Initialization**: Access the console of your started container, log in with `root` and the password you set up at the previous step. Complete the installation, skipping any unnecessary add-ons but making sure to apply the updates.
 {{< figure src="3.png" >}}
 4. **Database Setup**: Navigate to the browser using assigned-static-IP-address:12322 or simply input the IP address. This will take you to a dashboard where you can select Adminer. Use Adminer to log in with PostgreSQL credentials. Create a table named `umami`.
@@ -57,7 +56,7 @@ For me these where the resources that I had available, but you can adjust these 
 {{< figure src="6.png" >}}
    - In the site settings of your new project, navigate to "Site configuration" -> "Environment variables".
    - Add the `DATABASE_URL` variable with the value:
-     `postgresql://<postgres_account>:<postgress_password>@<your_db_ip>/umami`.
+     ```postgresql://<postgres_account>:<postgress_password>@<your_db_ip>/umami```
 
 4. **Trigger Deployment**:
 {{< figure src="7.png" >}}
