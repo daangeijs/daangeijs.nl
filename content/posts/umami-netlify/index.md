@@ -20,7 +20,7 @@ summary:
 {{< figure src="cover.jpg" >}}
 Umami is a sleek, open-source analytics tool that provides an alternative to mainstream solutions like Google Analytics. Its simplicity and transparency make it a preferred choice for those wary of the intricacies and potential privacy concerns associated with bigger platforms. 
 
-In this case I like having autonomy and control of hosting my own data, but I also appreciate the efficiency and scalability of cloud services. That's why, I've opted to host the database needed for Umami to host on my own premises using Proxmox.  However, when it comes to the dashboard – the visual heart of Umami – I use Netlify. Hosting the Umami dashboard on Netlify not only offloads my trusty NUC from running yet another service but also made installation a breeze with Netlify's effortless deployment process. In this article I will show you how I set it up.
+In this case I like having autonomy and control of hosting my own data, but I also appreciate the efficiency and scalability of cloud services. That's why, I've opted to host the database needed for Umami at home on my homeserver using Proxmox.  However, when it comes to the dashboard – the visual heart of Umami – I use Netlify. Hosting the Umami dashboard on Netlify not only offloads my trusty NUC from running yet another service but also made installation a breeze with Netlify's effortless deployment process. In this article I will show you how I set it up.
 
 ## Setting Up Database on Proxmox
 
