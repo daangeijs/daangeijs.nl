@@ -1,5 +1,5 @@
 ---
-title: "Proxmox: how to Expand Storage in a Linux VM with LVM"
+title: "Website Analytics with Umami, Netlify and a self-hosted database. "
 date: 2023-08-22T12:48:00+01:00
 draft: false
 
