@@ -44,7 +44,10 @@ For me these where the resources that I had available, but you can adjust these 
 
 ## Deploying Umami on Netlify
 
-1. **Fork Repository**: Fork the Umami repository to your GitHub account: `https://github.com/umami-software/umami`.
+1. **Fork Repository**: Fork the Umami repository to your GitHub account: 
+      ```html
+      https://github.com/umami-software/umami
+      ```
 
 2. **Netlify Setup**:
    - Log into Netlify.
@@ -56,7 +59,9 @@ For me these where the resources that I had available, but you can adjust these 
 {{< figure src="6.png" >}}
    - In the site settings of your new project, navigate to "Site configuration" -> "Environment variables".
    - Add the `DATABASE_URL` variable with the value:
-     ```postgresql://<postgres_account>:<postgress_password>@<your_db_ip>/umami```
+     ```html
+     postgresql://<postgres_account>:<postgress_password>@<your_db_ip>/umami
+     ```
 
 4. **Trigger Deployment**:
 {{< figure src="7.png" >}}
