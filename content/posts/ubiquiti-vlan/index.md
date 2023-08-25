@@ -1,6 +1,6 @@
 ---
 title: "Setting Up an Isolated Virtual Server in a VLAN on Ubiquiti and Proxmox"
-date: 2023-06-25T12:48:00+01:00
+date: 2023-06-14T12:48:00+01:00
 draft: false
 
 tags:
