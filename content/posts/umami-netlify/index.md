@@ -40,7 +40,7 @@ For me these where the resources that I had available, but you can adjust these 
 {{< figure src="3.png" >}}
 4. **Database Setup**: Navigate to the browser using assigned-static-IP-address:12322 or simply input the IP address. This will take you to a dashboard where you can select Adminer. Use Adminer to log in with PostgreSQL credentials. Create a table named `umami`.
 {{< figure src="5.png" >}}
-5. **Port forwarding** Make sure you don't forget to enable port forwarding (5432) to the IP address of your running Postgres container. Ofcourse, this completely depends on your network setup.
+5. **Port forwarding** Make sure you don't forget to enable port forwarding (5432) to the IP address of your running Postgres container. Ofcourse, this completely depends on your network setup. Keep in mind that exposing a port does come with security vulnerabilities. If you have an Ubiquiti router [you can read this article]( {{< relref "ubiquiti-vlan" >}}) for more information on how to set this up in a more safe way.
 
 ## Deploying Umami on Netlify
 
