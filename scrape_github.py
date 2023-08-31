@@ -11,7 +11,7 @@ soup = BeautifulSoup(response.content, 'html.parser')
 repos = soup.find_all('div', class_='col-10 col-lg-9 d-inline-block')
 
 # List of specified repository titles
-specified_repos = ['daangeijs.nl', 'dekeukenvandael.nl']
+specified_repos = ['daangeijs.nl', 'dekeukenvandael.nl', 'deepops-slurmjob']
 
 # Extracting data and creating partials
 partials = []
