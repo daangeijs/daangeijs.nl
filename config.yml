@@ -65,6 +65,29 @@ params:
 
   profileMode:
     enabled: true
+    title: "Daan Geijs"
+    subtitle: "PhD candidate @ Computational Pathology Group  \n 
+    \n| Working on deep learning for skin cancer assessment |"
+    imageUrl: "images/z4d4.jpg"
+    imageWidth: 200 # custom size
+    imageHeight: 200 # custom size
+#    buttons:
+#      - name: "Publications"
+#        url: "publications"
+#      - name: "About me"
+#        url: "aboutme"
+#      - name: "Contact"
+#        url: "contact"
+
+  socialIcons:
+    - name: github-simple
+      url: "https://github.com/daangeijs"
+    - name: linkedin-simple
+      url: "https://www.linkedin.com/in/daan-geijs-188009121/"
+    - name: googlescholar
+      url: "https://scholar.google.nl/citations?user=qj6BUocAAAAJ&hl=nl"
+    - name: radboud
+      url: "https://www.computationalpathologygroup.eu/members/daan-geijs/"
 
 paginate: 5
 menu:
