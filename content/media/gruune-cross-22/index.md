@@ -15,4 +15,6 @@ cover:
 ---
 A beautiful route through the Achterhoek organized by Lions Doetinchem De Graafschap. Nearly 100 people have committed themselves to cycling together an impressive amount. I was chosen to be 1 of the 3 charities, receiving funding for my research. 
 
-[Read the full article here](https://www.doetinchemsvizier.nl/nieuws/maatschappij/425913/gruune-cross-van-serviceclub-lions-zamelt-53-000-euro-in)
+[Read the article about this in the Doetinchems Verzier](https://www.doetinchemsvizier.nl/nieuws/maatschappij/425913/gruune-cross-van-serviceclub-lions-zamelt-53-000-euro-in)
+
+[Read the article about this at Omroep Gelderland](https://www.gld.nl/lokaal/7722462/gruune-cross-voor-drie-lokale-doelen)
