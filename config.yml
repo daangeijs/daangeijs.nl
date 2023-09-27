@@ -58,7 +58,7 @@ params:
       minMatchCharLength: 0
 
   assets:
-    disableHLJS: false # to disable highlight.js
+    disableHLJS: true # to disable highlight.js
     disableFingerprinting: true
     favicon: "favicon.ico"
     appleTouchIcon: "favicon-152.png"
@@ -107,6 +107,16 @@ menu:
   - name: Archive
     url: /archives/
     weight: -130
-  - name: Publications
-    url: /publications/
-    weight: -140
+#  - name: Publications
+#    url: /publications/
+#    weight: -140
+# disable for now
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    style: dracula
+    lineNos: false
+    noClasses: false
