@@ -75,9 +75,7 @@ all_polygons.append(shapely.geometry.shape(shape).buffer(0))
 -   `.buffer(0)`: The `buffer(0)` trick is a common technique in GIS operations. It's used here to fix potential topology errors in the polygons. Even though it might seem like it does nothing (since the buffer distance is 0), it can help in ensuring the created polygon is topologically valid.
 
 ## Computing Cell Density
-`GeoPandas` is an open-source Python library that makes working with geospatial data easier. It extends the datatypes used by `pandas` to allow spatial operations on geometric types. These geometric operations are performed by `shapely`, and `GeoPandas` also depends on `Fiona` for file access and `matplotlib` for plotting.
-
-While `pandas` is loved for data manipulation, it doesn’t have built-in capabilities to handle spatial data. `GeoPandas`, on the other hand, equips DataFrames with a geometry column, which can store spatial objects like points, lines, and polygons, allowing for sophisticated spatial operations. Just what I needed in this case!
+`GeoPandas` is an open-source Python library that makes working with geospatial data easier. While `pandas` is loved for data manipulation, it doesn’t have built-in capabilities to handle spatial data. `GeoPandas`, on the other hand, equips DataFrames with a geometry column, which can store spatial objects like points, lines, and polygons, allowing for sophisticated spatial operations. Just what I needed in this case!
 
 Much like how `pandas` allows for efficient data operations due to its internal use of optimized C and Cython operations, `GeoPandas` spatial operations are vectorized, making spatial calculations very fast, also`GeoPandas` uses spatial indexing (via the R-tree data structure) for quick bounding box queries. When you’re trying to find overlaps between geometries (like in this case tumor polygon and cell points), spatial indexing ensures that you’re only comparing geometries that are close to one another, making overlap checks much quicker.
 
