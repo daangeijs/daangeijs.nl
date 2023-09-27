@@ -84,9 +84,10 @@ menu:
   - name: Archive
     url: /archives/
     weight: -130
-  - name: Publications
-    url: /publications/
-    weight: -140
+#  - name: Publications
+#    url: /publications/
+#    weight: -140
+# disable for now
 
 markup:
   goldmark:
