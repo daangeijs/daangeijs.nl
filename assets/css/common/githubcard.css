@@ -36,7 +36,7 @@
 }
 
 .language {
-    color: #586069;
+    color: var(--git-language);
 }
 .stars, .forks {
     color: #586069;
