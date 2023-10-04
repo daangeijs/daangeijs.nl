@@ -51,14 +51,13 @@ services:
       - db-data:/var/lib/postgresql/data
 
   cache:
-    image: redis:latest
-    volumes:
-      - cache-data:/data
+    image: redis
+    command: redis-server --save 20 1 --loglevel warning
 
 volumes:
   app-data:
   db-data:
-  cache-data: 
+
 ```
 This configuration offers a Django web service (`web`) that leans on PostgreSQL (`db`) for its data storage and Redis (`cache`) for caching. It illustrates a typical setup that many web applications could use.
 
@@ -116,7 +115,7 @@ In your project root, create a `.devcontainer` directory. Inside, add a `devcont
    "overrideCommand": true
 }
 ```
-In this case I copied my Django project inside the folder /app when building my docker. Therefore I target this folder as the startup `workspaceFolder`
+In this case I copied my Django project inside the folder /app when building my docker and therefore, I target this folder as the startup `workspaceFolder`. Note the `overrideCommand: true`. I added this to override the default command that is specified in the docker-compose file, to avoid the container from starting up the Django server. By doing this it will fall back to the default command specified in the Dockerfile, which is `CMD ["/bin/bash"]`. This will allow us to start the Django server manually.
 
 To ensure data persistence and easy access, introduce a volume, `app-data`, to your docker service. In the context of our setup, this volume I attached to the `web` service, making sure that when your docker fails you won't lose your uncommited changes. 
 
@@ -127,7 +126,7 @@ In VSCode:
 1. Open the Command Palette.
 2. Search and select "Dev Containers: Reopen in Container." 
 OR
-3. Click on the bottom left green corner `><` button
+3. Click on the green bottom left `><` button all the way in the corner.
 4. Select "Reopen in Container"
 
 VSCode will now set everything up, and you're all set to develop!
