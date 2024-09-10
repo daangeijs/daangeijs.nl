@@ -108,7 +108,7 @@ While VSCode offers a great environment for writing and compiling LaTeX document
    ```
    After cloning, you can open the project in VSCode.
 
-4. **Add the `.gitignore` File**:
+4. **Add a .gitignore file**:
    Add a `.gitignore` file to your project to exclude unnecessary LaTeX-generated files (like `.aux`, `.log`, etc.). A nice `.gitignore` template for LaTeX projects can be found [here](https://github.com/github/gitignore/blob/main/TeX.gitignore
 ).
 5. **Working in VSCode**:
