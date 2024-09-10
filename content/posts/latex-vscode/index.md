@@ -46,7 +46,7 @@ sudo tlmgr update --self
 sudo tlmgr update --all
 ```
 
-This ensures your LaTeX environment is fully up to date. If you encounter any issues during the installation or update process, check the terminal output for error messages and try to resolve them accordingly. For me it helped to run eval "$(/usr/libexec/path_helper)" and restarting my terminal.
+This ensures your LaTeX environment is fully up to date. If you encounter any issues during the installation or update process, check the terminal output for error messages and try to resolve them accordingly. For me it helped to run `eval "$(/usr/libexec/path_helper)"` and restarting my terminal.
 
 ## Step 3: Install VSCode
 
