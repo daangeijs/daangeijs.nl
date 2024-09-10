@@ -117,7 +117,7 @@ While VSCode offers a great environment for writing and compiling LaTeX document
 6. **Syncing with Overleaf**:
    If you want to review or share a version, simply push your changes back to the Overleaf repository:
    ```bash
-   git push origin master
+   git push origin main
    ```
 
    Overleaf will not automatically update with the latest version, for this you will have to manually pull the changes from GitHub in Overleaf.
@@ -133,7 +133,7 @@ While VSCode offers a great environment for writing and compiling LaTeX document
 7. **Collaborate and Review on Overleaf**:
    Once your collaborators or reviewers have made changes on Overleaf, you can pull those changes back into your local repository:
    ```bash
-   git pull origin master
+   git pull origin main
    ```
    This way, you can synchronize changes between Overleaf and VSCode seamlessly, using Overleaf for easy collaboration and VSCode for more ease of work.
 
