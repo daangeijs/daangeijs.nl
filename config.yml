@@ -66,8 +66,8 @@ params:
   profileMode:
     enabled: true
     title: "Daan Geijs"
-    subtitle: "PhD candidate @ Computational Pathology Group  \n 
-    \n| Working on deep learning for skin cancer assessment |"
+    subtitle: "Machine Learning Engineer @ kaiko.ai \n 
+    \n| Integrating AI in the clinical workflow |"
     imageUrl: "images/z4d4.jpg"
     imageWidth: 200 # custom size
     imageHeight: 200 # custom size
@@ -86,8 +86,8 @@ params:
       url: "https://www.linkedin.com/in/daan-geijs-188009121/"
     - name: googlescholar
       url: "https://scholar.google.nl/citations?user=qj6BUocAAAAJ&hl=nl"
-    - name: radboud
-      url: "https://www.computationalpathologygroup.eu/members/daan-geijs/"
+    - name: kaiko
+      url: "https://kaiko.ai/"
 
 paginate: 5
 menu:
