@@ -1,0 +1,34 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="footer-inner">
+    <span>© {year} Daan Geijs</span>
+    <a href="/rss.xml">RSS</a>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--line);
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+  }
+
+  .footer-inner {
+    max-width: calc(var(--w-wide) + 3rem);
+    margin: 0 auto;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  footer a {
+    color: var(--ink-faint);
+  }
+
+  footer a:hover {
+    color: var(--accent);
+  }
+</style>

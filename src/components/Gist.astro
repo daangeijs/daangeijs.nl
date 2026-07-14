@@ -1,0 +1,9 @@
+---
+interface Props {
+  user: string;
+  id: string;
+}
+const { user, id } = Astro.props;
+---
+
+<script src={`https://gist.github.com/${user}/${id}.js`} is:inline></script>

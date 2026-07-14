@@ -1,0 +1,44 @@
+---
+interface Props {
+  url: string;
+  name: string;
+  description?: string;
+  language?: string;
+  stars?: string | number;
+  forks?: string | number;
+}
+const { url, name, description, language, stars, forks } = Astro.props;
+---
+
+<div class="github-card">
+  <h2><a href={url} target="_blank" rel="noopener">{name}</a></h2>
+  {description && <p>{description}</p>}
+  <div class="card-details">
+    {language && <span class="language">{language}</span>}
+    {stars !== undefined && <span class="stars">⭐ {stars}</span>}
+    {forks !== undefined && <span class="forks">🍴 {forks}</span>}
+  </div>
+</div>
+
+<style>
+  .github-card {
+    border: 1px solid var(--ring, currentColor);
+    border-radius: var(--radius-card, 12px);
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+  }
+  .github-card h2 {
+    margin: 0 0 0.25rem;
+    font-size: 1.1rem;
+  }
+  .github-card p {
+    margin: 0 0 0.5rem;
+    color: var(--fg-muted, inherit);
+  }
+  .card-details {
+    display: flex;
+    gap: 1rem;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.85rem;
+  }
+</style>
