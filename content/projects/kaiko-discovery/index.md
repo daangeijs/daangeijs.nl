@@ -9,10 +9,8 @@ tags:
   - product discovery
   - deep learning
   - computational pathology
-draft: true
+draft: false
 ---
-
-> This case study is a work in progress — I'm writing it up in a way that respects what's confidential while still being useful. Check back soon.
 
 At kaiko.ai I lead product discovery: the work of deciding what's worth building before we commit to building it. In a field moving as fast as foundation models for pathology, the temptation is to ship capability for its own sake. Discovery is the discipline that keeps the work pointed at real clinical and research value.
 

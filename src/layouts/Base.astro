@@ -44,15 +44,6 @@ const ogImage = image ? new URL(image, Astro.site) : undefined;
     {ogImage && <meta property="og:image" content={ogImage} />}
 
     <meta name="google-site-verification" content="h1fpCdrqE6dnKfui_Ofnc3K1PAWdQTpA3ntLgzR8_YA" />
-    {
-      import.meta.env.PROD && (
-        <script
-          async
-          src="https://www.stats.daangeijs.nl/script.js"
-          data-website-id="8b6d123d-8dae-48d0-b243-b2f92c8ab733"
-        />
-      )
-    }
 
     <script is:inline>
       // Set theme before first paint to avoid a flash of the wrong theme.
