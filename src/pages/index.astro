@@ -1,17 +1,21 @@
 ---
+// Temporary placeholder — real homepage lands in Phase 3.
+// Consumes every collection so builds validate all migrated content.
+import { getCollection } from 'astro:content';
 
+const posts = await getCollection('posts');
+const media = await getCollection('media');
+const publications = await getCollection('publications');
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Daan Geijs</title>
+  </head>
+  <body>
+    <h1>Daan Geijs</h1>
+    <p>{posts.length} posts, {media.length} media, {publications.length} publications</p>
+  </body>
 </html>

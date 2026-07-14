@@ -15,6 +15,8 @@ cover:
 summary:
     We all know that digital pathology demands efficient handling of large-scale images. However, I hadn't anticipated that the sheer volume of cell detections would significantly impact the performance of my cell density calculations within these images.  This article combines the ease of WholeSlideData, shapely, rasterio, and geopandas to achieve this in a fast and simple way.
 ---
+import GitHubCard from '../../../src/components/GitHubCard.astro';
+
 
 We all know that digital pathology demands efficient handling of large-scale images. However, I hadn't anticipated that the sheer volume of cell detections would significantly impact the performance of my cell density calculations within these images.  This article combines the ease of WholeSlideData, shapely, rasterio, and geopandas to achieve this in a fast and simple way.
 
@@ -123,4 +125,4 @@ The purpose of the last line is to calculate and return the density of the point
 
 Want to see the full code? Check out this repository where I have put together an example notebook and normal python script and also included some example data.
 
-{{< githubRepoCard url="https://github.com/daangeijs/pathology-cell-density" name="pathology-cell-density" description="A demonstration script for analyzing cell density in whole slide images (WSIs)." language="Jupyter Notebook" stars="1" forks="0" >}}
+<GitHubCard url="https://github.com/daangeijs/pathology-cell-density" name="pathology-cell-density" description="A demonstration script for analyzing cell density in whole slide images (WSIs)." language="Jupyter Notebook" stars="1" forks="0" />

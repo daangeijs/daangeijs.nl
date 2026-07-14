@@ -86,7 +86,7 @@ If you're facing similar issues, try this script first—it may solve your probl
 
 After trying software solutions without success, I decided to check if my BIOS was configured correctly for ASPM. I confirmed that **PCIe ASPM Support** was enabled in the BIOS.
 
-{{< figure src="image_bios.jpg" >}}
+![](image_bios.jpg)
 
 Despite this correct configuration in the BIOS, my system still could not reach deeper C-states. This led me to conclude that either the port my NVMe SSD was using did not allow lower power states. However, this conclusion did not make sense to me—why would an Intel NUC engineer design it this way? So the next day, I decided to give it one last try and check if this was an issue that was solved by a BIOS update.
 
