@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { visiblePosts } from '../../lib/site';
+
+const posts = visiblePosts(await getCollection('posts'));
+const media = await getCollection('media');
+const counts = new Map<string, number>();
+for (const entry of [...posts, ...media]) {
+  for (const tag of entry.data.tags) {
+    counts.set(tag, (counts.get(tag) ?? 0) + 1);
+  }
+}
+const tags = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+---
+
+<Base title="Tags">
+  <h1>Tags</h1>
+  <div class="cloud">
+    {
+      tags.map(([tag, count]) => (
+        <a class="tag" href={`/tags/${tag.replaceAll(' ', '-')}/`}>
+          {tag} <sup>{count}</sup>
+        </a>
+      ))
+    }
+  </div>
+</Base>
+
+<style>
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  .cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+</style>

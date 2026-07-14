@@ -1,0 +1,74 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../lib/site';
+
+interface Props {
+  item: CollectionEntry<'media'>;
+}
+
+const { item } = Astro.props;
+const href = `/media/${item.id}/`;
+---
+
+<article class="card media-card">
+  {
+    item.data.cover?.image && (
+      <a class="cover" href={href} tabindex="-1" aria-hidden="true">
+        <Image src={item.data.cover.image} alt={item.data.cover.alt ?? ''} width={420} />
+      </a>
+    )
+  }
+  <div class="body">
+    <h3><a href={href}>{item.data.title}</a></h3>
+    <p class="meta">{formatDate(item.data.date)}</p>
+  </div>
+</article>
+
+<style>
+  .media-card {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cover {
+    display: block;
+    aspect-ratio: 16 / 10;
+  }
+
+  .cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .body {
+    padding: 0.9rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1;
+  }
+
+  h3 {
+    font-size: 0.98rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  h3 a {
+    color: var(--ink);
+  }
+
+  h3 a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .meta {
+    margin-top: auto;
+  }
+</style>

@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import MediaCard from '../../components/MediaCard.astro';
+import { byDateDesc } from '../../lib/site';
+
+const items = (await getCollection('media')).sort(byDateDesc);
+---
+
+<Base title="Media" description="Daan Geijs in the media" wide>
+  <h1>In the media</h1>
+  <div class="grid-3">
+    {items.map((item) => <MediaCard item={item} />)}
+  </div>
+</Base>
+
+<style>
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  @media (max-width: 800px) {
+    .grid-3 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

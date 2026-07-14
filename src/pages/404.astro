@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Page not found">
+  <div class="lost">
+    <h1>404</h1>
+    <p>This page doesn't exist (anymore).</p>
+    <p><a href="/">Back to the homepage →</a></p>
+  </div>
+</Base>
+
+<style>
+  .lost {
+    text-align: center;
+    padding: 4rem 0;
+  }
+
+  .lost h1 {
+    font-size: 4rem;
+    color: var(--ink-faint);
+  }
+</style>

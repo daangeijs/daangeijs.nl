@@ -1,21 +1,135 @@
 ---
-// Temporary placeholder — real homepage lands in Phase 3.
-// Consumes every collection so builds validate all migrated content.
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+import MediaCard from '../components/MediaCard.astro';
+import PublicationItem from '../components/PublicationItem.astro';
+import RepoCard from '../components/RepoCard.astro';
+import SocialIcons from '../components/SocialIcons.astro';
+import { byDateDesc, visiblePosts } from '../lib/site';
+import profile from '../assets/profile.jpg';
+import repos from '../data/repos.json';
 
-const posts = await getCollection('posts');
-const media = await getCollection('media');
-const publications = await getCollection('publications');
+const posts = visiblePosts(await getCollection('posts')).slice(0, 4);
+const media = (await getCollection('media')).sort(byDateDesc).slice(0, 3);
+const publications = (await getCollection('publications')).sort(byDateDesc).slice(0, 5);
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Daan Geijs</title>
-  </head>
-  <body>
-    <h1>Daan Geijs</h1>
-    <p>{posts.length} posts, {media.length} media, {publications.length} publications</p>
-  </body>
-</html>
+<Base wide>
+  <section class="hero">
+    <Image src={profile} alt="Portrait of Daan Geijs" width={280} class="portrait" />
+    <div>
+      <h1>Daan Geijs</h1>
+      <p class="tagline">
+        Machine Learning Engineer @ <a href="https://kaiko.ai" target="_blank" rel="noopener">kaiko.ai</a>
+      </p>
+      <p class="sub">Integrating AI in the clinical workflow</p>
+      <SocialIcons />
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Latest posts</h2>
+    <div class="stack">
+      {posts.map((post) => <PostCard post={post} />)}
+    </div>
+    <p class="more"><a href="/posts/">All posts →</a></p>
+  </section>
+
+  <section>
+    <h2 class="section-title">In the media</h2>
+    <div class="grid-3">
+      {media.map((item) => <MediaCard item={item} />)}
+    </div>
+    <p class="more"><a href="/media/">All media →</a></p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Latest publications</h2>
+    <ul class="pubs">
+      {publications.map((pub) => <PublicationItem pub={pub} authorCount={1} />)}
+    </ul>
+    <p class="more"><a href="/publications/">All publications →</a></p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Open source</h2>
+    <div class="grid-3">
+      {repos.map((repo) => <RepoCard {...repo} />)}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 2rem 0 3rem;
+  }
+
+  .hero .portrait {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .tagline {
+    color: var(--ink-dim);
+    margin-top: 0.4rem;
+  }
+
+  .sub {
+    color: var(--ink-faint);
+    font-size: 0.95rem;
+    margin-bottom: 0.8rem;
+  }
+
+  section + section {
+    margin-top: 3.5rem;
+  }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .pubs {
+    padding: 0;
+    margin: 0;
+  }
+
+  .more {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 800px) {
+    .grid-3 {
+      grid-template-columns: 1fr;
+    }
+
+    .hero {
+      flex-direction: column;
+      text-align: center;
+      gap: 1.25rem;
+    }
+
+    .hero :global(.social) {
+      justify-content: center;
+    }
+  }
+</style>

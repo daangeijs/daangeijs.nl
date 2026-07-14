@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import MediaCard from '../../components/MediaCard.astro';
+import { byDateDesc, visiblePosts } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const posts = visiblePosts(await getCollection('posts'));
+  const media = (await getCollection('media')).sort(byDateDesc);
+  const tags = new Set([...posts, ...media].flatMap((e) => e.data.tags));
+  return [...tags].map((tag) => ({
+    params: { tag: tag.replaceAll(' ', '-') },
+    props: {
+      tag,
+      posts: posts.filter((p) => p.data.tags.includes(tag)),
+      media: media.filter((m) => m.data.tags.includes(tag)),
+    },
+  }));
+}
+
+const { tag, posts, media } = Astro.props;
+---
+
+<Base title={`Tag: ${tag}`}>
+  <h1>{tag}</h1>
+  <div class="stack">
+    {posts.map((post) => <PostCard post={post} />)}
+    {media.map((item) => <MediaCard item={item} />)}
+  </div>
+</Base>
+
+<style>
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+</style>

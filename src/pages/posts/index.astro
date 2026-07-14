@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { visiblePosts } from '../../lib/site';
+
+const posts = visiblePosts(await getCollection('posts'));
+---
+
+<Base title="Posts" description="Blog posts by Daan Geijs">
+  <h1>Posts</h1>
+  <div class="stack">
+    {posts.map((post) => <PostCard post={post} />)}
+  </div>
+</Base>
+
+<style>
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+</style>

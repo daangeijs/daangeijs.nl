@@ -1,0 +1,94 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { formatDate, readingTime } from '../lib/site';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const href = `/posts/${post.id}/`;
+const summary = post.data.description ?? post.data.summary ?? post.body?.replace(/[#*`>\[\]]/g, '').slice(0, 260);
+---
+
+<article class="card post-card">
+  {
+    post.data.cover?.image && !post.data.cover.hidden && (
+      <a class="cover" href={href} tabindex="-1" aria-hidden="true">
+        <Image src={post.data.cover.image} alt={post.data.cover.alt ?? ''} width={480} />
+      </a>
+    )
+  }
+  <div class="body">
+    <h3><a href={href}>{post.data.title}</a></h3>
+    <p class="summary">{summary}</p>
+    <p class="meta">
+      {formatDate(post.data.date)} · {readingTime(post.body ?? '')} min read
+    </p>
+  </div>
+</article>
+
+<style>
+  .post-card {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    overflow: hidden;
+  }
+
+  .post-card:has(.cover:only-child),
+  .post-card:not(:has(.cover)) {
+    grid-template-columns: 1fr;
+  }
+
+  .cover {
+    display: block;
+    height: 100%;
+    min-height: 150px;
+  }
+
+  .cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .body {
+    padding: 1.1rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  h3 a {
+    color: var(--ink);
+  }
+
+  h3 a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .summary {
+    color: var(--ink-dim);
+    font-size: 0.92rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+
+  .meta {
+    margin-top: auto;
+  }
+
+  @media (max-width: 600px) {
+    .post-card {
+      grid-template-columns: 1fr;
+    }
+
+    .cover {
+      max-height: 180px;
+    }
+  }
+</style>
