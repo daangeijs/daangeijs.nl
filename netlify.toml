@@ -5,6 +5,12 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Old empty Hugo taxonomy page; tags is the real index.
+[[redirects]]
+  from = "/categories/"
+  to = "/tags/"
+  status = 301
+
 [[headers]]
   for = "/*"
     [headers.values]

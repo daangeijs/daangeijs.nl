@@ -8,13 +8,17 @@ import { byDateDesc, tagSlug, visiblePosts } from '../../lib/site';
 export async function getStaticPaths() {
   const posts = visiblePosts(await getCollection('posts'));
   const media = (await getCollection('media')).sort(byDateDesc);
-  const tags = new Set([...posts, ...media].flatMap((e) => e.data.tags));
-  return [...tags].map((tag) => ({
-    params: { tag: tagSlug(tag) },
+  // Group by slug so case variants ("Docker"/"docker") share one page.
+  const slugs = new Map();
+  for (const tag of [...posts, ...media].flatMap((e) => e.data.tags)) {
+    slugs.set(tagSlug(tag), tag.toLowerCase());
+  }
+  return [...slugs.entries()].map(([slug, tag]) => ({
+    params: { tag: slug },
     props: {
       tag,
-      posts: posts.filter((p) => p.data.tags.includes(tag)),
-      media: media.filter((m) => m.data.tags.includes(tag)),
+      posts: posts.filter((p) => p.data.tags.some((t) => tagSlug(t) === slug)),
+      media: media.filter((m) => m.data.tags.some((t) => tagSlug(t) === slug)),
     },
   }));
 }

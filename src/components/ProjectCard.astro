@@ -1,0 +1,80 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const href = `/projects/${project.id}/`;
+const { title, summary, thumbnail, role, timeframe } = project.data;
+---
+
+<article class="card project-card">
+  {
+    thumbnail && (
+      <a class="thumb" href={href} tabindex="-1" aria-hidden="true">
+        <Image src={thumbnail} alt="" width={640} />
+      </a>
+    )
+  }
+  <div class="body">
+    <h3><a href={href}>{title}</a></h3>
+    <p class="summary">{summary}</p>
+    {
+      (role || timeframe) && (
+        <p class="meta">
+          {role}
+          {role && timeframe && ' · '}
+          {timeframe}
+        </p>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .project-card {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .thumb {
+    display: block;
+    aspect-ratio: 16 / 9;
+  }
+
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .body {
+    padding: 1.1rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+  }
+
+  h3 a {
+    color: var(--ink);
+  }
+
+  h3 a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .summary {
+    color: var(--ink-dim);
+    font-size: 0.92rem;
+  }
+
+  .meta {
+    margin-top: auto;
+  }
+</style>

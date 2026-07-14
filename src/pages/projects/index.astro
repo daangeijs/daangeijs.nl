@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.weight - b.data.weight
+);
+---
+
+<Base
+  title="Projects"
+  description="Product and engineering projects by Daan Geijs — from clinical AI to self-hosted infrastructure."
+  wide
+>
+  <h1>Projects</h1>
+  <p class="intro">
+    Things I helped figure out and build — written up the way I think about them: what problem
+    was worth solving, how we found out, and what shipped.
+  </p>
+  <div class="grid">
+    {projects.map((project) => <ProjectCard project={project} />)}
+  </div>
+</Base>
+
+<style>
+  h1 {
+    margin-bottom: 0.75rem;
+  }
+
+  .intro {
+    color: var(--ink-dim);
+    margin-bottom: 2rem;
+    max-width: 44rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+</style>
