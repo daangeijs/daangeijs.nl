@@ -27,3 +27,6 @@ export const byDateDesc = <T extends { data: { date: Date } }>(a: T, b: T) =>
 
 export const visiblePosts = (posts: CollectionEntry<'posts'>[]) =>
   posts.filter((p) => !p.data.draft).sort(byDateDesc);
+
+/** Hugo-compatible tag slug: lowercase, spaces to hyphens. */
+export const tagSlug = (tag: string) => tag.toLowerCase().replaceAll(' ', '-');

@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { visiblePosts } from '../../lib/site';
+import { tagSlug, visiblePosts } from '../../lib/site';
 
 const posts = visiblePosts(await getCollection('posts'));
 const media = await getCollection('media');
@@ -19,7 +19,7 @@ const tags = [...counts.entries()].sort((a, b) => b[1] - a[1]);
   <div class="cloud">
     {
       tags.map(([tag, count]) => (
-        <a class="tag" href={`/tags/${tag.replaceAll(' ', '-')}/`}>
+        <a class="tag" href={`/tags/${tagSlug(tag)}/`}>
           {tag} <sup>{count}</sup>
         </a>
       ))

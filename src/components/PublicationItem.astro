@@ -23,7 +23,7 @@ const venue = journal ?? school;
         <span class="title">{title}</span>
       )
     }
-    <span class="meta">({date.getFullYear()})</span>
+    <span class="meta year">({date.getFullYear()})</span>
   </div>
   <p class="meta">
     {shortAuthors(authors, authorCount)}{venue && <> — <em>{venue}</em></>}
@@ -43,6 +43,10 @@ const venue = journal ?? school;
   .title,
   .pub a {
     font-weight: 550;
+  }
+
+  .year {
+    margin-left: 0.35rem;
   }
 
   .title {

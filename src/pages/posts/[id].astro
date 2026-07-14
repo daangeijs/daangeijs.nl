@@ -2,7 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
-import { formatDate, readingTime, visiblePosts } from '../../lib/site';
+import { formatDate, readingTime, tagSlug, visiblePosts } from '../../lib/site';
 
 export async function getStaticPaths() {
   const posts = visiblePosts(await getCollection('posts'));
@@ -28,7 +28,7 @@ const cover = post.data.cover;
         post.data.tags.length > 0 && (
           <p class="tags">
             {post.data.tags.map((tag) => (
-              <a class="tag" href={`/tags/${tag.replaceAll(' ', '-')}/`}>
+              <a class="tag" href={`/tags/${tagSlug(tag)}/`}>
                 {tag}
               </a>
             ))}

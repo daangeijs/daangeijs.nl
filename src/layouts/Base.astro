@@ -33,7 +33,7 @@ const ogImage = image ? new URL(image, Astro.site) : undefined;
     <meta name="author" content="Daan Geijs" />
     <link rel="canonical" href={canonical} />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <link rel="alternate" type="application/rss+xml" title={siteTitle} href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title={siteTitle} href="/index.xml" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
     <meta property="og:title" content={pageTitle} />
@@ -57,9 +57,10 @@ const ogImage = image ? new URL(image, Astro.site) : undefined;
     <script is:inline>
       // Set theme before first paint to avoid a flash of the wrong theme.
       (() => {
+        const query = new URLSearchParams(location.search).get('theme');
         const stored = localStorage.getItem('theme');
         const preferred = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        document.documentElement.dataset.theme = stored ?? preferred;
+        document.documentElement.dataset.theme = query ?? stored ?? preferred;
       })();
     </script>
   </head>
