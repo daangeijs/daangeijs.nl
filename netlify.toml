@@ -11,6 +11,16 @@
   to = "/tags/"
   status = 301
 
+# Publications re-slugged to their correct publication year.
+[[redirects]]
+  from = "/publications/geijs2024weakly/"
+  to = "/publications/geijs2025weakly/"
+  status = 301
+[[redirects]]
+  from = "/publications/varra2022deep/"
+  to = "/publications/varra2025deep/"
+  status = 301
+
 [[headers]]
   for = "/*"
     [headers.values]

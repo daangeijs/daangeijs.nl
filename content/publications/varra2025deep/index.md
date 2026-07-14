@@ -10,9 +10,11 @@ authors:
   - "Geijs, Daan"
   - "Litjens, Geert"
   - "Carr, David R"
-date: 2022-01-01
+date: 2025-01-01
 journal: "Dermatologic Surgery"
-pages: "10--1097"
+volume: "51"
+number: "4"
+pages: "355--359"
 publisher: "LWW"
 ---
 
