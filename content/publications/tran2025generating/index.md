@@ -20,4 +20,4 @@ pages: "4886"
 publisher: "Nature Publishing Group UK London"
 ---
 
-Summary about Generating dermatopathology reports from gigapixel whole slide images with HistoGPT.
+Introduces HistoGPT, a model that generates dermatopathology reports directly from gigapixel whole-slide images.

@@ -19,4 +19,4 @@ pages: "100653"
 publisher: "Elsevier"
 ---
 
-Summary about Weakly Supervised Classification of Mohs Surgical Sections Using Artificial Intelligence.
+Applies weakly supervised artificial intelligence to classify Mohs micrographic surgery sections, aiming to support detection of residual skin cancer during surgery.

@@ -15,4 +15,4 @@ pages: "S193--S194"
 publisher: "Elsevier"
 ---
 
-Summary about In silico validation of a cartilage specific circadian clock: mutation of BMAL1 increased MMP expression.
+Uses an in silico model of the cartilage circadian clock to show that mutating BMAL1 raises MMP expression, linking clock disruption to cartilage breakdown.

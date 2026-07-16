@@ -11,4 +11,4 @@ authors:
 date: 2022-01-01
 ---
 
-Summary about Basal cell carcinoma detection using weakly supervised deep learning methods and rule-based labels.
+Detects basal cell carcinoma in histopathology slides using weakly supervised deep learning trained with rule-based labels, reducing the need for detailed manual annotations.

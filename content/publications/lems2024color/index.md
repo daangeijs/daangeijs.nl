@@ -13,4 +13,4 @@ journal: "2024 IEEE International Symposium on Biomedical Imaging (ISBI)"
 pages: "1--4"
 ---
 
-Summary about Color Deconvolution for Color-Agnostic and Cross-Modality Analysis of Immunohistochemistry Whole-Slide Images with Deep Learning.
+Presents a deep learning color deconvolution method for color-agnostic, cross-modality analysis of immunohistochemistry whole-slide images.

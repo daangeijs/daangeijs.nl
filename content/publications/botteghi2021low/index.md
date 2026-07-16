@@ -15,4 +15,4 @@ journal: "2020 25th International Conference on Pattern Recognition (ICPR)"
 pages: "3736--3743"
 ---
 
-Summary about Low dimensional state representation learning with reward-shaped priors.
+Presents a reinforcement learning method that learns compact, low-dimensional state representations guided by reward-shaped priors, making robot control policies more efficient to train.

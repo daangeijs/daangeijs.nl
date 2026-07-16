@@ -15,4 +15,4 @@ journal: "2017 IEEE 14th International Symposium on Biomedical Imaging (ISBI 201
 pages: "591--595"
 ---
 
-Summary about Comparison of different methods for tissue segmentation in histopathological whole-slide images.
+Compares several automated methods for separating tissue from background in histopathology whole-slide images, benchmarking their accuracy and robustness.

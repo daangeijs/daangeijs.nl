@@ -19,4 +19,4 @@ volume: "481"
 pages: "S46--S46"
 ---
 
-Summary about Quantification of metabolic heterogeneity across multiple imaging modalities.
+Quantifies tumor metabolic heterogeneity by comparing measurements across multiple imaging modalities.

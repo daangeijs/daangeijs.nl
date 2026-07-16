@@ -18,4 +18,4 @@ journal: "Journal of Nuclear Medicine"
 publisher: "Society of Nuclear Medicine"
 ---
 
-Summary about Histology-Based Radiomics for [18F] FDG PET Identifies Tissue Heterogeneity in Pancreatic Cancer.
+Uses histology-based radiomics from [18F]FDG PET imaging to identify tissue heterogeneity in pancreatic cancer.

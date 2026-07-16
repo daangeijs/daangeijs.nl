@@ -10,4 +10,4 @@ date: 2014-01-01
 journal: "University of Twente Students Journal of Biometrics and Computer Vision"
 ---
 
-Summary about Detection Of People Stream Features Using Eigenvalue Maps.
+Uses eigenvalue maps to detect and characterize features of moving crowds, or people streams, in video.

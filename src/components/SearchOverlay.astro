@@ -1,0 +1,236 @@
+---
+// Theodore-style modal search. Opens via the header search icon, Cmd/Ctrl+K, or "/".
+// Pagefind assets exist only in the production build, so they are lazy-loaded on first open.
+---
+
+<div id="search-overlay" class="search-overlay" role="dialog" aria-modal="true" aria-label="Search" hidden>
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-head">
+      <span class="search-hint">Search</span>
+      <button class="search-close" data-search-close aria-label="Close search">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"
+          ><path
+            fill="currentColor"
+            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+          ></path></svg
+        >
+      </button>
+    </div>
+    <div id="search-ui"></div>
+    <p class="search-fallback" hidden>Search index is only available in the production build.</p>
+  </div>
+</div>
+
+<script>
+  const overlay = document.getElementById('search-overlay');
+  const uiEl = document.getElementById('search-ui');
+  const fallback = document.querySelector('.search-fallback');
+  const toggle = document.getElementById('search-toggle');
+  let loaded = false;
+
+  function loadPagefind() {
+    if (loaded) return Promise.resolve();
+    loaded = true;
+    return new Promise((resolve) => {
+      const css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = '/pagefind/pagefind-ui.css';
+      document.head.appendChild(css);
+      const js = document.createElement('script');
+      js.src = '/pagefind/pagefind-ui.js';
+      js.onload = () => {
+        // @ts-ignore - PagefindUI is attached to window by the script above
+        if (window.PagefindUI) {
+          // @ts-ignore
+          new window.PagefindUI({
+            element: '#search-ui',
+            showSubResults: true,
+            showImages: false,
+            resetStyles: false,
+          });
+        } else if (fallback) {
+          fallback.hidden = false;
+        }
+        resolve();
+      };
+      js.onerror = () => {
+        loaded = false;
+        if (fallback) fallback.hidden = false;
+        resolve();
+      };
+      document.body.appendChild(js);
+    });
+  }
+
+  async function openSearch() {
+    if (!overlay) return;
+    overlay.hidden = false;
+    document.body.classList.add('search-open');
+    toggle?.setAttribute('aria-expanded', 'true');
+    await loadPagefind();
+    const input = uiEl?.querySelector('input');
+    if (input) (input as HTMLInputElement).focus();
+  }
+
+  function closeSearch() {
+    if (!overlay) return;
+    overlay.hidden = true;
+    document.body.classList.remove('search-open');
+    toggle?.setAttribute('aria-expanded', 'false');
+  }
+
+  toggle?.addEventListener('click', openSearch);
+  overlay
+    ?.querySelectorAll('[data-search-close]')
+    .forEach((el) => el.addEventListener('click', closeSearch));
+
+  document.addEventListener('keydown', (e) => {
+    const isTyping =
+      document.activeElement instanceof HTMLElement &&
+      (document.activeElement.tagName === 'INPUT' ||
+        document.activeElement.tagName === 'TEXTAREA' ||
+        document.activeElement.isContentEditable);
+
+    if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || (e.key === '/' && !isTyping)) {
+      e.preventDefault();
+      if (overlay?.hidden) openSearch();
+    } else if (e.key === 'Escape' && !overlay?.hidden) {
+      closeSearch();
+    }
+  });
+</script>
+
+<style is:global>
+  .search-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .search-overlay[hidden] {
+    display: none;
+  }
+
+  .search-backdrop {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .search-panel {
+    position: relative;
+    width: min(640px, calc(100vw - 2rem));
+    margin-top: 12vh;
+    background: var(--bg);
+    border: 1.2px solid var(--line);
+    border-radius: 20px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.18);
+    padding: 1.1rem 1.3rem 1.4rem;
+    animation: search-pop 0.24s ease;
+  }
+
+  @keyframes search-pop {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  .search-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+
+  .search-hint {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--ink);
+    opacity: 0.9;
+  }
+
+  .search-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink);
+    opacity: 0.45;
+    padding: 0.2rem;
+    display: inline-flex;
+    transition: opacity 0.2s ease;
+  }
+
+  .search-close:hover {
+    opacity: 0.9;
+  }
+
+  .search-fallback {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: var(--ink);
+    opacity: 0.55;
+    margin-top: 0.5rem;
+  }
+
+  body.search-open {
+    overflow: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .search-panel {
+      animation: none;
+    }
+  }
+
+  /* Pagefind UI, re-skinned to the site's mono + ink ladder. */
+  #search-ui {
+    --pagefind-ui-scale: 0.85;
+    --pagefind-ui-primary: var(--ink);
+    --pagefind-ui-text: var(--ink);
+    --pagefind-ui-background: var(--bg);
+    --pagefind-ui-border: var(--line);
+    --pagefind-ui-tag: var(--bg);
+    --pagefind-ui-border-width: 1.2px;
+    --pagefind-ui-border-radius: 12px;
+    --pagefind-ui-font: var(--font-mono);
+  }
+
+  #search-ui .pagefind-ui__search-input {
+    font-family: var(--font-mono);
+    font-weight: 300;
+  }
+
+  #search-ui .pagefind-ui__search-input:focus {
+    outline: none;
+    border-color: var(--ink);
+    box-shadow: 0 0 0 1px var(--ink);
+  }
+
+  #search-ui .pagefind-ui__search-clear {
+    outline: none;
+    background: transparent;
+    color: var(--ink);
+    opacity: 0.55;
+  }
+
+  #search-ui .pagefind-ui__result-title,
+  #search-ui .pagefind-ui__result-title a {
+    font-family: var(--font-serif);
+    font-weight: 400;
+  }
+
+  #search-ui .pagefind-ui__results-area {
+    max-height: 56vh;
+    overflow-y: auto;
+    margin-top: 0.5rem;
+  }
+</style>

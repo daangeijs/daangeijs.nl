@@ -18,4 +18,4 @@ pages: "355--359"
 publisher: "LWW"
 ---
 
-Summary about Deep Learning for Automated Segmentation of Basal Cell Carcinoma on Mohs Micrographic Surgery Frozen Section Slides.
+Develops a deep learning model to automatically segment basal cell carcinoma on Mohs micrographic surgery frozen section slides.

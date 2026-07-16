@@ -6,4 +6,4 @@ authors:
 date: 2015-01-01
 ---
 
-Summary about Geautomatiseerde beeldanalyse van morfologische kenmerken en de motiliteit van een individuele spermatozoon..
+Describes automated image analysis to measure the morphology and motility of individual sperm cells.

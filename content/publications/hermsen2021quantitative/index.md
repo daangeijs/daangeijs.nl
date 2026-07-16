@@ -20,4 +20,4 @@ pages: "970--982"
 publisher: "Elsevier"
 ---
 
-Summary about Quantitative assessment of inflammatory infiltrates in kidney transplant biopsies using multiplex tyramide signal amplification and deep learning.
+Combines multiplex tyramide signal amplification staining with deep learning to quantify inflammatory infiltrates in kidney transplant biopsies.

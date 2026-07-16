@@ -16,4 +16,4 @@ pages: "773--780"
 publisher: "Elsevier"
 ---
 
-Summary about Spermometer: electrical characterization of single boar sperm motility.
+Presents the Spermometer, a microfluidic chip that electrically measures the motility of individual boar sperm cells, offering a label-free way to assess sperm quality.

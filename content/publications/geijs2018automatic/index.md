@@ -12,4 +12,4 @@ volume: "10581"
 pages: "165--171"
 ---
 
-Summary about Automatic color unmixing of IHC stained whole slide images.
+Presents an automatic color unmixing method to separate immunohistochemical stains in whole-slide images, enabling more reliable quantitative analysis.

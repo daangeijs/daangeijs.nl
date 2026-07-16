@@ -20,4 +20,4 @@ pages: "78--87"
 publisher: "Churchill Livingstone"
 ---
 
-Summary about Optimized tumour infiltrating lymphocyte assessment for triple negative breast cancer prognostics.
+Develops an optimized deep learning pipeline to automatically assess tumour-infiltrating lymphocytes in triple negative breast cancer, aiming to improve prognostic prediction from histopathology slides.

@@ -15,4 +15,4 @@ pages: "103063"
 publisher: "Elsevier"
 ---
 
-Summary about Detection and subtyping of basal cell carcinoma in whole-slide histopathology using weakly-supervised learning.
+Develops a weakly-supervised deep learning method to detect and subtype basal cell carcinoma in whole-slide histopathology images.

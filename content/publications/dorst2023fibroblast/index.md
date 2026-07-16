@@ -18,4 +18,4 @@ journal: "Molecular Pharmaceutics"
 publisher: "American Chemical Society"
 ---
 
-Summary about Fibroblast Activation Protein-Targeted Photodynamic Therapy of Cancer-Associated Fibroblasts in Murine Models for Pancreatic Ductal Adenocarcinoma.
+Tests a photodynamic therapy targeting fibroblast activation protein to selectively destroy cancer-associated fibroblasts in mouse models of pancreatic ductal adenocarcinoma.

@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import SearchOverlay from '../components/SearchOverlay.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -20,7 +21,7 @@ const {
 const siteTitle = 'Daan Geijs';
 const pageTitle = title ? `${title} | ${siteTitle}` : siteTitle;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = image ? new URL(image, Astro.site) : undefined;
+const ogImage = new URL(image ?? '/og-default.jpg', Astro.site);
 ---
 
 <!doctype html>
@@ -43,8 +44,9 @@ const ogImage = image ? new URL(image, Astro.site) : undefined;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={siteTitle} />
-    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:image" content={ogImage} />
 
     <meta name="google-site-verification" content="h1fpCdrqE6dnKfui_Ofnc3K1PAWdQTpA3ntLgzR8_YA" />
 
@@ -64,5 +66,6 @@ const ogImage = image ? new URL(image, Astro.site) : undefined;
       <slot />
     </main>
     <Footer />
+    <SearchOverlay />
   </body>
 </html>

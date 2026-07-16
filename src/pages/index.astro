@@ -75,6 +75,35 @@ const monthYear = (d: Date) =>
       </div>
     </section>
 
+    {
+      recipes.length > 0 && (
+        <section class="kitchen reveal">
+          <a
+            class="section-link"
+            href="https://www.dekeukenvandael.nl"
+            target="_blank"
+            rel="noopener"
+          >
+            <h2>
+              From the kitchen <span class="arrow" aria-hidden="true">→</span>
+            </h2>
+          </a>
+          <p class="kitchen-sub">
+            not everything I ship is software. latest from dekeukenvandael.nl, my Dutch recipe
+            site.
+          </p>
+          <div class="collage">
+            {recipes.map((recipe, i) => (
+              <a class={`tile t${i}`} href={recipe.link} target="_blank" rel="noopener">
+                <img src={recipe.image} alt={recipe.title} loading="lazy" />
+                <span class="tile-title">{recipe.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
     <section class="writing reveal">
       <a class="section-link" href="/posts/"
         ><h2>Writing <span class="arrow" aria-hidden="true">→</span></h2></a
@@ -118,35 +147,6 @@ const monthYear = (d: Date) =>
       </ul>
       <p class="more"><a href="/publications/">all {pubCount} publications</a></p>
     </section>
-
-    {
-      recipes.length > 0 && (
-        <section class="kitchen reveal">
-          <a
-            class="section-link"
-            href="https://www.dekeukenvandael.nl"
-            target="_blank"
-            rel="noopener"
-          >
-            <h2>
-              From the kitchen <span class="arrow" aria-hidden="true">→</span>
-            </h2>
-          </a>
-          <p class="kitchen-sub">
-            not everything I ship is software. latest from dekeukenvandael.nl, my Dutch recipe
-            site.
-          </p>
-          <div class="collage">
-            {recipes.map((recipe, i) => (
-              <a class={`tile t${i}`} href={recipe.link} target="_blank" rel="noopener">
-                <img src={recipe.image} alt={recipe.title} loading="lazy" />
-                <span class="tile-title">{recipe.title}</span>
-              </a>
-            ))}
-          </div>
-        </section>
-      )
-    }
   </div>
 </Base>
 

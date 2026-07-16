@@ -12,4 +12,4 @@ volume: "11603"
 pages: "25--30"
 ---
 
-Summary about End-to-end classification on basal-cell carcinoma histopathology whole-slides images.
+Develops an end-to-end deep learning approach that classifies basal cell carcinoma directly from histopathology whole-slide images.

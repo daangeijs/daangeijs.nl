@@ -20,4 +20,4 @@ pages: "289"
 publisher: "Nature Publishing Group UK London"
 ---
 
-Summary about The DRAGON benchmark for clinical NLP.
+Introduces DRAGON, a benchmark of 28 clinical natural-language-processing tasks built from Dutch medical reports, to standardize how language models for pathology and radiology are evaluated.
