@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { shortAuthors } from '../../lib/site';
 
 export async function getStaticPaths() {
@@ -15,6 +16,7 @@ const venue = [journal ?? school, volume, pages].filter(Boolean).join(', ');
 ---
 
 <Base title={title}>
+  <Breadcrumbs crumbs={[{ label: 'Publications', href: '/publications/' }]} current={title} />
   <article>
     <h1>{title}</h1>
     <p class="meta">

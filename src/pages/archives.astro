@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { byDateDesc, formatDate, visiblePosts } from '../lib/site';
 
 type Entry = { title: string; date: Date; href: string };
@@ -21,6 +22,7 @@ const years = [...new Set(entries.map((e) => e.date.getFullYear()))];
 ---
 
 <Base title="Archive">
+  <Breadcrumbs crumbs={[]} current="Archive" />
   <h1>Archive</h1>
   {
     years.map((year) => (

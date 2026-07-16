@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { tagSlug, visiblePosts } from '../../lib/site';
 
 const posts = visiblePosts(await getCollection('posts'));
@@ -15,6 +16,7 @@ const tags = [...counts.entries()].sort((a, b) => b[1] - a[1]);
 ---
 
 <Base title="Tags">
+  <Breadcrumbs crumbs={[]} current="Tags" />
   <h1>Tags</h1>
   <div class="cloud">
     {

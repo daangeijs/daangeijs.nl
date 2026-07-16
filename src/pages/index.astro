@@ -84,6 +84,7 @@ const monthYear = (d: Date) =>
       <div class="grid-container">
         {projects.map((project) => <ProjectCard project={project} />)}
       </div>
+      <p class="more-soon">Still writing these up, more on the way.</p>
     </section>
 
     {
@@ -100,8 +101,8 @@ const monthYear = (d: Date) =>
             </h2>
           </a>
           <p class="kitchen-sub">
-            not everything I ship is software. latest from dekeukenvandael.nl, my Dutch recipe
-            site.
+            not everything I ship is software. latest from dekeukenvandael.nl, my personal recipe
+            book.
           </p>
           <div class="collage">
             {recipes.map((recipe, i) => (
@@ -242,11 +243,11 @@ const monthYear = (d: Date) =>
     opacity: 0.6;
   }
 
-  /* About — portrait block beside mono columns */
+  /* About — portrait block beside a single readable text column */
   .about-layout {
     display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 2.2rem;
+    grid-template-columns: 300px minmax(0, 42rem);
+    gap: 2.4rem;
     align-items: start;
   }
 
@@ -260,9 +261,9 @@ const monthYear = (d: Date) =>
   }
 
   .cols {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   .cols p {
@@ -280,6 +281,15 @@ const monthYear = (d: Date) =>
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
     gap: 14px;
+  }
+
+  .more-soon {
+    margin-top: 1.1rem;
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: var(--ink);
+    opacity: 0.4;
   }
 
   /* Writing — stacked rows with hairlines */

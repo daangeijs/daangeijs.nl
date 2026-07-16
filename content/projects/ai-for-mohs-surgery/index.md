@@ -9,7 +9,7 @@ tags:
   - computational pathology
   - deep learning
   - product
-draft: false
+draft: true
 ---
 
 ## The problem worth solving

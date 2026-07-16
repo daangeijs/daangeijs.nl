@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects', ({ data }) => !data.draft);
@@ -14,6 +15,7 @@ const { title, summary, description, thumbnail, role, timeframe, external_url } 
 ---
 
 <Base title={title} description={description ?? summary}>
+  <Breadcrumbs crumbs={[{ label: 'Some stuff I have done', href: '/projects/' }]} current={title} />
   <article data-pagefind-body>
     <header>
       <h1>{title}</h1>

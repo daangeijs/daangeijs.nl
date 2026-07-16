@@ -10,7 +10,7 @@ tags:
   - docker
   - homeautomation
   - linux
-draft: false
+draft: true
 ---
 
 I like technology best when it changes how I live, not just how I work. My home runs on a self-hosted stack I treat like a product: it has users (my household), uptime expectations (very real ones), and a maintenance budget (my evenings).

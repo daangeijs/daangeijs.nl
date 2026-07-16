@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { formatDate } from '../../lib/site';
 
 export async function getStaticPaths() {
@@ -15,6 +16,7 @@ const cover = item.data.cover;
 ---
 
 <Base title={item.data.title} description={item.data.summary}>
+  <Breadcrumbs crumbs={[{ label: 'Media', href: '/media/' }]} current={item.data.title} />
   <article data-pagefind-body>
     <header>
       <h1>{item.data.title}</h1>

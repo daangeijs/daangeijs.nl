@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import PublicationItem from '../../components/PublicationItem.astro';
 import { byDateDesc } from '../../lib/site';
 
@@ -9,6 +10,7 @@ const years = [...new Set(pubs.map((p) => p.data.date.getFullYear()))];
 ---
 
 <Base title="Publications" description="Academic publications by Daan Geijs">
+  <Breadcrumbs crumbs={[]} current="Publications" />
   <h1>Publications</h1>
   {
     years.map((year) => (

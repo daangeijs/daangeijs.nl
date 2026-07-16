@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import PostCard from '../../components/PostCard.astro';
 import MediaCard from '../../components/MediaCard.astro';
 import { byDateDesc, tagSlug, visiblePosts } from '../../lib/site';
@@ -27,6 +28,7 @@ const { tag, posts, media } = Astro.props;
 ---
 
 <Base title={`Tag: ${tag}`}>
+  <Breadcrumbs crumbs={[{ label: 'Tags', href: '/tags/' }]} current={tag} />
   <h1>{tag}</h1>
   <div class="stack">
     {posts.map((post) => <PostCard post={post} />)}
