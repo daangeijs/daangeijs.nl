@@ -2,5 +2,20 @@
 
 # daangeijs.nl
 
-This repo contains the sourcecode of the website https://daangeijs.nl, my personal website. It is built using [Hugo](https://gohugo.io/), a static site generator. The theme is based on PapermodX.
+Source code of https://daangeijs.nl — my personal website. Built with [Astro](https://astro.build/) and deployed on Netlify.
 
+## Develop
+
+```sh
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # static output in dist/ (runs Pagefind indexing)
+npm run preview
+```
+
+## Structure
+
+- `content/` — markdown/MDX content: `posts`, `media`, `publications`, `projects` (Astro content collections, see `src/content.config.ts`)
+- `src/pages/` — routes; `src/components/`, `src/layouts/`, `src/styles/` — UI
+- `src/pages/index.xml.ts` — RSS feed at `/index.xml`
+- Search is [Pagefind](https://pagefind.app/), built from `dist/` after `astro build`

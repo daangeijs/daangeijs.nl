@@ -1,15 +1,25 @@
 [build]
-  command = "hugo"
-  publish = "public"
-
-[context.deploy-preview]
-  command = "hugo -b $DEPLOY_PRIME_URL"
-
-[context.branch-deploy]
-  command = "hugo -b $DEPLOY_PRIME_URL"
+  command = "npm run build"
+  publish = "dist"
 
 [build.environment]
-  HUGO_VERSION = "0.116.1"
+  NODE_VERSION = "22"
+
+# Old empty Hugo taxonomy page; tags is the real index.
+[[redirects]]
+  from = "/categories/"
+  to = "/tags/"
+  status = 301
+
+# Publications re-slugged to their correct publication year.
+[[redirects]]
+  from = "/publications/geijs2024weakly/"
+  to = "/publications/geijs2025weakly/"
+  status = 301
+[[redirects]]
+  from = "/publications/varra2022deep/"
+  to = "/publications/varra2025deep/"
+  status = 301
 
 [[headers]]
   for = "/*"
@@ -22,3 +32,34 @@
     Access-Control-Allow-Methods = "GET, OPTIONS"
     Access-Control-Allow-Headers = "Origin, Content-Type, Accept"
     Cache-Control = "public, max-age=31536000"
+
+# HTML must revalidate — asset filenames are hashed, pages are not.
+[[headers]]
+  for = "/*.html"
+    [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/"
+    [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*/"
+    [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/sitemap*.xml"
+    [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/index.xml"
+    [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/pagefind/*"
+    [headers.values]
+    Cache-Control = "public, max-age=3600"

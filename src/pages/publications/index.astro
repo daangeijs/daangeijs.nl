@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import PublicationItem from '../../components/PublicationItem.astro';
+import { byDateDesc } from '../../lib/site';
+
+const pubs = (await getCollection('publications')).sort(byDateDesc);
+const years = [...new Set(pubs.map((p) => p.data.date.getFullYear()))];
+---
+
+<Base title="Publications" description="Academic publications by Daan Geijs">
+  <Breadcrumbs crumbs={[]} current="Publications" />
+  <h1>Publications</h1>
+  {
+    years.map((year) => (
+      <section>
+        <h2>{year}</h2>
+        <ul>
+          {pubs
+            .filter((p) => p.data.date.getFullYear() === year)
+            .map((pub) => (
+              <PublicationItem pub={pub} authorCount={3} />
+            ))}
+        </ul>
+      </section>
+    ))
+  }
+</Base>
+
+<style>
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  section {
+    margin-bottom: 2rem;
+  }
+
+  section h2 {
+    font-size: 1rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.25rem;
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+</style>

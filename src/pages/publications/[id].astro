@@ -1,0 +1,50 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { shortAuthors } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const pubs = await getCollection('publications');
+  return pubs.map((pub) => ({ params: { id: pub.id }, props: { pub } }));
+}
+
+const { pub } = Astro.props;
+const { Content } = await render(pub);
+const { title, authors, date, journal, school, volume, pages, publisher, url } = pub.data;
+const venue = [journal ?? school, volume, pages].filter(Boolean).join(', ');
+---
+
+<Base title={title}>
+  <Breadcrumbs crumbs={[{ label: 'Publications', href: '/publications/' }]} current={title} />
+  <article>
+    <h1>{title}</h1>
+    <p class="meta">
+      {shortAuthors(authors, 10)} ({date.getFullYear()})
+      {venue && <>, <em>{venue}</em></>}
+      {publisher && <>, {publisher}</>}
+    </p>
+    {
+      url && (
+        <p>
+          <a href={url} target="_blank" rel="noopener">
+            Read the publication →
+          </a>
+        </p>
+      )
+    }
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</Base>
+
+<style>
+  h1 {
+    margin-bottom: 0.75rem;
+  }
+
+  .meta {
+    margin-bottom: 1.5rem;
+  }
+</style>

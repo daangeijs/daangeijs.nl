@@ -1,0 +1,584 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import portrait from '../assets/portrait-suit.jpg';
+import ProjectCard from '../components/ProjectCard.astro';
+import MediaCard from '../components/MediaCard.astro';
+import PublicationItem from '../components/PublicationItem.astro';
+import { byDateDesc, formatDate, readingTime, visiblePosts } from '../lib/site';
+import { latestRecipes } from '../lib/recipes';
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft))
+  .sort((a, b) => a.data.weight - b.data.weight)
+  .slice(0, 6);
+const posts = visiblePosts(await getCollection('posts')).slice(0, 4);
+const media = (await getCollection('media')).sort(byDateDesc).slice(0, 3);
+const publications = (await getCollection('publications')).sort(byDateDesc).slice(0, 3);
+const pubCount = (await getCollection('publications')).length;
+const recipes = await latestRecipes(5);
+
+const monthYear = (d: Date) =>
+  d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+---
+
+<Base wide>
+  <div class="home">
+    <section class="intro reveal">
+      <h1>
+        Hey! I'm <a href="/work-with-me/">Daan</a>, <span id="typed"></span><span
+          class="cursor"
+          aria-hidden="true">|</span
+        >
+      </h1>
+      <p class="sub">
+        I figure out what to build, and then build it.<br />
+        here's a bit of my work.
+      </p>
+    </section>
+
+    <section class="about reveal">
+      <h2>About</h2>
+      <div class="about-layout">
+        <Image
+          src={portrait}
+          alt="Daan Geijs"
+          widths={[320, 480, 640]}
+          sizes="(max-width: 800px) 100vw, 300px"
+          class="about-photo"
+        />
+        <div class="cols">
+        <p>
+          I'm the Product Discovery Lead at <a
+            href="https://kaiko.ai"
+            target="_blank"
+            rel="noopener">kaiko.ai</a
+          >, where I work out how AI and careful design can solve real problems across healthcare,
+          and turn that into something a clinician can actually use. It's a new
+          design space: the problems are harder than most software, so how a tool works and is
+          understood matters as much as the model behind it.
+        </p>
+        <p>
+          I hold a PhD in computational pathology from <a
+            href="https://www.radboudumc.nl/en"
+            target="_blank"
+            rel="noopener">Radboudumc</a
+          > and a double master's in biomedical engineering and physics education. Ten years of
+          shipping models taught me that shipping is the easy part. Knowing <em>what</em> to ship
+          is the hard part.
+        </p>
+        <p>
+          On the side I run <a href="https://alpacus.nl" target="_blank" rel="noopener">Alpacus</a
+          >, my freelance practice for engineering and early product consulting. This site holds
+          my <a href="/projects/">work</a> and <a href="/posts/">writing</a>. Reach out via <a
+            href="/work-with-me/">work with me</a
+          >.
+        </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects reveal">
+      <a class="section-link" href="/projects/"
+        ><h2>Some stuff I have done <span class="arrow" aria-hidden="true">→</span></h2></a
+      >
+      <div class="grid-container">
+        {projects.map((project) => <ProjectCard project={project} />)}
+      </div>
+      <p class="more-soon">Still writing these up, more on the way.</p>
+    </section>
+
+    {
+      recipes.length > 0 && (
+        <section class="kitchen reveal">
+          <a
+            class="section-link"
+            href="https://www.dekeukenvandael.nl"
+            target="_blank"
+            rel="noopener"
+          >
+            <h2>
+              From the kitchen <span class="arrow" aria-hidden="true">→</span>
+            </h2>
+          </a>
+          <p class="kitchen-sub">
+            not everything I ship is software. latest from dekeukenvandael.nl, my personal recipe
+            book.
+          </p>
+          <div class="collage">
+            {recipes.map((recipe, i) => (
+              <a class={`tile t${i}`} href={recipe.link} target="_blank" rel="noopener">
+                <img src={recipe.image} alt={recipe.title} loading="lazy" />
+                <span class="tile-title">{recipe.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <section class="writing reveal">
+      <a class="section-link" href="/posts/"
+        ><h2>Writing <span class="arrow" aria-hidden="true">→</span></h2></a
+      >
+      {
+        posts.map((post, i) => (
+          <>
+            {i > 0 && <hr />}
+            <div class="writparent">
+              <a href={`/posts/${post.id}/`}>
+                <div class="title-row">
+                  <p class="w-title">{post.data.title}</p>
+                  <p class="w-year">{monthYear(post.data.date)}</p>
+                </div>
+                <div class="description-row">
+                  <p class="w-desc">{post.data.description ?? post.data.summary}</p>
+                  <p class="w-read">{readingTime(post.body ?? '')} mins</p>
+                </div>
+              </a>
+            </div>
+          </>
+        ))
+      }
+    </section>
+
+    <section class="media reveal">
+      <a class="section-link" href="/media/"
+        ><h2>In the media <span class="arrow" aria-hidden="true">→</span></h2></a
+      >
+      <div class="media-grid">
+        {media.map((item) => <MediaCard item={item} />)}
+      </div>
+    </section>
+
+    <section class="pubs reveal">
+      <a class="section-link" href="/publications/"
+        ><h2>Publications <span class="arrow" aria-hidden="true">→</span></h2></a
+      >
+      <ul class="publist">
+        {publications.map((pub) => <PublicationItem pub={pub} authorCount={1} />)}
+      </ul>
+      <p class="more"><a href="/publications/">all {pubCount} publications</a></p>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .home {
+    display: flex;
+    flex-direction: column;
+    gap: var(--section-gap);
+    padding-top: 2.5rem;
+  }
+
+  /* Intro — big light serif, à la theodore.net */
+  .intro h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 5.2vw, 2.8125rem);
+    font-weight: 400;
+    line-height: 1.25;
+  }
+
+  .intro h1 a {
+    text-decoration: none;
+    border-bottom: 2px solid var(--ink-ghost);
+  }
+
+  .intro h1 a:hover {
+    border-bottom-color: var(--ink);
+  }
+
+  #typed {
+    font-style: italic;
+  }
+
+  .cursor {
+    font-style: normal;
+    font-weight: 300;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .sub {
+    margin-top: 0.9rem;
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 1.1875rem;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+
+  /* Section headings — serif with faint arrow */
+  h2 {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--ink);
+    opacity: 0.9;
+    margin-bottom: 0.75em;
+  }
+
+  .section-link {
+    text-decoration: none;
+    display: block;
+  }
+
+  .arrow {
+    font-size: 0.55em;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+    float: right;
+    margin-top: 0.55em;
+  }
+
+  .section-link:hover .arrow {
+    opacity: 0.6;
+  }
+
+  /* About — smaller portrait beside three mono columns (one paragraph each,
+     so the columns stay even in height) */
+  .about-layout {
+    display: grid;
+    grid-template-columns: 232px 1fr;
+    gap: 2.2rem;
+    align-items: stretch;
+  }
+
+  .about-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1.2px solid var(--line);
+  }
+
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+  }
+
+  .cols p {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--ink);
+    opacity: 0.9;
+    text-align: justify;
+  }
+
+  /* Projects — pill grid */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: 14px;
+  }
+
+  .more-soon {
+    margin-top: 1.1rem;
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: var(--ink);
+    opacity: 0.4;
+  }
+
+  /* Writing — stacked rows with hairlines */
+  .writing hr {
+    margin: 0.35rem 0;
+  }
+
+  .writparent {
+    transition: transform 0.3s ease;
+    transform-origin: center;
+    padding: 0.25em 0;
+  }
+
+  .writparent:hover {
+    transform: scale(0.98);
+  }
+
+  .writparent a {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1em;
+  }
+
+  .title-row,
+  .description-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .w-title {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 1.125rem;
+    color: var(--ink);
+    opacity: 0.75;
+  }
+
+  .w-desc {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--ink);
+    opacity: 0.55;
+  }
+
+  .w-year {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--ink);
+    opacity: 0.38;
+    flex-shrink: 0;
+  }
+
+  .w-read {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--ink);
+    opacity: 0.28;
+    flex-shrink: 0;
+  }
+
+  /* Media — three small cards */
+  .media-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4em;
+  }
+
+  /* Publications */
+  .publist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .more {
+    margin-top: 1.2rem;
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.9rem;
+  }
+
+  .more a {
+    color: var(--ink-dim);
+  }
+
+  /* Kitchen — recipe collage, mixed frame sizes */
+  .kitchen-sub {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: var(--ink);
+    opacity: 0.55;
+    margin: -0.35rem 0 1.1rem;
+  }
+
+  .collage {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 215px 215px;
+    gap: 14px;
+  }
+
+  .tile {
+    position: relative;
+    display: block;
+    border-radius: 18px;
+    border: 1.2px solid var(--line);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .tile:hover {
+    transform: scale(0.97);
+  }
+
+  .tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .tile-title {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 1.6rem 0.9rem 0.7rem;
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.92);
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.55));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .tile:hover .tile-title {
+    opacity: 1;
+  }
+
+  .t0 {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+  }
+
+  .t1 {
+    grid-column: 3 / 5;
+    grid-row: 1;
+  }
+
+  .t2 {
+    grid-column: 5;
+    grid-row: 1;
+  }
+
+  .t3 {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  .t4 {
+    grid-column: 4 / 6;
+    grid-row: 2;
+  }
+
+  @media (max-width: 800px) {
+    .home {
+      gap: 3rem;
+      padding-top: 1rem;
+    }
+
+    .about-layout {
+      grid-template-columns: 1fr;
+      gap: 1.6rem;
+    }
+
+    .about-photo {
+      max-width: 260px;
+      height: auto;
+      aspect-ratio: 1 / 1;
+    }
+
+    .cols {
+      grid-template-columns: 1fr;
+    }
+
+    .media-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .description-row .w-read {
+      display: none;
+    }
+
+    .collage {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(3, 150px);
+    }
+
+    .t0 {
+      grid-column: 1 / 3;
+      grid-row: 1;
+    }
+
+    .t1 {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .t2 {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .t3 {
+      grid-column: 1;
+      grid-row: 3;
+    }
+
+    .t4 {
+      grid-column: 2;
+      grid-row: 3;
+    }
+
+    .tile-title {
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  // Typed rotating role, like theodore.net's typed.js hero — no dependency.
+  const strings = [
+    'a product discovery lead.',
+    'a machine learning engineer.',
+    'a computational pathologist.',
+    'a builder.',
+    'a teacher.',
+    'a dataset builder.',
+    'a speaker.',
+    'an optimist.',
+  ];
+  const el = document.getElementById('typed');
+  if (el) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      el.textContent = strings[0];
+    } else {
+      let si = 0;
+      let ci = 0;
+      let deleting = false;
+      const tick = () => {
+        const s = strings[si];
+        el.textContent = s.slice(0, ci);
+        let delay = deleting ? 35 : 65;
+        if (!deleting && ci === s.length) {
+          delay = 1800;
+          deleting = true;
+        } else if (deleting && ci === 0) {
+          deleting = false;
+          si = (si + 1) % strings.length;
+          delay = 350;
+        } else {
+          ci += deleting ? -1 : 1;
+        }
+        setTimeout(tick, delay);
+      };
+      tick();
+    }
+  }
+
+  // Scroll reveal
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }
+    },
+    { threshold: 0.08 }
+  );
+  document.querySelectorAll('.reveal').forEach((s) => io.observe(s));
+</script>

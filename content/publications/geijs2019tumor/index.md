@@ -1,13 +1,9 @@
-+++
-title = "Tumor segmentation in fluorescent TNBC immunohistochemical multiplex images using deep learning"
-hidden = true
-authors  = ['Geijs, DJ']
-date = 2019-01-01
-journal = ""
-volume = ""
-pages = ""
-publisher = ""
-url = ""
-+++
+---
+title: "Tumor segmentation in fluorescent TNBC immunohistochemical multiplex images using deep learning"
+hidden: true
+authors:
+  - "Geijs, DJ"
+date: 2019-01-01
+---
 
-Summary about Tumor segmentation in fluorescent TNBC immunohistochemical multiplex images using deep learning.
+Uses deep learning to segment tumor regions in fluorescent multiplex immunohistochemistry images of triple negative breast cancer.

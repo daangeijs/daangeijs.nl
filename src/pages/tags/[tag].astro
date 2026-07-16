@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import PostCard from '../../components/PostCard.astro';
+import MediaCard from '../../components/MediaCard.astro';
+import { byDateDesc, tagSlug, visiblePosts } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const posts = visiblePosts(await getCollection('posts'));
+  const media = (await getCollection('media')).sort(byDateDesc);
+  // Group by slug so case variants ("Docker"/"docker") share one page.
+  const slugs = new Map();
+  for (const tag of [...posts, ...media].flatMap((e) => e.data.tags)) {
+    slugs.set(tagSlug(tag), tag.toLowerCase());
+  }
+  return [...slugs.entries()].map(([slug, tag]) => ({
+    params: { tag: slug },
+    props: {
+      tag,
+      posts: posts.filter((p) => p.data.tags.some((t) => tagSlug(t) === slug)),
+      media: media.filter((m) => m.data.tags.some((t) => tagSlug(t) === slug)),
+    },
+  }));
+}
+
+const { tag, posts, media } = Astro.props;
+---
+
+<Base title={`Tag: ${tag}`}>
+  <Breadcrumbs crumbs={[{ label: 'Tags', href: '/tags/' }]} current={tag} />
+  <h1>{tag}</h1>
+  <div class="stack">
+    {posts.map((post) => <PostCard post={post} />)}
+    {media.map((item) => <MediaCard item={item} />)}
+  </div>
+</Base>
+
+<style>
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+</style>

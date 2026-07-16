@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { byDateDesc, formatDate, visiblePosts } from '../lib/site';
+
+type Entry = { title: string; date: Date; href: string };
+
+const posts = visiblePosts(await getCollection('posts')).map((p) => ({
+  title: p.data.title,
+  date: p.data.date,
+  href: `/posts/${p.id}/`,
+}));
+const media = (await getCollection('media')).map((m) => ({
+  title: m.data.title,
+  date: m.data.date,
+  href: `/media/${m.id}/`,
+}));
+
+const entries: Entry[] = [...posts, ...media].sort((a, b) => b.date.valueOf() - a.date.valueOf());
+const years = [...new Set(entries.map((e) => e.date.getFullYear()))];
+---
+
+<Base title="Archive">
+  <Breadcrumbs crumbs={[]} current="Archive" />
+  <h1>Archive</h1>
+  {
+    years.map((year) => (
+      <section>
+        <h2>{year} <sup>{entries.filter((e) => e.date.getFullYear() === year).length}</sup></h2>
+        <ul>
+          {entries
+            .filter((e) => e.date.getFullYear() === year)
+            .map((e) => (
+              <li>
+                <span class="meta date">{formatDate(e.date)}</span>
+                <a href={e.href}>{e.title}</a>
+              </li>
+            ))}
+        </ul>
+      </section>
+    ))
+  }
+</Base>
+
+<style>
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  section {
+    margin-bottom: 2rem;
+  }
+
+  section h2 {
+    color: var(--ink-faint);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  sup {
+    font-size: 0.7rem;
+    font-weight: 400;
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  li {
+    display: flex;
+    gap: 1rem;
+    padding: 0.35rem 0;
+    align-items: baseline;
+  }
+
+  .date {
+    flex: 0 0 9.5rem;
+  }
+
+  @media (max-width: 500px) {
+    li {
+      flex-direction: column;
+      gap: 0;
+      padding: 0.5rem 0;
+    }
+  }
+</style>

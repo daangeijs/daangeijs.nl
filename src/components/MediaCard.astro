@@ -1,0 +1,72 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../lib/site';
+
+interface Props {
+  item: CollectionEntry<'media'>;
+}
+
+const { item } = Astro.props;
+const href = `/media/${item.id}/`;
+---
+
+<a class="mini-card" href={href}>
+  {
+    item.data.cover?.image && (
+      <div class="mini-img">
+        <Image src={item.data.cover.image} alt={item.data.cover.alt ?? ''} width={520} />
+      </div>
+    )
+  }
+  <p class="mini-title">{item.data.title}</p>
+  <p class="mini-date">{formatDate(item.data.date)}</p>
+</a>
+
+<style>
+  .mini-card {
+    display: block;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+  }
+
+  .mini-card:hover {
+    transform: scale(0.97);
+  }
+
+  .mini-img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: 18px;
+    border: 1.2px solid var(--line);
+    background: var(--bg);
+  }
+
+  .mini-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mini-title {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: var(--ink);
+    opacity: 0.85;
+    margin: 0.7em 0 0.15em;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .mini-date {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.78rem;
+    color: var(--ink);
+    opacity: 0.5;
+  }
+</style>

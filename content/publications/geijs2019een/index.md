@@ -1,13 +1,9 @@
-+++
-title = "Een systematische aanpak voor het ontwikkelen en rangschikken van leerlijnen"
-hidden = true
-authors  = ['Geijs, DJ']
-date = 2019-01-01
-journal = ""
-volume = ""
-pages = ""
-publisher = ""
-url = ""
-+++
+---
+title: "Een systematische aanpak voor het ontwikkelen en rangschikken van leerlijnen"
+hidden: true
+authors:
+  - "Geijs, DJ"
+date: 2019-01-01
+---
 
-Summary about Een systematische aanpak voor het ontwikkelen en rangschikken van leerlijnen.
+Proposes a systematic approach for designing and ranking educational learning pathways.

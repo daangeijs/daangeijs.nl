@@ -1,0 +1,27 @@
+---
+interface Props {
+  src: string;
+  height?: number;
+  title?: string;
+}
+const { src, height = 175, title = 'Embedded content' } = Astro.props;
+---
+
+<iframe
+  src={src}
+  title={title}
+  height={height}
+  loading="lazy"
+  allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+  sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+></iframe>
+
+<style>
+  iframe {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    border: 0;
+    border-radius: 10px;
+  }
+</style>

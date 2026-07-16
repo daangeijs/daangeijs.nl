@@ -1,0 +1,99 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import GitHubCard from '../../components/GitHubCard.astro';
+import { formatDate, readingTime, tagSlug, visiblePosts } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const posts = visiblePosts(await getCollection('posts'));
+  return posts.map((post, i) => ({
+    params: { id: post.id },
+    props: { post, newer: posts[i - 1], older: posts[i + 1] },
+  }));
+}
+
+const { post, newer, older } = Astro.props;
+const { Content } = await render(post);
+const cover = post.data.cover;
+---
+
+<Base title={post.data.title} description={post.data.description ?? post.data.summary}>
+  <Breadcrumbs crumbs={[{ label: 'Writing', href: '/posts/' }]} current={post.data.title} />
+  <article data-pagefind-body>
+    <header>
+      <h1>{post.data.title}</h1>
+      <p class="meta">
+        {formatDate(post.data.date)} · {readingTime(post.body ?? '')} min read
+      </p>
+      {
+        post.data.tags.length > 0 && (
+          <p class="tags">
+            {post.data.tags.map((tag) => (
+              <a class="tag" href={`/tags/${tagSlug(tag)}/`}>
+                {tag}
+              </a>
+            ))}
+          </p>
+        )
+      }
+      {
+        cover?.image && !cover.hidden && (
+          <Image src={cover.image} alt={cover.alt ?? ''} width={1200} class="cover" />
+        )
+      }
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+    {post.data.repo && <GitHubCard repo={post.data.repo} />}
+  </article>
+
+  <nav class="post-nav">
+    {
+      older ? (
+        <a href={`/posts/${older.id}/`}>← {older.data.title}</a>
+      ) : (
+        <span />
+      )
+    }
+    {newer && <a class="next" href={`/posts/${newer.id}/`}>{newer.data.title} →</a>}
+  </nav>
+</Base>
+
+<style>
+  header {
+    margin-bottom: 2rem;
+  }
+
+  header h1 {
+    margin-bottom: 0.5rem;
+  }
+
+  .tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-top: 0.6rem;
+  }
+
+  .cover {
+    border-radius: var(--radius);
+    margin-top: 1.5rem;
+  }
+
+  .post-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.95rem;
+  }
+
+  .post-nav .next {
+    text-align: right;
+  }
+</style>

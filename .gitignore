@@ -1,6 +1,5 @@
-.idea
-.hugo_build.lock
-themes
+node_modules/
+dist/
+.astro/
+public/pagefind/
 .DS_Store
-_gen
-.vscode

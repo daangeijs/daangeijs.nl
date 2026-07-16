@@ -1,0 +1,98 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const href = `/projects/${project.id}/`;
+const { title, summary } = project.data;
+---
+
+<a class="pill-link" href={href}>
+  <div class="grid-item">
+    <p class="projtitle">{title}</p>
+    <p class="projdescription">{summary}</p>
+    <span class="corner-arrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="15" height="15"
+        ><path
+          fill="currentColor"
+          d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14zM5 5h5v2H7v10h10v-3h2v5H5z"
+        ></path></svg
+      >
+    </span>
+  </div>
+</a>
+
+<style>
+  .pill-link {
+    display: block;
+    text-decoration: none;
+  }
+
+  .grid-item {
+    position: relative;
+    height: 101px;
+    border-radius: 28px;
+    border: 1.2px solid var(--line);
+    background: var(--bg);
+    overflow: hidden;
+    padding: 0.9em 1.3em 0;
+    transition: transform 0.3s ease;
+    transform-origin: center;
+  }
+
+  .grid-item:hover {
+    transform: scale(0.98);
+  }
+
+  .projtitle {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 1.125rem;
+    color: var(--ink);
+    opacity: 0.75;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 1.5em);
+  }
+
+  .projdescription {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--ink);
+    opacity: 0.55;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 1em);
+    margin-top: 0.2em;
+  }
+
+  .corner-arrow {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    color: var(--ink);
+    opacity: 0.12;
+  }
+
+  @media (max-width: 695px) {
+    .grid-item {
+      height: 78px;
+      border-radius: 18px;
+      padding-top: 0.7em;
+    }
+
+    .projtitle {
+      font-size: 1rem;
+    }
+
+    .projdescription {
+      font-size: 0.85rem;
+    }
+  }
+</style>

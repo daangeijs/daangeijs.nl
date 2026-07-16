@@ -1,0 +1,49 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { formatDate } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const items = await getCollection('media');
+  return items.map((item) => ({ params: { id: item.id }, props: { item } }));
+}
+
+const { item } = Astro.props;
+const { Content } = await render(item);
+const cover = item.data.cover;
+---
+
+<Base title={item.data.title} description={item.data.summary}>
+  <Breadcrumbs crumbs={[{ label: 'Media', href: '/media/' }]} current={item.data.title} />
+  <article data-pagefind-body>
+    <header>
+      <h1>{item.data.title}</h1>
+      <p class="meta">{formatDate(item.data.date)}</p>
+      {
+        cover?.image && !cover.hidden && (
+          <Image src={cover.image} alt={cover.alt ?? ''} width={1200} class="cover" />
+        )
+      }
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</Base>
+
+<style>
+  header {
+    margin-bottom: 2rem;
+  }
+
+  header h1 {
+    margin-bottom: 0.5rem;
+  }
+
+  .cover {
+    border-radius: var(--radius);
+    margin-top: 1.5rem;
+  }
+</style>

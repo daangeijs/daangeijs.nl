@@ -1,0 +1,59 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { shortAuthors } from '../lib/site';
+
+interface Props {
+  pub: CollectionEntry<'publications'>;
+  authorCount?: number;
+}
+
+const { pub, authorCount = 2 } = Astro.props;
+const { title, authors, date, journal, school, url } = pub.data;
+const venue = journal ?? school;
+---
+
+<li class="pub">
+  <div>
+    {
+      url ? (
+        <a href={url} target="_blank" rel="noopener">
+          {title}
+        </a>
+      ) : (
+        <span class="title">{title}</span>
+      )
+    }
+    <span class="meta year">({date.getFullYear()})</span>
+  </div>
+  <p class="meta">
+    {shortAuthors(authors, authorCount)}{venue && <>, <em>{venue}</em></>}
+  </p>
+</li>
+
+<style>
+  .pub {
+    padding: 0.7rem 0;
+    list-style: none;
+  }
+
+  .pub + .pub {
+    border-top: 1px solid var(--line-faint);
+  }
+
+  .title,
+  .pub a {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--ink);
+    opacity: 0.8;
+  }
+
+  .year {
+    margin-left: 0.35rem;
+  }
+
+  .title {
+    color: var(--ink);
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Search">
+  <h1>Search</h1>
+  <div id="search"></div>
+</Base>
+
+<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+<script is:inline src="/pagefind/pagefind-ui.js"></script>
+<script is:inline>
+  window.addEventListener('DOMContentLoaded', () => {
+    if (window.PagefindUI) {
+      new PagefindUI({ element: '#search', showSubResults: true });
+    } else {
+      document.getElementById('search').textContent =
+        'Search index is only available in the production build.';
+    }
+  });
+</script>
+
+<style>
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  #search {
+    --pagefind-ui-primary: var(--accent);
+    --pagefind-ui-text: var(--ink);
+    --pagefind-ui-background: var(--bg-raised);
+    --pagefind-ui-border: var(--line);
+    --pagefind-ui-font: var(--font-sans);
+  }
+</style>
