@@ -32,7 +32,28 @@ similarity_matrix = embeddings @ embeddings.T  # cosine similarity, vectors are 
 np.fill_diagonal(similarity_matrix, -np.inf)   # mask self-similarity
 ```
 
-For each bird I then sort its neighbours by similarity and store the ranked distances in a small SQLite table (`source_id`, `target_id`, `distance`, `rank`). At quiz time, difficulty becomes a lookup: for an easy round I pull decoys with low similarity, and for a hard round I pull the top-ranked lookalikes, the birds most likely to fool a real birder.
+For each bird I then sort its neighbours by similarity and store the ranked distances in a small SQLite table (`source_id`, `target_id`, `distance`, `rank`). At quiz time, difficulty becomes a lookup: I don't judge difficulty by hand, I just pick decoys from different bands of that similarity ranking.
+
+## Tuning the difficulty
+
+Each answer option is a decoy pulled from one of three rank bands: `similar` (the nearest lookalikes), `semi` (moderately close), and `far` (obviously different birds). A difficulty level is nothing more than which ranks each band draws from:
+
+```python
+# Difficulty configuration
+DIFFICULTY_CONFIG = {
+    "makkelijk": {"similar": range(1, 6),   "semi": range(20, 51),  "far": range(100, 201)},
+    "gemiddeld": {"similar": range(1, 3),   "semi": range(10, 31),  "far": range(60, 121)},
+    "moeilijk":  {"similar": range(1, 2),   "semi": range(2, 11),   "far": range(10, 41)},
+}
+```
+
+Read the ranks and the mechanic falls out:
+
+- **makkelijk (easy):** the closest decoy is only the 1st–5th most similar bird, and the other options come from far down the list (ranks 100–200), birds that look nothing alike. Easy to tell apart.
+- **gemiddeld (average):** the bands tighten. The nearest decoy is a top-2 lookalike, the "far" option is now only rank 60–120, so even the easy option is no longer a gift.
+- **moeilijk (hard):** everything collapses toward the top of the ranking. The nearest decoy is *the* single most similar bird (rank 1), and even the "far" option is drawn from ranks 10–40, birds that are still genuinely confusable. Every option looks plausible.
+
+So the same similarity matrix drives the whole difficulty curve: easy rounds spread the decoys across the ranking, hard rounds squeeze them all into the lookalike zone.
 
 ## Why I like this one
 
