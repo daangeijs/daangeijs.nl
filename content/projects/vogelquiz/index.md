@@ -5,6 +5,7 @@ description: "An embedding-powered bird identification quiz that scales difficul
 role: "Author & maintainer"
 timeframe: "2024 – present"
 external_url: "https://vogelquiz.nl"
+repo: "daangeijs/bird-quiz"
 thumbnail: ./logo.png
 weight: 20
 tags:
@@ -58,5 +59,3 @@ So the same similarity matrix drives the whole difficulty curve: easy rounds spr
 ## Why I like this one
 
 It's a small project, but it's the whole loop I enjoy: a real problem I personally had, a bit of domain knowledge (which birds are actually confusable), and a machine learning technique used exactly where it earns its keep, no more. The embedding trick that powers medical image retrieval is the same trick that makes a bird quiz sting.
-
-The code for the embedding and similarity pipeline is on [GitHub](https://github.com/daangeijs/bird-quiz).
