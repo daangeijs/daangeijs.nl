@@ -5,6 +5,7 @@ import ProjectCard from '../components/ProjectCard.astro';
 import MediaCard from '../components/MediaCard.astro';
 import PublicationItem from '../components/PublicationItem.astro';
 import { byDateDesc, formatDate, readingTime, visiblePosts } from '../lib/site';
+import { latestRecipes } from '../lib/recipes';
 
 const projects = (await getCollection('projects', ({ data }) => !data.draft))
   .sort((a, b) => a.data.weight - b.data.weight)
@@ -13,6 +14,7 @@ const posts = visiblePosts(await getCollection('posts')).slice(0, 4);
 const media = (await getCollection('media')).sort(byDateDesc).slice(0, 3);
 const publications = (await getCollection('publications')).sort(byDateDesc).slice(0, 3);
 const pubCount = (await getCollection('publications')).length;
+const recipes = await latestRecipes(5);
 
 const monthYear = (d: Date) =>
   d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
@@ -116,6 +118,35 @@ const monthYear = (d: Date) =>
       </ul>
       <p class="more"><a href="/publications/">all {pubCount} publications</a></p>
     </section>
+
+    {
+      recipes.length > 0 && (
+        <section class="kitchen reveal">
+          <a
+            class="section-link"
+            href="https://www.dekeukenvandael.nl"
+            target="_blank"
+            rel="noopener"
+          >
+            <h2>
+              From the kitchen <span class="arrow" aria-hidden="true">→</span>
+            </h2>
+          </a>
+          <p class="kitchen-sub">
+            not everything I ship is software. latest from dekeukenvandael.nl, my Dutch recipe
+            site.
+          </p>
+          <div class="collage">
+            {recipes.map((recipe, i) => (
+              <a class={`tile t${i}`} href={recipe.link} target="_blank" rel="noopener">
+                <img src={recipe.image} alt={recipe.title} loading="lazy" />
+                <span class="tile-title">{recipe.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
   </div>
 </Base>
 
@@ -314,6 +345,85 @@ const monthYear = (d: Date) =>
     color: var(--ink-dim);
   }
 
+  /* Kitchen — recipe collage, mixed frame sizes */
+  .kitchen-sub {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: var(--ink);
+    opacity: 0.55;
+    margin: -0.35rem 0 1.1rem;
+  }
+
+  .collage {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 215px 215px;
+    gap: 14px;
+  }
+
+  .tile {
+    position: relative;
+    display: block;
+    border-radius: 18px;
+    border: 1.2px solid var(--line);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .tile:hover {
+    transform: scale(0.97);
+  }
+
+  .tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .tile-title {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 1.6rem 0.9rem 0.7rem;
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.92);
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.55));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .tile:hover .tile-title {
+    opacity: 1;
+  }
+
+  .t0 {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+  }
+
+  .t1 {
+    grid-column: 3 / 5;
+    grid-row: 1;
+  }
+
+  .t2 {
+    grid-column: 5;
+    grid-row: 1;
+  }
+
+  .t3 {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  .t4 {
+    grid-column: 4 / 6;
+    grid-row: 2;
+  }
+
   @media (max-width: 800px) {
     .home {
       gap: 3rem;
@@ -330,6 +440,40 @@ const monthYear = (d: Date) =>
 
     .description-row .w-read {
       display: none;
+    }
+
+    .collage {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(3, 150px);
+    }
+
+    .t0 {
+      grid-column: 1 / 3;
+      grid-row: 1;
+    }
+
+    .t1 {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .t2 {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .t3 {
+      grid-column: 1;
+      grid-row: 3;
+    }
+
+    .t4 {
+      grid-column: 2;
+      grid-row: 3;
+    }
+
+    .tile-title {
+      opacity: 1;
     }
   }
 </style>
