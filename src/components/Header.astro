@@ -1,7 +1,5 @@
 ---
-import { Image } from 'astro:assets';
 import ThemeToggle from './ThemeToggle.astro';
-import profile from '../assets/profile.jpg';
 
 const nav = [
   { label: 'Home', href: '/' },
@@ -22,7 +20,7 @@ const isActive = (href: string) =>
 <header>
   <div class="header-inner">
     <a class="brand" href="/" aria-label="Daan Geijs, home">
-      <Image src={profile} alt="Daan Geijs" width={96} height={96} class="avatar" />
+      <span class="logo-mark"><span class="logo-d">D</span><span class="logo-g">G</span></span>
     </a>
     <div class="actions">
       <button class="icon-btn hide-on-open" id="search-toggle" aria-label="Search" aria-controls="search-overlay" aria-expanded="false">
@@ -115,16 +113,37 @@ const isActive = (href: string) =>
     text-decoration: none;
   }
 
-  .avatar {
+  .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
     border: 1.2px solid var(--line);
-    transition: transform 0.3s ease;
+    background: var(--bg);
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var(--ink);
+    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
   }
 
-  .brand:hover .avatar {
+  /* Tuck the G under the D's bowl for a monogram feel. */
+  .logo-d {
+    margin-right: -0.14em;
+  }
+
+  .logo-g {
+    position: relative;
+    top: 0.06em;
+  }
+
+  .brand:hover .logo-mark {
     transform: scale(0.95);
+    background: var(--ink);
+    color: var(--bg);
   }
 
   .actions {
