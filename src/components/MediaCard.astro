@@ -11,64 +11,62 @@ const { item } = Astro.props;
 const href = `/media/${item.id}/`;
 ---
 
-<article class="card media-card">
+<a class="mini-card" href={href}>
   {
     item.data.cover?.image && (
-      <a class="cover" href={href} tabindex="-1" aria-hidden="true">
-        <Image src={item.data.cover.image} alt={item.data.cover.alt ?? ''} width={420} />
-      </a>
+      <div class="mini-img">
+        <Image src={item.data.cover.image} alt={item.data.cover.alt ?? ''} width={520} />
+      </div>
     )
   }
-  <div class="body">
-    <h3><a href={href}>{item.data.title}</a></h3>
-    <p class="meta">{formatDate(item.data.date)}</p>
-  </div>
-</article>
+  <p class="mini-title">{item.data.title}</p>
+  <p class="mini-date">{formatDate(item.data.date)}</p>
+</a>
 
 <style>
-  .media-card {
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .cover {
+  .mini-card {
     display: block;
-    aspect-ratio: 16 / 10;
+    text-decoration: none;
+    transition: transform 0.3s ease;
   }
 
-  .cover img {
+  .mini-card:hover {
+    transform: scale(0.97);
+  }
+
+  .mini-img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: 18px;
+    border: 1.2px solid var(--line);
+    background: var(--bg);
+  }
+
+  .mini-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  .body {
-    padding: 0.9rem 1.1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    flex: 1;
-  }
-
-  h3 {
-    font-size: 0.98rem;
+  .mini-title {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: var(--ink);
+    opacity: 0.85;
+    margin: 0.7em 0 0.15em;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
   }
 
-  h3 a {
+  .mini-date {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.78rem;
     color: var(--ink);
-  }
-
-  h3 a:hover {
-    color: var(--accent);
-    text-decoration: none;
-  }
-
-  .meta {
-    margin-top: auto;
+    opacity: 0.5;
   }
 </style>

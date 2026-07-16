@@ -17,14 +17,15 @@ const isActive = (href: string) =>
   href === '/' ? pathname === '/' : pathname.startsWith(href);
 ---
 
+<div class="blur-overlay" aria-hidden="true"></div>
+
 <header>
   <div class="header-inner">
     <a class="brand" href="/" aria-label="Daan Geijs — home">
-      <Image src={profile} alt="Daan Geijs" width={72} height={72} class="avatar" />
-      <span class="site-name">Daan Geijs</span>
+      <Image src={profile} alt="Daan Geijs" width={96} height={96} class="avatar" />
     </a>
     <div class="actions">
-      <a class="icon-btn" href="/search/" aria-label="Search">
+      <a class="icon-btn hide-on-open" href="/search/" aria-label="Search">
         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"
           ><path
             fill="currentColor"
@@ -32,7 +33,7 @@ const isActive = (href: string) =>
           ></path></svg
         >
       </a>
-      <ThemeToggle />
+      <span class="hide-on-open"><ThemeToggle /></span>
       <button class="icon-btn" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
         <svg class="i-menu" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"
           ><path fill="currentColor" d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg
@@ -53,7 +54,7 @@ const isActive = (href: string) =>
     {
       nav.map(({ label, href }, i) => (
         <li>
-          <a href={href} aria-current={isActive(href) ? 'page' : undefined}>
+          <a href={href} aria-current={isActive(href) ? 'page' : undefined} style={`--i: ${i}`}>
             <span class="num">{String(i + 1).padStart(2, '0')}</span>
             <span class="label">{label}</span>
           </a>
@@ -64,20 +65,45 @@ const isActive = (href: string) =>
 </nav>
 
 <style>
+  /* Soft blur at the very top of the page, like theodore.net */
+  .blur-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 90px;
+    pointer-events: none;
+    z-index: 25;
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    mask-image: linear-gradient(
+      to bottom,
+      black 0%,
+      rgba(0, 0, 0, 0.9) 20%,
+      rgba(0, 0, 0, 0.55) 45%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      black 0%,
+      rgba(0, 0, 0, 0.9) 20%,
+      rgba(0, 0, 0, 0.55) 45%,
+      transparent 100%
+    );
+  }
+
   header {
     position: sticky;
     top: 0;
     z-index: 30;
-    background: color-mix(in srgb, var(--bg) 82%, transparent);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line);
+    background: none;
+    border: 0;
   }
 
   .header-inner {
     max-width: calc(var(--w-wide) + 3rem);
     margin: 0 auto;
-    padding: 0.7rem 1.5rem;
+    padding: 1.4rem 1.5rem 0.4rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -86,30 +112,19 @@ const isActive = (href: string) =>
 
   .brand {
     display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-  }
-
-  .brand:hover {
     text-decoration: none;
   }
 
   .avatar {
-    width: 2.1rem;
-    height: 2.1rem;
+    width: 3rem;
+    height: 3rem;
     border-radius: 50%;
-    border: 1px solid var(--line);
+    border: 1.2px solid var(--line);
+    transition: transform 0.3s ease;
   }
 
-  .site-name {
-    font-weight: 700;
-    font-size: 1.05rem;
-    color: var(--ink);
-    letter-spacing: -0.01em;
-  }
-
-  .brand:hover .site-name {
-    color: var(--accent);
+  .brand:hover .avatar {
+    transform: scale(0.95);
   }
 
   .actions {
@@ -122,18 +137,18 @@ const isActive = (href: string) =>
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 2.5rem;
+    height: 2.5rem;
     border: 0;
     background: transparent;
-    color: var(--ink-dim);
+    color: var(--ink);
     cursor: pointer;
-    border-radius: 6px;
+    border-radius: 8px;
+    transition: opacity 0.25s ease, transform 0.3s ease;
   }
 
   .icon-btn:hover {
-    color: var(--ink);
-    background: var(--bg-inset);
+    transform: scale(0.92);
     text-decoration: none;
   }
 
@@ -141,57 +156,104 @@ const isActive = (href: string) =>
     display: none;
   }
 
-  /* Full-screen overlay nav */
+  .hide-on-open {
+    transition: opacity 0.25s ease;
+  }
+
+  /* nav open: only the close X stays; it sits on the inverted overlay */
+  :global(body.nav-open) .hide-on-open {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  :global(body.nav-open) #nav-toggle {
+    color: var(--bg);
+  }
+
+  :global(body.nav-open) .brand {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Full-screen inverted overlay nav — theodore.net style */
   .overlay-nav {
     position: fixed;
     inset: 0;
-    z-index: 20;
-    background: var(--bg);
+    z-index: 28;
+    background: var(--nav-ink);
     display: flex;
     align-items: center;
-    justify-content: center;
     transform: translateX(-100%);
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
     visibility: hidden;
   }
 
   .overlay-nav ol {
     list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(0.4rem, 2vh, 1.1rem);
+    padding: 0 clamp(1.5rem, 8vw, 8rem);
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+    font-size: 9vmin;
+  }
+
+  .overlay-nav li {
+    overflow: hidden;
   }
 
   .overlay-nav a {
-    display: flex;
+    display: inline-flex;
     align-items: baseline;
-    gap: 1.1rem;
+    gap: 0.45em;
     text-decoration: none;
-    color: var(--ink);
-    font-size: clamp(1.8rem, 6vw, 3rem);
-    font-weight: 650;
-    letter-spacing: -0.02em;
+    color: var(--bg);
+    font-family: var(--font-serif);
+    font-size: 1em;
+    font-weight: 400;
+    line-height: 1.2;
+    transform: translateY(100%);
+    transition: font-style 0.15s ease;
+    user-select: none;
+  }
+
+  html[data-theme='dark'] .overlay-nav a {
+    color: hsl(228, 7%, 14%);
   }
 
   .overlay-nav a:hover .label {
-    color: var(--accent);
+    font-style: italic;
   }
 
   .overlay-nav a[aria-current='page'] .label {
-    color: var(--ink-faint);
+    opacity: 0.55;
   }
 
   .num {
-    font-family: var(--font-mono);
-    font-size: 0.5em;
-    color: var(--accent);
+    font-size: 0.35em;
+    font-weight: 300;
+    font-style: italic;
+    opacity: 0.75;
   }
 
   :global(body.nav-open) .overlay-nav {
     transform: translateX(0);
     visibility: visible;
+  }
+
+  :global(body.nav-open) .overlay-nav a {
+    animation: link-appear 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+    animation-delay: calc(var(--i) * 0.03s);
+  }
+
+  @keyframes link-appear {
+    0%,
+    25% {
+      transform: translateY(100%);
+    }
+    50%,
+    100% {
+      transform: translateY(0);
+    }
   }
 
   :global(body.nav-open) .i-menu {
@@ -200,6 +262,15 @@ const isActive = (href: string) =>
 
   :global(body.nav-open) .i-close {
     display: block;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .overlay-nav a {
+      transform: none;
+    }
+    :global(body.nav-open) .overlay-nav a {
+      animation: none;
+    }
   }
 </style>
 

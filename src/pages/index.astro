@@ -1,283 +1,386 @@
 ---
 import { getCollection } from 'astro:content';
-import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import MediaCard from '../components/MediaCard.astro';
 import PublicationItem from '../components/PublicationItem.astro';
-import SocialIcons from '../components/SocialIcons.astro';
 import { byDateDesc, formatDate, readingTime, visiblePosts } from '../lib/site';
-import profile from '../assets/profile.jpg';
-import marquee from '../data/marquee.json';
 
 const projects = (await getCollection('projects', ({ data }) => !data.draft))
   .sort((a, b) => a.data.weight - b.data.weight)
-  .slice(0, 4);
-const posts = visiblePosts(await getCollection('posts')).slice(0, 5);
+  .slice(0, 6);
+const posts = visiblePosts(await getCollection('posts')).slice(0, 4);
 const media = (await getCollection('media')).sort(byDateDesc).slice(0, 3);
 const publications = (await getCollection('publications')).sort(byDateDesc).slice(0, 3);
 const pubCount = (await getCollection('publications')).length;
+
+const monthYear = (d: Date) =>
+  d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 ---
 
 <Base wide>
-  <section class="hero">
-    <Image src={profile} alt="Portrait of Daan Geijs" width={280} class="portrait" />
-    <div class="hero-text">
-      <p class="greeting">Hey! I'm Daan,</p>
-      <h1>I figure out what to build — and then build it.</h1>
+  <div class="home">
+    <section class="intro reveal">
+      <h1>
+        Hey! I'm <a href="/work-with-me/">Daan</a>, <span id="typed"></span><span
+          class="cursor"
+          aria-hidden="true">|</span
+        >
+      </h1>
       <p class="sub">
-        Product Discovery Lead at <a href="https://kaiko.ai" target="_blank" rel="noopener"
-          >kaiko.ai</a
-        >. Ten years of training deep learning models and bringing AI into the clinic taught me:
-        shipping is the easy part — knowing <em>what</em> to ship is the hard part.
+        I figure out what to build — and then build it.<br />
+        here's a bit of my work.
       </p>
-      <SocialIcons />
-    </div>
-  </section>
+    </section>
 
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
+    <section class="about reveal">
+      <h2>About</h2>
+      <div class="cols">
+        <p>
+          I'm the Product Discovery Lead at <a
+            href="https://kaiko.ai"
+            target="_blank"
+            rel="noopener">kaiko.ai</a
+          >, where I figure out what's worth building for AI in cancer care. By training I'm a
+          machine learning engineer — since 2016, from designing my own architectures to getting
+          them running in an actual clinic.
+        </p>
+        <p>
+          I hold a PhD in computational pathology from <a
+            href="https://www.radboudumc.nl/en"
+            target="_blank"
+            rel="noopener">Radboudumc</a
+          > and a double master's in biomedical engineering and physics education. Ten years of
+          shipping models taught me: shipping is the easy part — knowing <em>what</em> to ship is
+          the hard part.
+        </p>
+        <p>
+          On the side I run <a href="https://alpacus.nl" target="_blank" rel="noopener">Alpacus</a
+          >, my freelance practice — engineering and early product consulting. This site holds my
+          <a href="/projects/">work</a> and <a href="/posts/">writing</a>. Reach out via
+          <a href="/work-with-me/">work with me</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="projects reveal">
+      <a class="section-link" href="/projects/"
+        ><h2>Projects <span class="arrow" aria-hidden="true">→</span></h2></a
+      >
+      <div class="grid-container">
+        {projects.map((project) => <ProjectCard project={project} />)}
+      </div>
+    </section>
+
+    <section class="writing reveal">
+      <a class="section-link" href="/posts/"
+        ><h2>Writing <span class="arrow" aria-hidden="true">→</span></h2></a
+      >
       {
-        [...marquee, ...marquee].map((item) => (
-          <span class="marquee-item">
-            {item}
-            <span class="dot">•</span>
-          </span>
+        posts.map((post, i) => (
+          <>
+            {i > 0 && <hr />}
+            <div class="writparent">
+              <a href={`/posts/${post.id}/`}>
+                <div class="title-row">
+                  <p class="w-title">{post.data.title}</p>
+                  <p class="w-year">{monthYear(post.data.date)}</p>
+                </div>
+                <div class="description-row">
+                  <p class="w-desc">{post.data.description ?? post.data.summary}</p>
+                  <p class="w-read">{readingTime(post.body ?? '')} mins</p>
+                </div>
+              </a>
+            </div>
+          </>
         ))
       }
-    </div>
+    </section>
+
+    <section class="media reveal">
+      <a class="section-link" href="/media/"
+        ><h2>In the media <span class="arrow" aria-hidden="true">→</span></h2></a
+      >
+      <div class="media-grid">
+        {media.map((item) => <MediaCard item={item} />)}
+      </div>
+    </section>
+
+    <section class="pubs reveal">
+      <a class="section-link" href="/publications/"
+        ><h2>Publications <span class="arrow" aria-hidden="true">→</span></h2></a
+      >
+      <ul class="publist">
+        {publications.map((pub) => <PublicationItem pub={pub} authorCount={1} />)}
+      </ul>
+      <p class="more"><a href="/publications/">all {pubCount} publications</a></p>
+    </section>
   </div>
-
-  <section class="about prose">
-    <p>
-      By training I'm a machine learning engineer — since 2016, from designing my own deep
-      learning architectures to getting them running in an actual clinic. I did a PhD in
-      computational pathology and hold a double master's in biomedical engineering and physics
-      education. Today I lead product discovery, because the models were never the point; what
-      they change for the person using them is.
-    </p>
-    <p>
-      On the side I run <a href="https://alpacus.nl" target="_blank" rel="noopener">Alpacus</a>,
-      my freelance practice — engineering when there's a clear thing to build, and early product
-      consulting when the harder question is what to build at all.
-      <a href="/work-with-me/">Work with me →</a>
-    </p>
-  </section>
-
-  <section>
-    <h2 class="section-title">Some things I've built</h2>
-    <div class="grid-3">
-      {projects.map((project) => <ProjectCard project={project} />)}
-    </div>
-    <p class="more"><a href="/projects/">All projects →</a></p>
-  </section>
-
-  <section>
-    <h2 class="section-title">Writing</h2>
-    <ul class="writing">
-      {
-        posts.map((post) => (
-          <li>
-            <a href={`/posts/${post.id}/`}>
-              <span class="w-title">{post.data.title}</span>
-              <span class="w-meta meta">
-                {formatDate(post.data.date)} · {readingTime(post.body ?? '')} min
-              </span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-    <p class="more"><a href="/posts/">All writing →</a></p>
-  </section>
-
-  <section>
-    <h2 class="section-title">In the media</h2>
-    <div class="grid-3">
-      {media.map((item) => <MediaCard item={item} />)}
-    </div>
-    <p class="more"><a href="/media/">All media →</a></p>
-  </section>
-
-  <section>
-    <h2 class="section-title">Selected publications</h2>
-    <ul class="pubs">
-      {publications.map((pub) => <PublicationItem pub={pub} authorCount={1} />)}
-    </ul>
-    <p class="more"><a href="/publications/">All {pubCount} publications →</a></p>
-  </section>
 </Base>
 
 <style>
-  .hero {
+  .home {
     display: flex;
-    align-items: center;
-    gap: 2.5rem;
-    padding: 1.5rem 0 2.5rem;
+    flex-direction: column;
+    gap: var(--section-gap);
+    padding-top: 2.5rem;
   }
 
-  .hero .portrait {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    flex-shrink: 0;
+  /* Intro — big light serif, à la theodore.net */
+  .intro h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 5.2vw, 2.8125rem);
+    font-weight: 400;
+    line-height: 1.25;
   }
 
-  .greeting {
-    color: var(--ink-dim);
-    font-size: 1.1rem;
-    margin-bottom: 0.3rem;
+  .intro h1 a {
+    text-decoration: none;
+    border-bottom: 2px solid var(--ink-ghost);
   }
 
-  .hero h1 {
-    font-size: clamp(1.7rem, 4vw, 2.6rem);
-    letter-spacing: -0.02em;
+  .intro h1 a:hover {
+    border-bottom-color: var(--ink);
+  }
+
+  #typed {
+    font-style: italic;
+  }
+
+  .cursor {
+    font-style: normal;
+    font-weight: 300;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
   }
 
   .sub {
-    color: var(--ink-dim);
-    font-size: 1.05rem;
-    margin-top: 0.8rem;
-    max-width: 40rem;
-  }
-
-  .hero :global(.social) {
-    margin-top: 1.1rem;
-  }
-
-  /* Marquee */
-  .marquee {
-    overflow: hidden;
-    border-block: 1px solid var(--line);
-    padding: 0.7rem 0;
-    margin: 1rem 0 3rem;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  }
-
-  .marquee-track {
-    display: flex;
-    width: max-content;
-    animation: scroll 40s linear infinite;
-  }
-
-  .marquee-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 1.5rem;
-    padding-right: 1.5rem;
-    white-space: nowrap;
+    margin-top: 0.9rem;
     font-family: var(--font-mono);
-    font-size: 0.9rem;
-    color: var(--ink-dim);
-  }
-
-  .dot {
-    color: var(--accent);
-  }
-
-  @keyframes scroll {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .marquee-track {
-      animation: none;
-      flex-wrap: wrap;
-      width: 100%;
-    }
-  }
-
-  .about {
-    max-width: 44rem;
-    margin-bottom: 3.5rem;
-    font-size: 1.08rem;
-  }
-
-  section + section {
-    margin-top: 3.5rem;
-  }
-
-  .grid-3 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
-
-  .writing {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .writing li {
-    border-top: 1px solid var(--line);
-  }
-
-  .writing li:last-child {
-    border-bottom: 1px solid var(--line);
-  }
-
-  .writing a {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1rem;
-    padding: 0.8rem 0;
+    font-weight: 300;
+    font-size: 1.1875rem;
+    line-height: 1.35;
     color: var(--ink);
   }
 
-  .writing a:hover {
+  /* Section headings — serif with faint arrow */
+  h2 {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--ink);
+    opacity: 0.9;
+    margin-bottom: 0.75em;
+  }
+
+  .section-link {
     text-decoration: none;
+    display: block;
   }
 
-  .writing a:hover .w-title {
-    color: var(--accent);
+  .arrow {
+    font-size: 0.55em;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+    float: right;
+    margin-top: 0.55em;
   }
 
-  .w-meta {
+  .section-link:hover .arrow {
+    opacity: 0.6;
+  }
+
+  /* About — three mono columns */
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+  }
+
+  .cols p {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--ink);
+    opacity: 0.9;
+    text-align: justify;
+  }
+
+  /* Projects — pill grid */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: 14px;
+  }
+
+  /* Writing — stacked rows with hairlines */
+  .writing hr {
+    margin: 0.35rem 0;
+  }
+
+  .writparent {
+    transition: transform 0.3s ease;
+    transform-origin: center;
+    padding: 0.25em 0;
+  }
+
+  .writparent:hover {
+    transform: scale(0.98);
+  }
+
+  .writparent a {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1em;
+  }
+
+  .title-row,
+  .description-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .w-title {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 1.125rem;
+    color: var(--ink);
+    opacity: 0.75;
+  }
+
+  .w-desc {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--ink);
+    opacity: 0.55;
+  }
+
+  .w-year {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--ink);
+    opacity: 0.38;
     flex-shrink: 0;
-    font-size: 0.82rem;
   }
 
-  .pubs {
+  .w-read {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--ink);
+    opacity: 0.28;
+    flex-shrink: 0;
+  }
+
+  /* Media — three small cards */
+  .media-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4em;
+  }
+
+  /* Publications */
+  .publist {
+    list-style: none;
     padding: 0;
     margin: 0;
   }
 
   .more {
     margin-top: 1.2rem;
-    font-size: 0.95rem;
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.9rem;
+  }
+
+  .more a {
+    color: var(--ink-dim);
   }
 
   @media (max-width: 800px) {
-    .grid-3 {
+    .home {
+      gap: 3rem;
+      padding-top: 1rem;
+    }
+
+    .cols {
       grid-template-columns: 1fr;
     }
 
-    .hero {
-      flex-direction: column;
-      text-align: center;
-      gap: 1.25rem;
+    .media-grid {
+      grid-template-columns: 1fr;
     }
 
-    .hero .sub {
-      margin-inline: auto;
-    }
-
-    .hero :global(.social) {
-      justify-content: center;
-    }
-
-    .writing a {
-      flex-direction: column;
-      gap: 0.15rem;
+    .description-row .w-read {
+      display: none;
     }
   }
 </style>
+
+<script>
+  // Typed rotating role, like theodore.net's typed.js hero — no dependency.
+  const strings = [
+    'a product discovery lead.',
+    'a machine learning engineer.',
+    'a computational pathologist.',
+    'a builder.',
+  ];
+  const el = document.getElementById('typed');
+  if (el) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      el.textContent = strings[0];
+    } else {
+      let si = 0;
+      let ci = 0;
+      let deleting = false;
+      const tick = () => {
+        const s = strings[si];
+        el.textContent = s.slice(0, ci);
+        let delay = deleting ? 35 : 65;
+        if (!deleting && ci === s.length) {
+          delay = 1800;
+          deleting = true;
+        } else if (deleting && ci === 0) {
+          deleting = false;
+          si = (si + 1) % strings.length;
+          delay = 350;
+        } else {
+          ci += deleting ? -1 : 1;
+        }
+        setTimeout(tick, delay);
+      };
+      tick();
+    }
+  }
+
+  // Scroll reveal
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }
+    },
+    { threshold: 0.08 }
+  );
+  document.querySelectorAll('.reveal').forEach((s) => io.observe(s));
+</script>

@@ -37,12 +37,16 @@ const venue = journal ?? school;
   }
 
   .pub + .pub {
-    border-top: 1px solid var(--line);
+    border-top: 1px solid var(--line-faint);
   }
 
   .title,
   .pub a {
-    font-weight: 550;
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--ink);
+    opacity: 0.8;
   }
 
   .year {

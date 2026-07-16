@@ -1,34 +1,54 @@
 ---
+import SocialIcons from './SocialIcons.astro';
+
 const year = new Date().getFullYear();
 ---
 
 <footer>
   <div class="footer-inner">
-    <span>© {year} Daan Geijs</span>
-    <a href="/index.xml">RSS</a>
+    <SocialIcons />
+    <p class="copyright">Copyright © {year} Daan Geijs</p>
+    <p class="footer-links">
+      <a href="/index.xml">RSS</a>
+      <a href="/archives/">Archive</a>
+      <a href="/work-with-me/">Work with me</a>
+    </p>
   </div>
 </footer>
 
 <style>
   footer {
-    border-top: 1px solid var(--line);
-    color: var(--ink-faint);
-    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    font-weight: 300;
   }
 
   .footer-inner {
     max-width: calc(var(--w-wide) + 3rem);
     margin: 0 auto;
-    padding: 1.25rem 1.5rem;
+    padding: 1rem 1.5rem 5rem;
+  }
+
+  .copyright {
+    margin-top: 0.6rem;
+    font-size: 0.8rem;
+    color: var(--ink);
+    opacity: 0.9;
+  }
+
+  .footer-links {
+    margin-top: 0.35rem;
+    font-size: 0.8rem;
     display: flex;
-    justify-content: space-between;
+    gap: 1.1rem;
   }
 
-  footer a {
-    color: var(--ink-faint);
+  .footer-links a {
+    color: var(--ink);
+    opacity: 0.55;
+    text-decoration: none;
   }
 
-  footer a:hover {
-    color: var(--accent);
+  .footer-links a:hover {
+    opacity: 0.9;
   }
 </style>

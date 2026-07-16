@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -8,73 +7,92 @@ interface Props {
 
 const { project } = Astro.props;
 const href = `/projects/${project.id}/`;
-const { title, summary, thumbnail, role, timeframe } = project.data;
+const { title, summary } = project.data;
 ---
 
-<article class="card project-card">
-  {
-    thumbnail && (
-      <a class="thumb" href={href} tabindex="-1" aria-hidden="true">
-        <Image src={thumbnail} alt="" width={640} />
-      </a>
-    )
-  }
-  <div class="body">
-    <h3><a href={href}>{title}</a></h3>
-    <p class="summary">{summary}</p>
-    {
-      (role || timeframe) && (
-        <p class="meta">
-          {role}
-          {role && timeframe && ' · '}
-          {timeframe}
-        </p>
-      )
-    }
+<a class="pill-link" href={href}>
+  <div class="grid-item">
+    <p class="projtitle">{title}</p>
+    <p class="projdescription">{summary}</p>
+    <span class="corner-arrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="15" height="15"
+        ><path
+          fill="currentColor"
+          d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14zM5 5h5v2H7v10h10v-3h2v5H5z"
+        ></path></svg
+      >
+    </span>
   </div>
-</article>
+</a>
 
 <style>
-  .project-card {
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .thumb {
+  .pill-link {
     display: block;
-    aspect-ratio: 16 / 9;
-  }
-
-  .thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .body {
-    padding: 1.1rem 1.4rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    flex: 1;
-  }
-
-  h3 a {
-    color: var(--ink);
-  }
-
-  h3 a:hover {
-    color: var(--accent);
     text-decoration: none;
   }
 
-  .summary {
-    color: var(--ink-dim);
-    font-size: 0.92rem;
+  .grid-item {
+    position: relative;
+    height: 101px;
+    border-radius: 28px;
+    border: 1.2px solid var(--line);
+    background: var(--bg);
+    overflow: hidden;
+    padding: 0.9em 1.3em 0;
+    transition: transform 0.3s ease;
+    transform-origin: center;
   }
 
-  .meta {
-    margin-top: auto;
+  .grid-item:hover {
+    transform: scale(0.98);
+  }
+
+  .projtitle {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 1.125rem;
+    color: var(--ink);
+    opacity: 0.75;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 1.5em);
+  }
+
+  .projdescription {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--ink);
+    opacity: 0.55;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 1em);
+    margin-top: 0.2em;
+  }
+
+  .corner-arrow {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    color: var(--ink);
+    opacity: 0.12;
+  }
+
+  @media (max-width: 695px) {
+    .grid-item {
+      height: 78px;
+      border-radius: 18px;
+      padding-top: 0.7em;
+    }
+
+    .projtitle {
+      font-size: 1rem;
+    }
+
+    .projdescription {
+      font-size: 0.85rem;
+    }
   }
 </style>
