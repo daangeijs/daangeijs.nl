@@ -249,13 +249,12 @@ const monthYear = (d: Date) =>
     display: grid;
     grid-template-columns: 232px 1fr;
     gap: 2.2rem;
-    align-items: start;
+    align-items: stretch;
   }
 
   .about-photo {
     width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 5;
+    height: 100%;
     object-fit: cover;
     border-radius: var(--radius);
     border: 1.2px solid var(--line);
@@ -475,6 +474,7 @@ const monthYear = (d: Date) =>
 
     .about-photo {
       max-width: 260px;
+      height: auto;
       aspect-ratio: 1 / 1;
     }
 

@@ -5,7 +5,6 @@ description: "An embedding-powered bird identification quiz that scales difficul
 role: "Author & maintainer"
 timeframe: "2024 – present"
 external_url: "https://vogelquiz.nl"
-repo: "daangeijs/bird-quiz"
 thumbnail: ./logo.png
 weight: 20
 tags:
