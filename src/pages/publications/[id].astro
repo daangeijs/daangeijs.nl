@@ -19,7 +19,7 @@ const venue = [journal ?? school, volume, pages].filter(Boolean).join(', ');
     <h1>{title}</h1>
     <p class="meta">
       {shortAuthors(authors, 10)} ({date.getFullYear()})
-      {venue && <> — <em>{venue}</em></>}
+      {venue && <>, <em>{venue}</em></>}
       {publisher && <>, {publisher}</>}
     </p>
     {

@@ -26,7 +26,7 @@ const venue = journal ?? school;
     <span class="meta year">({date.getFullYear()})</span>
   </div>
   <p class="meta">
-    {shortAuthors(authors, authorCount)}{venue && <> — <em>{venue}</em></>}
+    {shortAuthors(authors, authorCount)}{venue && <>, <em>{venue}</em></>}
   </p>
 </li>
 

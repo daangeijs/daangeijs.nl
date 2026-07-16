@@ -36,7 +36,7 @@ Once Homebrew is installed, you can install LaTeX by running the following comma
 brew install --cask mactex-no-gui
 ```
 
-This command installs the **MacTeX-no-GUI** version, which includes the full LaTeX environment without any graphical applications (such as TeXShop). The download and installation can take a while to start, so be patient—it may seem like nothing is happening initially, but it will eventually begin downloading.
+This command installs the **MacTeX-no-GUI** version, which includes the full LaTeX environment without any graphical applications (such as TeXShop). The download and installation can take a while to start, so be patient. It may seem like nothing is happening initially, but it will eventually begin downloading.
 
 After installation, update LaTeX packages to ensure you have the latest versions. You will need to restart your terminal before running the following commands:
 

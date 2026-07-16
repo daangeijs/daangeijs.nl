@@ -25,7 +25,7 @@ export async function GET(context: APIContext) {
   return rss({
     title: 'Daan Geijs',
     description:
-      'Writing and media appearances by Daan Geijs — product discovery, machine learning, and AI in the clinic.',
+      'Writing and media appearances by Daan Geijs: product discovery, machine learning, and AI in the clinic.',
     site: context.site!,
     items,
     customData: '<language>en</language>',

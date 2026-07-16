@@ -80,7 +80,7 @@ sudo lspci -vv | awk '/ASPM/{print $0}' RS= | grep --color -P '(^[a-z0-9:.]+|ASP
 
 I still noticed that my ASPM was disabled for the NVMe.
 
-If you're facing similar issues, try this script first—it may solve your problem without requiring a BIOS update.
+If you're facing similar issues, try this script first, as it may solve your problem without requiring a BIOS update.
 
 ### Checking BIOS Configuration for ASPM
 
@@ -88,7 +88,7 @@ After trying software solutions without success, I decided to check if my BIOS w
 
 ![](image_bios.jpg)
 
-Despite this correct configuration in the BIOS, my system still could not reach deeper C-states. This led me to conclude that either the port my NVMe SSD was using did not allow lower power states. However, this conclusion did not make sense to me—why would an Intel NUC engineer design it this way? So the next day, I decided to give it one last try and check if this was an issue that was solved by a BIOS update.
+Despite this correct configuration in the BIOS, my system still could not reach deeper C-states. This led me to conclude that either the port my NVMe SSD was using did not allow lower power states. However, this conclusion did not make sense to me: why would an Intel NUC engineer design it this way? So the next day, I decided to give it one last try and check if this was an issue that was solved by a BIOS update.
 
 ### The Fix: Updating My BIOS
 
@@ -100,7 +100,7 @@ I followed the instructions:
 - Booted my NUC with the USB flash drive while spamming `F7`.
 - Selected the `.bio` file from the menu and let the system update itself.
 
-Once the BIOS update was complete, I quickly verified that my BIOS settings were still untouched— PCIe ASPM Support was still enabled. After rebooting, I ran the same power state checks:
+Once the BIOS update was complete, I quickly verified that my BIOS settings were still untouched: PCIe ASPM Support was still enabled. After rebooting, I ran the same power state checks:
 
 Now I was able to run AutoASPM and verify that it was working with:
 
@@ -114,7 +114,7 @@ And after running:
 sudo powertop
 ```
 
-I noticed that the output now showed C8 and even C9 states, with 20% less power consumption! Okay, I'll be honest with you— 3 watts saved. But hey, free energy savings!
+I noticed that the output now showed C8 and even C9 states, with 20% less power consumption! Okay, I'll be honest with you: 3 watts saved. But hey, free energy savings!
 
 ### Bonus: Enabling ASPM for Other Devices
 

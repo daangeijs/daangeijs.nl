@@ -69,4 +69,4 @@ For me these where the resources that I had available, but you can adjust these 
    - Select "Trigger Deploy" and choose "Clear cache and deploy site".
 
 
-The example here is just with Proxmox, but you can choose any popular solutions like AWS, Azure, DigitalOcean, or Heroku— provided they support PostgreSQL.  At the end you just need to update the URL in the Netlify dashboard.  Choose what's best for your needs.
+The example here is just with Proxmox, but you can choose any popular solutions like AWS, Azure, DigitalOcean, or Heroku, provided they support PostgreSQL.  At the end you just need to update the URL in the Netlify dashboard.  Choose what's best for your needs.

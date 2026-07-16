@@ -17,7 +17,7 @@ At kaiko.ai I lead product discovery: the work of deciding what's worth building
 ## How I think about discovery here
 
 - **Start from the user's decision, not the model's output.** A researcher or pathologist is trying to make a call; the product exists to make that call faster, cheaper, or more confident.
-- **De-risk the riskiest assumption first.** Usually that's not "can the model do it" — it's "will this fit how people actually work."
+- **De-risk the riskiest assumption first.** Usually that's not "can the model do it", it's "will this fit how people actually work."
 - **Kill ideas cheaply.** The best discovery outcome is often a well-argued no.
 
 More detail to come.
