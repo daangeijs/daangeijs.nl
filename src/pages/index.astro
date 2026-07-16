@@ -243,11 +243,12 @@ const monthYear = (d: Date) =>
     opacity: 0.6;
   }
 
-  /* About — portrait block beside a single readable text column */
+  /* About — smaller portrait beside three mono columns (one paragraph each,
+     so the columns stay even in height) */
   .about-layout {
     display: grid;
-    grid-template-columns: 300px minmax(0, 42rem);
-    gap: 2.4rem;
+    grid-template-columns: 232px 1fr;
+    gap: 2.2rem;
     align-items: start;
   }
 
@@ -261,9 +262,9 @@ const monthYear = (d: Date) =>
   }
 
   .cols {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
   }
 
   .cols p {

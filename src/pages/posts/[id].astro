@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import GitHubCard from '../../components/GitHubCard.astro';
 import { formatDate, readingTime, tagSlug, visiblePosts } from '../../lib/site';
 
 export async function getStaticPaths() {
@@ -46,6 +47,7 @@ const cover = post.data.cover;
     <div class="prose">
       <Content />
     </div>
+    {post.data.repo && <GitHubCard repo={post.data.repo} />}
   </article>
 
   <nav class="post-nav">

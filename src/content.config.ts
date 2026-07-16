@@ -20,6 +20,7 @@ const posts = defineCollection({
       tags: z.array(z.string()).default([]),
       summary: z.string().optional(),
       description: z.string().optional(),
+      repo: z.string().optional(),
       cover: cover(image),
     }),
 });
@@ -65,6 +66,7 @@ const projects = defineCollection({
       role: z.string().optional(),
       timeframe: z.string().optional(),
       external_url: z.string().url().optional(),
+      repo: z.string().optional(),
       tags: z.array(z.string()).default([]),
       weight: z.number().default(100),
       draft: z.boolean().default(false),

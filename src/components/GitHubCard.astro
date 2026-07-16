@@ -1,44 +1,158 @@
 ---
+// A repo card for articles. Two ways to use it:
+//   <GitHubCard repo="owner/name" />            -> metadata fetched at build time
+//   <GitHubCard url=... name=... stars=... />    -> explicit props (legacy, used in MDX)
+// The build-time fetch fails gracefully so a missing/rate-limited API never breaks a page.
 interface Props {
-  url: string;
-  name: string;
+  repo?: string;
+  url?: string;
+  name?: string;
   description?: string;
   language?: string;
   stars?: string | number;
   forks?: string | number;
 }
-const { url, name, description, language, stars, forks } = Astro.props;
+const props = Astro.props;
+
+let { url, name, description, language, stars, forks } = props;
+
+if (props.repo) {
+  const slug = props.repo
+    .replace(/^https?:\/\/github\.com\//, '')
+    .replace(/\.git$/, '')
+    .replace(/\/$/, '');
+  url = `https://github.com/${slug}`;
+  name = slug;
+  try {
+    const res = await fetch(`https://api.github.com/repos/${slug}`, {
+      headers: { Accept: 'application/vnd.github+json' },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      description = data.description ?? undefined;
+      language = data.language ?? undefined;
+      stars = typeof data.stargazers_count === 'number' ? data.stargazers_count : undefined;
+      forks = typeof data.forks_count === 'number' ? data.forks_count : undefined;
+    }
+  } catch {
+    // Offline or rate-limited at build time: render the card with just owner/name.
+  }
+}
+
+const displayName = name ?? url;
 ---
 
-<div class="github-card">
-  <h2><a href={url} target="_blank" rel="noopener">{name}</a></h2>
-  {description && <p>{description}</p>}
-  <div class="card-details">
-    {language && <span class="language">{language}</span>}
-    {stars !== undefined && <span class="stars">⭐ {stars}</span>}
-    {forks !== undefined && <span class="forks">🍴 {forks}</span>}
-  </div>
-</div>
+<a class="gh-card" href={url} target="_blank" rel="noopener">
+  <span class="gh-icon" aria-hidden="true">
+    <svg viewBox="0 0 16 16" width="24" height="24">
+      <path
+        fill="currentColor"
+        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"
+      ></path>
+    </svg>
+  </span>
+  <span class="gh-body">
+    <span class="gh-top">
+      <span class="gh-name">{displayName}</span>
+      <span class="gh-view">View on GitHub →</span>
+    </span>
+    {description && <span class="gh-desc">{description}</span>}
+    {
+      (language || stars !== undefined || forks !== undefined) && (
+        <span class="gh-meta">
+          {language && <span>{language}</span>}
+          {stars !== undefined && <span>★ {stars}</span>}
+          {forks !== undefined && <span>⑂ {forks}</span>}
+        </span>
+      )
+    }
+  </span>
+</a>
 
 <style>
-  .github-card {
-    border: 1px solid var(--ring, currentColor);
-    border-radius: var(--radius-card, 12px);
-    padding: 1rem 1.25rem;
-    margin: 1.5rem 0;
-  }
-  .github-card h2 {
-    margin: 0 0 0.25rem;
-    font-size: 1.1rem;
-  }
-  .github-card p {
-    margin: 0 0 0.5rem;
-    color: var(--fg-muted, inherit);
-  }
-  .card-details {
+  .gh-card {
     display: flex;
     gap: 1rem;
-    font-family: var(--font-mono, monospace);
-    font-size: 0.85rem;
+    align-items: flex-start;
+    margin: 1.75rem 0;
+    padding: 1.1rem 1.25rem;
+    border: 1.2px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg);
+    text-decoration: none;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .gh-card:hover {
+    transform: scale(0.99);
+    border-color: var(--ink-faint);
+  }
+
+  .gh-icon {
+    color: var(--ink);
+    opacity: 0.85;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .gh-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .gh-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .gh-name {
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 1.05rem;
+    color: var(--ink);
+    opacity: 0.9;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .gh-view {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.8rem;
+    color: var(--ink);
+    opacity: 0.45;
+    flex-shrink: 0;
+  }
+
+  .gh-desc {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--ink);
+    opacity: 0.6;
+  }
+
+  .gh-meta {
+    display: flex;
+    gap: 1.1rem;
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.82rem;
+    color: var(--ink);
+    opacity: 0.5;
+    margin-top: 0.15rem;
+  }
+
+  @media (max-width: 640px) {
+    .gh-view {
+      display: none;
+    }
   }
 </style>

@@ -4,7 +4,7 @@ summary: "An open-source, browser-based viewer for gigapixel pathology slides, s
 description: "Open-source web viewer for pathology whole-slide images."
 role: "Author & maintainer"
 timeframe: "2022 – present"
-external_url: "https://github.com/daangeijs/simple_wsi_viewer"
+repo: "daangeijs/simple_wsi_viewer"
 weight: 40
 tags:
   - computational pathology
