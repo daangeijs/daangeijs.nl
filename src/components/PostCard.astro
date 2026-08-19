@@ -14,7 +14,7 @@ const summary = post.data.description ?? post.data.summary ?? post.body?.replace
 
 <article class="card post-card">
   {
-    post.data.cover?.image && !post.data.cover.hidden && (
+    post.data.cover?.image && (
       <a class="cover" href={href} tabindex="-1" aria-hidden="true">
         <Image src={post.data.cover.image} alt={post.data.cover.alt ?? ''} width={480} />
       </a>
