@@ -9,7 +9,6 @@ tags:
 cover:
     image: "cover.png"
     alt: "Cartoon: Situation A, an engineering firm builds a complex custom storytelling display machine after a long specification process. Situation B, the same request is met by simply ordering a 42 inch smart TV online."
-    hidden: true
 
 summary: "The model is rarely the hard part. Two recent studies show how much the interface shapes what clinicians decide, and why hospitals building their own AI may be budgeting for the wrong thing."
 ---
@@ -32,5 +31,3 @@ This is the work almost nobody budgets for or investigates. You definitely do no
 Often it's the same model, same capabilities, two different interfaces. One of them people quietly stop opening. The other becomes the first thing they open every morning.
 
 So when hospitals announce big budgets for building their own AI solutions, I always wonder what they think the expensive part is.
-
-![Cartoon: Situation A, an engineering firm builds a complex custom storytelling display machine after a long specification process. Situation B, the same request is met by simply ordering a 42 inch smart TV online.](cover.png)
