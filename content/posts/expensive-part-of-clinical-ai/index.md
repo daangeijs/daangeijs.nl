@@ -4,10 +4,7 @@ date: 2026-08-19T09:00:00+02:00
 draft: false
 
 tags:
-- ai
-- healthcare
-- product-discovery
-- pathology
+- opinion
 
 cover:
     image: "cover.png"
