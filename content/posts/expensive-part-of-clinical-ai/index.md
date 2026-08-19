@@ -1,5 +1,5 @@
 ---
-title: "The expensive part of clinical AI"
+title: "The important unknown of clinical AI"
 date: 2026-08-19T09:00:00+02:00
 draft: false
 
