@@ -6,6 +6,10 @@ draft: false
 tags:
 - opinion
 
+cover:
+    image: "cover.jpg"
+    alt: "Discussion during the University of Twente alumni Healthcare / MedTech meetup at kaiko.ai in Amsterdam"
+
 summary: "After ten years embedded in a hospital I see innovation everywhere. What it lacks is a foundation to survive beyond the first proof of concept: budget, impact-first valorisation, IT architecture, and early industry collaboration."
 ---
 Hospitals are not a good place for innovation.
