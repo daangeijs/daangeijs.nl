@@ -2,13 +2,15 @@
 interface Props {
   id: string;
   title?: string;
+  start?: number;
 }
-const { id, title = 'YouTube video' } = Astro.props;
+const { id, title = 'YouTube video', start } = Astro.props;
+const src = `https://www.youtube-nocookie.com/embed/${id}${start ? `?start=${start}` : ''}`;
 ---
 
 <div class="youtube">
   <iframe
-    src={`https://www.youtube-nocookie.com/embed/${id}`}
+    src={src}
     title={title}
     loading="lazy"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
