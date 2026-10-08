@@ -1,0 +1,112 @@
+---
+// A prominent "go visit this" card: screenshot on top, one line of text and a button below.
+//   import shot from './screenshot.png';
+//   <SiteCard href="https://example.com" image={shot} alt="..." label="example.com">
+//     One sentence inviting people to open it.
+//   </SiteCard>
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  href: string;
+  image: ImageMetadata;
+  alt: string;
+  label?: string;
+  cta?: string;
+}
+
+const { href, image, alt, label, cta = 'Open the viewer →' } = Astro.props;
+const shown = label ?? href.replace(/^https?:\/\//, '').replace(/\/$/, '');
+---
+
+<a class="site-card" href={href} target="_blank" rel="noopener">
+  <Image src={image} alt={alt} width={1400} class="site-shot" />
+  <span class="site-foot">
+    <span class="site-text">
+      <span class="site-label">{shown}</span>
+      <span class="site-desc"><slot /></span>
+    </span>
+    <span class="site-cta">{cta}</span>
+  </span>
+</a>
+
+<style>
+  .site-card {
+    display: block;
+    margin: 1.75rem 0 2.25rem;
+    border: 1.2px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg);
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .site-card:hover {
+    transform: scale(0.99);
+    border-color: var(--ink-faint);
+  }
+
+  .site-card :global(.site-shot) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid var(--line-faint);
+    margin: 0;
+  }
+
+  .site-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 1rem 1.35rem;
+    font-family: var(--font-mono);
+  }
+
+  .site-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+
+  .site-label {
+    font-size: 1rem;
+    color: var(--ink);
+    opacity: 0.9;
+  }
+
+  .site-desc {
+    font-weight: 300;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--ink);
+    opacity: 0.6;
+  }
+
+  .site-cta {
+    flex-shrink: 0;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.45rem 1rem;
+    font-size: 0.85rem;
+    color: var(--ink);
+    white-space: nowrap;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .site-card:hover .site-cta {
+    border-color: var(--ink-faint);
+    background: var(--accent-soft);
+  }
+
+  @media (max-width: 640px) {
+    .site-foot {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

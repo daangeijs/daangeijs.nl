@@ -1,0 +1,322 @@
+---
+// A copy-paste citation block with BibTeX / APA / RIS tabs.
+//   <Citation
+//     key="geijs2025cobra"
+//     type="dataset"            -> dataset | article | software | misc
+//     title="..."
+//     authors={['Geijs, Daan', 'Litjens, Geert']}   (Last, First)
+//     year={2025}
+//     publisher="Zenodo"        -> or journal="..." for articles
+//     version="1.0.0"
+//     doi="10.5281/zenodo.123"
+//     url="https://..."         -> defaults to https://doi.org/<doi>
+//   />
+interface Props {
+  key: string;
+  title: string;
+  authors: string[];
+  year: number | string;
+  type?: 'dataset' | 'article' | 'software' | 'misc';
+  publisher?: string;
+  journal?: string;
+  volume?: string;
+  number?: string;
+  pages?: string;
+  version?: string;
+  doi?: string;
+  url?: string;
+  heading?: string;
+}
+
+const {
+  key,
+  title,
+  authors,
+  year,
+  type = 'misc',
+  publisher,
+  journal,
+  volume,
+  number,
+  pages,
+  version,
+  doi,
+  url = doi ? `https://doi.org/${doi}` : undefined,
+  heading = 'Cite',
+} = Astro.props;
+
+// "Last, First Middle" -> { last, first }
+const parsed = authors.map((a) => {
+  const [last, first = ''] = a.split(',').map((s) => s.trim());
+  return { last, first };
+});
+const initials = (first: string) =>
+  first
+    .split(/[\s-]+/)
+    .filter(Boolean)
+    .map((p) => p[0].toUpperCase() + '.')
+    .join(' ');
+
+// --- BibTeX ---
+const bibType =
+  type === 'article' ? 'article' : type === 'dataset' ? 'dataset' : type === 'software' ? 'software' : 'misc';
+const bibFields: [string, string | undefined][] = [
+  ['author', authors.join(' and ')],
+  ['title', title],
+  ['year', String(year)],
+  ['journal', journal],
+  ['volume', volume],
+  ['number', number],
+  ['pages', pages],
+  ['publisher', publisher],
+  ['version', version],
+  ['doi', doi],
+  ['url', url],
+];
+const bibtex =
+  `@${bibType}{${key},\n` +
+  bibFields
+    .filter(([, v]) => v)
+    .map(([k, v]) => `  ${k.padEnd(9)} = {${v}},`)
+    .join('\n') +
+  '\n}';
+
+// --- APA 7 ---
+const apaNames = parsed.map((p) => `${p.last}, ${initials(p.first)}`.trim());
+const apaAuthors =
+  apaNames.length <= 1
+    ? apaNames[0] ?? ''
+    : apaNames.slice(0, -1).join(', ') + ', & ' + apaNames[apaNames.length - 1];
+const apaDesc = type === 'dataset' ? ' [Data set]' : type === 'software' ? ' [Computer software]' : '';
+const apaVersion = version ? ` (Version ${version})` : '';
+let apa: string;
+if (type === 'article' && journal) {
+  const vol = volume ? ` ${volume}` : '';
+  const num = number ? `(${number})` : '';
+  const pg = pages ? `, ${pages}` : '';
+  apa = `${apaAuthors} (${year}). ${title}. ${journal}${vol}${num}${pg}.`;
+} else {
+  apa = `${apaAuthors} (${year}). ${title}${apaVersion}${apaDesc}.${publisher ? ` ${publisher}.` : ''}`;
+}
+if (url) apa += ` ${url}`;
+
+// --- RIS ---
+const risType =
+  type === 'article' ? 'JOUR' : type === 'dataset' ? 'DATA' : type === 'software' ? 'COMP' : 'GEN';
+const risLines: [string, string | undefined][] = [
+  ['TY', risType],
+  ...authors.map((a): [string, string] => ['AU', a]),
+  ['TI', title],
+  ['PY', String(year)],
+  ['JO', journal],
+  ['VL', volume],
+  ['IS', number],
+  ['SP', pages],
+  ['PB', publisher],
+  ['ET', version],
+  ['DO', doi],
+  ['UR', url],
+  ['ER', ''],
+];
+const ris = risLines
+  .filter(([k, v]) => v !== undefined && (k === 'ER' || v))
+  .map(([k, v]) => `${k}  - ${v}`)
+  .join('\n');
+
+const tabs = [
+  { id: 'bibtex', label: 'BibTeX', text: bibtex },
+  { id: 'apa', label: 'APA', text: apa },
+  { id: 'ris', label: 'RIS', text: ris },
+];
+const uid = `cite-${key.replace(/[^a-z0-9]/gi, '')}`;
+---
+
+<div class="citation" data-citation>
+  <div class="citation-bar">
+    <span class="citation-heading">{heading}</span>
+    <div class="citation-tabs" role="tablist" aria-label="Citation format">
+      {
+        tabs.map((t, i) => (
+          <button
+            type="button"
+            role="tab"
+            id={`${uid}-tab-${t.id}`}
+            aria-controls={`${uid}-panel-${t.id}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? 0 : -1}
+            data-tab={t.id}
+          >
+            {t.label}
+          </button>
+        ))
+      }
+    </div>
+    <button type="button" class="citation-copy" data-copy aria-label="Copy citation">
+      <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
+        <rect x="5.5" y="5.5" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"></rect>
+        <path d="M10.5 5.5v-2a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2" fill="none" stroke="currentColor" stroke-width="1.4"></path>
+      </svg>
+      <span data-copy-label>Copy</span>
+    </button>
+  </div>
+  {
+    tabs.map((t, i) => (
+      <pre
+        role="tabpanel"
+        id={`${uid}-panel-${t.id}`}
+        aria-labelledby={`${uid}-tab-${t.id}`}
+        data-panel={t.id}
+        hidden={i !== 0}
+        tabindex="0"
+      ><code>{t.text}</code></pre>
+    ))
+  }
+</div>
+
+<script>
+  function init(root: HTMLElement) {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-panel]'));
+    const copyBtn = root.querySelector<HTMLButtonElement>('[data-copy]');
+    const copyLabel = root.querySelector<HTMLElement>('[data-copy-label]');
+
+    const select = (id: string) => {
+      tabs.forEach((t) => {
+        const on = t.dataset.tab === id;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach((p) => (p.hidden = p.dataset.panel !== id));
+    };
+
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(t.dataset.tab!));
+      t.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        e.preventDefault();
+        const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        next.focus();
+        select(next.dataset.tab!);
+      });
+    });
+
+    copyBtn?.addEventListener('click', async () => {
+      const active = panels.find((p) => !p.hidden);
+      const text = active?.textContent ?? '';
+      try {
+        await navigator.clipboard.writeText(text);
+        if (copyLabel) copyLabel.textContent = 'Copied';
+      } catch {
+        if (copyLabel) copyLabel.textContent = 'Select & copy';
+      }
+      setTimeout(() => {
+        if (copyLabel) copyLabel.textContent = 'Copy';
+      }, 1600);
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-citation]').forEach(init);
+</script>
+
+<style>
+  .citation {
+    margin: 1.75rem 0;
+    border: 1.2px solid var(--line);
+    border-radius: 14px;
+    background: var(--bg);
+    overflow: hidden;
+    font-family: var(--font-mono);
+  }
+
+  .citation-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.55rem 0.75rem 0.55rem 1.1rem;
+    border-bottom: 1px solid var(--line-faint);
+    background: var(--bg-inset);
+  }
+
+  .citation-heading {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--ink-dim);
+    flex-shrink: 0;
+  }
+
+  .citation-tabs {
+    display: flex;
+    gap: 0.15rem;
+    flex: 1;
+  }
+
+  .citation-tabs [role='tab'] {
+    appearance: none;
+    border: 1px solid transparent;
+    background: none;
+    border-radius: 999px;
+    padding: 0.2rem 0.65rem;
+    font: inherit;
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .citation-tabs [role='tab']:hover {
+    color: var(--ink);
+  }
+
+  .citation-tabs [role='tab'][aria-selected='true'] {
+    color: var(--ink);
+    border-color: var(--line);
+    background: var(--bg);
+  }
+
+  .citation-copy {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    border-radius: 999px;
+    padding: 0.2rem 0.65rem;
+    font: inherit;
+    font-size: 0.8rem;
+    color: var(--ink-dim);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .citation-copy:hover {
+    color: var(--ink);
+    border-color: var(--ink-faint);
+  }
+
+  .citation pre {
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    padding: 1rem 1.1rem;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .citation pre code {
+    font-size: inherit;
+  }
+
+  @media (max-width: 640px) {
+    .citation-bar {
+      flex-wrap: wrap;
+    }
+    .citation-heading {
+      display: none;
+    }
+  }
+</style>
