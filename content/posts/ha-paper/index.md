@@ -14,9 +14,9 @@ cover:
 
 summary: "HA Paper turns a Xteink X4 Pro e-reader into a calm Home Assistant display. I wrote almost none of the code. Claude Code ran the project as a small team of agents, and most of the firmware was tested in emulators before the device arrived. This is what worked, and what only the real hardware could show."
 ---
-Home Assistant has run my house for years. It knows the energy price for the next hour, what the solar panels are doing, and how warm every room is. To see any of that I pick up my phone or open a dashboard on a tablet. Both glow at you in the evening, and both pull you into everything else that lives on a screen.
+Home Assistant has run my house for years. It knows the energy price for the next hour, what the solar panels are doing, and how warm every room is. To see any of that I pick up my phone or open a dashboard on a tablet. Both light up the room in the evening, and both have every other app one swipe away.
 
-What I wanted was a small display on a shelf that shows those numbers and nothing else. E-ink, so it is readable in daylight and dark at night. Every time I looked into it I ended up at the same place: a bare panel, an ESP32 board and a 3D-printed case. That is a nice weekend project. It is not an object I want in my living room.
+What I wanted was a small display on a shelf that shows those numbers and nothing else. E-ink, so it is readable in daylight and dark at night. Every time I looked into it I ended up at the same place: a bare panel, an ESP32 board and a 3D-printed case. That is a fine weekend project, but not something I want in my living room.
 
 <!-- TODO Daan: the 3D-printed-case reason comes from your brief, not from the project docs. Confirm or rephrase in your own words. -->
 
@@ -52,7 +52,7 @@ The main Claude Code session is the coordinator. It owns the board and hands wor
 
 Every change reaches `main` through a pull request. Builders leave their work uncommitted and report back. The coordinator commits, opens the PR, runs the full test list and merges. In two weeks that added up to 134 issues and 88 merged pull requests.
 
-I am the product owner and the only user. Anything with a visible change gets a `verify` label and a short "how to verify", and before each release I get one checklist of at most ten items to try on a test device. My useful contributions were mostly short. The coordinator built "roll back a firmware update if it can't reach Home Assistant". I pointed out that updates come from GitHub, so a Home Assistant outage should never undo a good update. The default screens turned out to be my own house, with my meters and my rooms. I asked that a fresh display builds its screens from the owner's Home Assistant instead.
+I am the product owner and the only user. Anything with a visible change gets a `verify` label and a short "how to verify", and before each release I get one checklist of at most ten items to try on a test device. My corrections were mostly one or two sentences. The coordinator built "roll back a firmware update if it can't reach Home Assistant". I pointed out that updates come from GitHub, so a Home Assistant outage should never undo a good update. The default screens turned out to be my own house, with my meters and my rooms. I asked that a fresh display builds its screens from the owner's Home Assistant instead.
 
 ### Two weeks of emulators
 
@@ -62,7 +62,7 @@ The first one was a design: an interactive mock-up made in Claude Design, with t
 
 The second was the real firmware in Espressif's QEMU fork, which emulates the ESP32-S3 on a Mac. It has no Wi-Fi and no e-ink panel, but it does emulate the CPU, flash, PSRAM and an Ethernet controller. That is enough to run the web server, the API, the Home Assistant connection and firmware updates against a fake Home Assistant with OAuth, a WebSocket, TLS and faults on purpose. The contract suite that runs against it is now 88 tests.
 
-It found bugs unit tests never would have. Firmware rollback had never worked: the function that tells Arduino to wait before trusting a new image was declared in C++ instead of C, so the linker never matched it and every update was accepted on first boot. The fix was two words, `extern "C"`. And Home Assistant sends its entity list as one 74 KB string, while the JSON library on a 32-bit chip caps a string at 65,535 bytes. On a big house the list came back empty.
+It found two bugs that every unit test had passed. Firmware rollback had never worked: the function that tells Arduino to wait before trusting a new image was declared in C++ instead of C, so the linker never matched it and every update was accepted on first boot. The fix was two words, `extern "C"`. And Home Assistant sends its entity list as one 74 KB string, while the JSON library on a 32-bit chip caps a string at 65,535 bytes. On a big house the list came back empty.
 
 On top of that runs an endurance harness: the firmware in QEMU for a full day while it injects Home Assistant restarts, dropped WebSockets, a two-hour clock jump and network drops. The run before v0.1.0-alpha.6 did 1440 polls with 273 injected faults, recovered from every one within 94 seconds, and the heap stayed flat. We shipped six alpha releases before the device existed.
 
@@ -70,7 +70,7 @@ On top of that runs an endurance harness: the firmware in QEMU for a full day wh
 
 The X4 Pro came in at midnight on 26 October. The plan was boring on purpose: check that the chip isn't locked, back up the full 16 MB of stock firmware (53 seconds, checked four ways), flash.
 
-It booted, joined Wi-Fi and linked to my Home Assistant on the first try. Two weeks of emulators had produced firmware that worked on its first flash.
+It booted, joined Wi-Fi and linked to my Home Assistant on the first try.
 
 ### What the emulators could not show
 
@@ -81,7 +81,7 @@ Then I used it for a while and wrote down what I saw. None of it had shown up in
 - **The internal heap fell to 10.9 KB.** QEMU had shown about 117 KB. The Wi-Fi driver asks for 64 buffers in internal RAM, and QEMU's Ethernet card never does.
 - **Every boot showed the setup screens**, three full refreshes before Home. The real panel's boot refresh takes longer than a 1.6-second timer, so the app decided it was a new display before the stored Wi-Fi settings had loaded.
 - **The text was too small.** 14 px on this panel is about 1.1 mm. The browser preview scales the image up, and for two weeks that hid it.
-- **It was slow.** A tap took 1.7 seconds before the next page even started drawing, and the drawing took seconds on top. The Home page needed 7.8 seconds to render. On my Mac the same code takes 2 ms.
+- **It was slow.** A tap cost 1.7 seconds of panel refreshes (565 ms to invert the pressed button, 1092 ms for the new page) before the render time was even added. Rendering the Home page took 7.8 seconds; on my Mac the same code takes about 2 ms. The worst I saw was 22.6 seconds for one page change, while I kept tapping, and every extra tap was queued and replayed afterwards.
 
 A discovery agent found the cause of the last one. The rounded corners of every card were computed with `double` math, per pixel. The ESP32-S3's FPU only does single precision, so every one of those operations became a software call.
 
@@ -89,15 +89,15 @@ Later that day I pressed the power button, and the device switched off so hard t
 
 ### Back to a display I want to use
 
-I went to bed and left the device on USB. The coordinator flashed each fix overnight, read the device's log, and only then merged the pull request. By the morning five of the six were in. Navigation uses the fast waveform and only every tenth page change does a clean refresh. The heap low point went from 7.6 KB to 23.9 KB. The display boots straight to Home.
+I went to bed and left the device on USB. The coordinator flashed each fix overnight, read the device's log, and only then merged the pull request. By the morning four were merged. Navigation uses the fast waveform and only every tenth page change does a clean refresh. The clock fix is one extra 48 KB write to the controller's RAM after each gray render. The heap low point went from 7.6 KB to 23.9 KB. The display boots straight to Home. The larger text waited until I could look at it on the glass.
 
 The speed was fixed by the next afternoon. A builder rewrote the drawing code in integers, and all 408 host renders came out byte-identical to before. Home now renders in 262 ms, and a tap shows the new page in about one second, most of which is the panel's own waveform. To measure that without me tapping, I asked for two API endpoints: one that injects input, one that returns the framebuffer. From then on the coordinator paged through the screens itself and read the timings from the log. My verdict after trying it: "speed is now perfect".
 
 ![The Solar and battery page, as the framebuffer of the real X4 Pro](solar-battery.png)
 
-The screenshots in this post come from that framebuffer: 800 × 480 pixels, four gray levels, exactly what is on the glass.
+The screenshots in this post come from that framebuffer: 800 × 480 pixels in four gray levels, the same image that is on the glass.
 
-With that, the display does what I wanted from the start.
+This is what the beta does now.
 
 **Setup.** You flash it from a web page in Chrome or Edge over USB. The page checks that the chip isn't locked, saves the full stock backup to a file so you can always go back, and installs without touching the partition where the factory stored the panel calibration. Then it sends your Wi-Fi name and password over the same cable with [Improv](https://www.improv-wifi.com/serial/). Without the cable you pick a network on the display, or join a setup hotspot from your phone.
 
@@ -111,15 +111,15 @@ With that, the display does what I wanted from the start.
 
 **Updates.** Firmware goes in over the API. The device checks the upload against the SHA-256 in the release manifest, writes it to the other of two app slots and boots it. A new image is kept once it has run for a minute with a network connection. If it crashes before that, the bootloader goes back to the old one. If it hangs, it restarts itself after 12 minutes and rolls back. If it can't get online within ten minutes, it rolls back as well, because an image that can't get online can never be fixed over the air. Once the repository is public, the device can also check GitHub releases on its own.
 
-**An API for agents.** I wanted the device to be something an agent can work with, not only a person. API tokens are read or write. `/status`, `/diagnostics` and `/logs` show what the device is doing: the last eight boots and why they happened, the heap low point, a 64 KB log ring in PSRAM, and the tail of the log from before the last reset. Remote input and the framebuffer are off by default and switched on in the settings. These are the endpoints the coordinator used on the real device that night.
+**An API for agents.** The API is meant for scripts and agents as well as for me. API tokens are read or write. `/status`, `/diagnostics` and `/logs` show what the device is doing: the last eight boots and why they happened, the heap low point, a 64 KB log ring in PSRAM, and the tail of the log from before the last reset. Remote input and the framebuffer are off by default and switched on in the settings. These are the endpoints the coordinator used on the real device that night.
 
 ![The page overview before (left) and after (right) the larger text sizes](text-size.png)
 
 ### What changed for me
 
-The emulators were worth every hour. They gave me firmware that booted, linked and drew the right things on its first flash. They could not tell me how it looked or how it felt, and that is exactly what the first night on hardware found. Next time I would still build the emulators first, and I would still expect to throw a night at the real thing.
+The emulators gave me firmware that booted, linked and drew the right things on its first flash. They could not show waveforms, the controller's RAM, the Wi-Fi driver's memory or how long the real panel takes to refresh, and every bug of the first night was one of those. Next time I would build the emulators first again, and plan a night with the real device.
 
-The agent team needed what a human team needs: one place for the plan, small pieces of work, someone who decides, and a user who actually uses the thing. Most of my value was in that last role. The difference with a human team is the pace. Bugs I found at midnight were flashed, checked and merged by the time I woke up. An agent flashing a device on my desk, reading its log, tapping it and looking at its screen is the part I didn't expect to work this well.
+The agent team needed what a human team needs: one place for the plan, small pieces of work, someone who decides, and a user who uses the thing every day. Most of my value was in that last role. The difference with a human team is the pace. Bugs I found at midnight were flashed, checked and merged by the time I woke up. I didn't expect an agent to flash a device on my desk, read its log, tap it through the API and check its framebuffer, and then fix what it saw.
 
 It is not finished, and the beta is public so other people can find what I haven't:
 
