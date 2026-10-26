@@ -28,6 +28,10 @@ So two weeks ago I started HA Paper: firmware that turns an Xteink X4 Pro e-read
 
 ### An e-reader instead of a DIY panel
 
+The idea came from work. A few colleagues had an Xteink X4 Pro, and one of them, [COLLEAGUE NAME], told me you can replace its operating system quite easily. He showed me what he had built himself: [HIS PROJECT NAME + LINK], his own firmware for reading books on the go, which also plays chess. If it can play chess, it can show my energy prices.
+
+<!-- TODO Daan: fill in [COLLEAGUE NAME] and [HIS PROJECT NAME + LINK], and check he is fine being named. -->
+
 The X4 Pro is a 4.3-inch e-reader that costs about a hundred euros. Inside is an ESP32-S3 with 16 MB of flash and 8 MB of PSRAM, an 800 × 480 e-ink panel with a touch controller, a front light and a battery. It comes with a proper case, buttons and a magnetic USB-C cable. It looks like something you bought on purpose, which is most of what I was after.
 
 What makes it usable is that the bootloader isn't locked. An open-source reader firmware, [CrossPoint](https://github.com/crosspoint-reader/crosspoint-reader), already runs on it. Its hardware library, freeink-sdk, has a pin map and display drivers that its authors checked on real devices. HA Paper pulls that library in as a submodule, so we never wrote a driver for the panel or the touch chip.
