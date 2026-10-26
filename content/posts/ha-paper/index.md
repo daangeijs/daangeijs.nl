@@ -1,7 +1,7 @@
 ---
 title: "HA Paper: e-ink firmware for a device I didn't own yet"
 date: 2026-10-27T09:00:00+01:00
-draft: true
+draft: false
 
 tags:
 - homeautomation
