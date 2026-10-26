@@ -7,13 +7,14 @@ interface Props {
 
 const { project } = Astro.props;
 const href = `/projects/${project.id}/`;
-const { title, summary } = project.data;
+const { title, summary, timeframe } = project.data;
 ---
 
 <a class="pill-link" href={href}>
   <div class="grid-item">
     <p class="projtitle">{title}</p>
     <p class="projdescription">{summary}</p>
+    {timeframe && <p class="projdate">{timeframe}</p>}
     <span class="corner-arrow" aria-hidden="true">
       <svg viewBox="0 0 24 24" width="15" height="15"
         ><path
@@ -33,7 +34,7 @@ const { title, summary } = project.data;
 
   .grid-item {
     position: relative;
-    height: 101px;
+    height: 124px;
     border-radius: 28px;
     border: 1.2px solid var(--line);
     background: var(--bg);
@@ -72,6 +73,16 @@ const { title, summary } = project.data;
     margin-top: 0.2em;
   }
 
+  .projdate {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--ink);
+    opacity: 0.4;
+    margin-top: 0.35em;
+    white-space: nowrap;
+  }
+
   .corner-arrow {
     position: absolute;
     top: 14px;
@@ -82,7 +93,7 @@ const { title, summary } = project.data;
 
   @media (max-width: 695px) {
     .grid-item {
-      height: 78px;
+      height: 96px;
       border-radius: 18px;
       padding-top: 0.7em;
     }
@@ -93,6 +104,10 @@ const { title, summary } = project.data;
 
     .projdescription {
       font-size: 0.85rem;
+    }
+
+    .projdate {
+      font-size: 0.75rem;
     }
   }
 </style>
