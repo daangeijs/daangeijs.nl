@@ -17,8 +17,6 @@ draft: false
 
 Home Assistant knows the energy price for the next hour, what the solar panels do and how warm every room is. To see it I had to pick up my phone or a tablet, which light up the room at night and have every other app one swipe away. HA Paper puts those numbers on an e-ink screen on a shelf, and nothing else.
 
-<!-- TODO Daan: github.com/daangeijs/ha-paper must be public before this page goes live (the repo card and the links below point there). -->
-
 <!-- IMAGE: photo of the X4 Pro on the shelf showing the Home page, Daan to add -->
 
 ## Why an e-reader
@@ -31,6 +29,7 @@ The usual route is a bare e-ink panel, an ESP32 board and a 3D-printed case. The
 - **Setup from a web page.** Flash it from Chrome or Edge over USB. The flasher checks that the chip isn't locked, saves the full 16 MB stock firmware to a file so you can go back, leaves the factory panel calibration alone and sends your Wi-Fi details over the same cable with [Improv](https://www.improv-wifi.com/serial/). Without the cable you pick a network on the display or join a setup hotspot from your phone.
 - **Sign in with a QR code.** No long-lived token to paste. Scan the code on the display and log in with your normal Home Assistant account through its own OAuth sign-in. The display doesn't need a public hostname.
 - **A web console on the device.** Edit screens and tiles with live values next to them, change settings, edit the YAML directly, create API tokens. Home Assistant admins get full access, other users a view-only console.
+- **Three steps on battery.** After a press the dashboard is live for a minute, then it stays on screen without updating while Wi-Fi stays on, so a touch brings it up to date at once. Five minutes later it goes into deep sleep behind a sleep screen with the date, today's weather, events and bins, and the battery with an estimate of the days left. Both times are settings.
 - **Updates that undo themselves.** A new image is checked against the SHA-256 in the release manifest and written to the second of two app slots. It is kept after a minute online. If it crashes, hangs (12 minutes) or can't get online (10 minutes), the device goes back to the previous image.
 - **An API for scripts and agents.** Read or write tokens. `/status`, `/diagnostics` and `/logs` show the last eight boots and why they happened, the heap low point, a 64 KB log ring and the log from before the last reset. Remote input and a framebuffer endpoint are off by default.
 
@@ -38,8 +37,6 @@ The usual route is a bare e-ink panel, an ESP32 board and a 3D-printed case. The
 
 ## Status
 
-The first public beta is v0.2.0-beta.1, on [GitHub](https://github.com/daangeijs/ha-paper). It runs in my living room. Battery life isn't measured yet: about 50 days in glance mode is an estimate from [TRMNL](https://usetrmnl.com)'s numbers. The power button can still switch the device off so hard that only USB brings it back, and the browser flasher hasn't run against a real X4 yet.
-
-<!-- TODO Daan: update the status against the board on the day you publish (#225 power button, #227 HTTP stall, flasher on hardware). -->
+The current release is v0.3.0, the first one out of beta, on [GitHub](https://github.com/daangeijs/ha-paper). It runs in my living room. Battery life isn't measured with a meter yet: the days-left estimate on the sleep screen starts from a power model and moves toward the drain the device measures itself. Standby with Wi-Fi on is the most expensive step, and its current is an estimate too. The browser flasher has only run against my own X4. The next milestone, v1.0, is 30 days on battery without touching it.
 
 I wrote almost none of the code. Claude Code built it as a small team of agents, mostly in emulators before the device arrived. That story is in [Handing the build to a team of agents](/posts/handing-the-build-to-agents/).

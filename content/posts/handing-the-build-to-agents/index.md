@@ -21,9 +21,7 @@ The idea for the hardware came from work. A few colleagues had an Xteink X4 Pro,
 
 <!-- TODO Daan: fill in [COLLEAGUE NAME] and [HIS PROJECT NAME + LINK], and check he is fine being named. -->
 
-That became [HA Paper](/projects/ha-paper/), firmware that turns the X4 Pro into a Home Assistant dashboard. The first public beta is v0.2.0-beta.1. What it does is on the project page. This post is about how it was built, because I wrote almost none of the code. HA Paper is the first project I built this way.
-
-<!-- TODO Daan: check the repo is public and the beta tag is live before publishing. -->
+That became [HA Paper](/projects/ha-paper/), firmware that turns the X4 Pro into a Home Assistant dashboard. The current release is v0.3.0, the first one out of beta. What it does is on the project page. This post is about how it was built, because I wrote almost none of the code. HA Paper is the first project I built this way.
 
 There were two catches. I didn't have the device yet; it arrived two weeks after the first commit. And I wasn't going to write the firmware myself. I had an opinion about how it should be built, though. My day job is product discovery, and I have fairly fixed ideas about how a product team should work: a product owner with clear goals, discovery before building, small pieces of work that anyone can pick up, checks on every change, and a real user who tries each release. I wanted to see what happens if you take that literally and let Claude Code play every role except two.
 
@@ -82,6 +80,8 @@ Later that day I pressed the power button, and the device switched off so hard t
 
 I went to bed and left the device on USB. The coordinator flashed each fix overnight, read the device's log, and only then merged the pull request. By the morning four were merged. Navigation uses the fast waveform and only every tenth page change does a clean refresh. The clock fix is one extra 48 KB write to the controller's RAM after each gray render. The heap low point went from 7.6 KB to 23.9 KB. The display boots straight to Home. The larger text waited until I could look at it on the glass.
 
+The power button took a day of debugging and turned out not to be a bug. The button on the top edge, next to the microSD slot, is Reset, not Power; Xteink's quick start guide says so. On battery a reset restarts the chip, the chip lets go of the line that holds the power on, and the device is off until you hold the real Power button, the small one at the top of the right side. The stock firmware does the same.
+
 The speed was fixed by the next afternoon. A builder rewrote the drawing code in integers, and all 408 host renders came out byte-identical to before. Home now renders in 262 ms, and a tap shows the new page in about one second, most of which is the panel's own waveform.
 
 To measure that without me tapping, I asked for two API endpoints: one that injects input, one that returns the framebuffer. The device already served its boot history, heap low point and log over the API. With input and the framebuffer added, the coordinator paged through the screens itself, read the timings from the log and looked at what was on the glass. My verdict after trying it: "speed is now perfect".
@@ -105,12 +105,12 @@ I don't know yet how far that carries beyond a one-person project with one user.
 Parts of this are still rough:
 
 - **Reviews need checking.** One in eleven findings of the first audit was real. Without the coordinator verifying them, the other ten would have become work.
-- **Some numbers come from paper.** Battery life in glance mode is about 50 days, but that uses [TRMNL](https://usetrmnl.com)'s published numbers. No emulator can measure it, and nobody has measured it on the device yet.
-- **The endurance harness found something it can't explain.** One overnight soak stopped answering over HTTP for 55 minutes without resetting itself.
-- **The browser flasher has not run against a real X4.** So far only the backup and flash from the repo have, so the first stranger to use it is also its first hardware test.
-- **The power button** from the first night is still the top issue.
+- **Some numbers come from paper.** The sleep screen estimates the days of battery left from a power model that moves toward the drain the device measures. The standby step, where Wi-Fi stays on, costs an estimated 25 to 38 mA. Nobody has put a current meter on the device yet.
+- **One crash is unexplained.** The device stored a core dump from the mDNS task while it parsed an incoming packet, on an older build, on my network with its VLANs. It could not be decoded exactly, so we cleared it and are waiting to see if it comes back on a build we can decode.
+- **The emulator job in CI is flaky.** On GitHub's runners a different contract test times out each run, and a rerun passes. The release of v0.3.0 needed one rerun before it could be tagged.
+- **The browser flasher has only run against my own X4.**
 
-<!-- TODO Daan: update this list against the board on the day you publish (#225 power button, #227 HTTP stall, flasher on hardware). -->
+The 55-minute HTTP stall from the endurance runs turned out to be name lookups: the device's `.local` name stopped resolving while it answered fine by IP. It now answers IPv6 lookups too, and since then the name has kept answering.
 
 <!-- TODO Daan: the "my day job is product discovery" framing and the reflection in "What changed for me" are written from your brief; check they say what you think, in your words. -->
 
