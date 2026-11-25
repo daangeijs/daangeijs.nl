@@ -50,7 +50,7 @@ Two projects saved me a lot of guessing as well: [TrailCamHub](https://github.co
 
 By the end of it, the Mac could wake the camera, pull every video off it, and read and change all of its settings. All that was left was to put that on the ESP32 and hang it in the garden.
 
-### Nowhere to put a clip
+### Where to store the video
 
 That's where my research hadn't gone far enough. An ESP32 has one Wi-Fi radio, so it's either on my home network or on the camera's hotspot, never both. A clip has to sit somewhere while it switches back home, and my board has about 0.5 MB of RAM and no storage at all. A 10-second clip in 1080p is around 7 MB. I couldn't stream the video through it to the house either, with the radio tied up on the camera's hotspot.
 
