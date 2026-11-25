@@ -108,3 +108,5 @@ The first clip came in on 25 November at 10:37, while I was still busy mounting 
 That clip came in just before the birdbox switched off the camera's own bar, so it's still burnt in. The models said "bird, 98%". I filled in the rest. The app was still called Wildcam then, which was a bit of a lame name. It's called Robin now.
 
 Next up is a second camera, and a real microphone for the birdbox, so it hears the birds better than it hears the ESP32.
+
+The code for the ESP32, the bridge on the Pi and Robin itself is on GitHub: [daangeijs/robin](https://github.com/daangeijs/robin).

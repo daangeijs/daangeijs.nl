@@ -4,6 +4,7 @@ summary: "A 2015 Raspberry Pi in a weatherproof box in the garden that listens f
 description: "The birdbox: a Raspberry Pi 2 audio streamer in the garden feeding BirdNET-Go on a home Kubernetes cluster, built from old hardware without buying anything new."
 role: "Builder, only listener"
 timeframe: "2026"
+repo: "daangeijs/robin"
 thumbnail: ./birdbox.jpg
 weight: 18
 tags:
