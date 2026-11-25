@@ -81,7 +81,7 @@ The Pi doesn't decide anything by itself. It has a small web API and waits until
 - Every clip gets looked at by three models: Google's SpeciesNet, DeepFaune (trained on European trail camera footage) and Claude. They vote, and I can correct them. Once I've approved a clip, it stays approved.
 - A side panel shows each camera with its Bluetooth signal, battery, whether the sun is charging it, temperature, free space on the card, and when it was last and next checked. A "check now" button shows which clip is coming in.
 
-![The Robin timeline with the camera panel open: camera Appelboom in range, signal -67 dBm, battery 60% charging from the sun, 2 °C, 255 of 255 MB free, last check 14:00, next check 18:00](dashboard.jpg)
+![The Robin timeline with the camera panel open: camera Appelboom in range, signal -84 dBm, battery 60% charging from the sun, 1 °C, 255 of 255 MB free, last check 15:44 with nothing new, next check 18:00, and one clip of a European robin in the timeline](dashboard.jpg)
 
 Adding a camera is a name and the address of its bridge. A camera in the front garden would be another ESP32 next to another Pi, and its clips land in the same timeline. A cheap camera now does what the expensive ones do, and a second or third one just shows up next to it.
 

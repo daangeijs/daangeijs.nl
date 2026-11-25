@@ -56,7 +56,9 @@ Power cuts are the first problem. Someone pulls the cable, the switch reboots, a
 
 The headset is a stopgap, and I wanted to plug in a real microphone later without rebuilding anything. The setup picks the sound card by name instead of by number and picks the best sample rate it supports. The headset surprised me there: it records natively at 48 kHz. A minute of the live stream showed no clipping, low rumble from wind and traffic, and a 50 Hz hum from its cable. No bird lives down there, so BirdNET-Go's high-pass filter takes that out for free. The real limit is the headset itself: faint flight calls high in the night sky need a proper microphone.
 
-Everything is scripted. One script writes the SD card, with checks so it can never touch the laptop's own disk, and an Ansible playbook does the rest. If the card ever dies, a new one is fifteen minutes away.
+I was a bit lazy here, too. I wanted to write the SD card, plug in the Pi and SSH straight into it with most of it already set up. I've always hated the usual Raspberry Pi fiddling: an HDMI cable to a monitor, a keyboard, cables everywhere, and a USB charger that's always just too short, so you end up with the Pi on your lap, being drawn and quartered by its own cables.
+
+So everything is scripted. One script writes the SD card, with checks so it can never touch the laptop's own disk, and the Pi comes up on the network ready to log in. An Ansible playbook does the rest. If the card ever dies, a new one is fifteen minutes away.
 
 It now lives in a white weatherproof box in the garden, on its one network cable, with the headset's microphone poking out of the bottom. I've started calling it the birdbox.
 
