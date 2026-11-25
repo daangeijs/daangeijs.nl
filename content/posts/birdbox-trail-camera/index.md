@@ -13,7 +13,7 @@ cover:
     image: "robin.jpg"
     alt: "A robin with its face right in front of the trail camera lens, a brick wall and a wooden fence in the autumn garden behind it"
 
-summary: "A cheap trail camera can't send you its clips. An old ESP32 and the Raspberry Pi in my birdbox now fetch them, from any number of cameras, into one dashboard. The first visitor was a very curious robin."
+summary: "A cheap trail camera can't send you its clips. But an old ESP32 and an old Raspberry Pi 2 (aka the birdbox) can! Combined with my Robin dashboard, clips from multiple wildlife cameras are now analysed and bundled into one clean dashboard. The first visitor was a very curious robin."
 ---
 A few weeks ago I turned a 2015 Raspberry Pi into a [bird listening station](/posts/birdstation/). It sits in a weatherproof box on a shelf in the garden and streams what it hears to my home server. The server tells me which birds were singing. I was pretty happy with that.
 
