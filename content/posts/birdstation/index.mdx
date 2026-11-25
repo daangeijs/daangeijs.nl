@@ -15,6 +15,8 @@ cover:
 
 summary: "A Raspberry Pi 2 from 2015, an old headset and a PoE splitter from the attic: a 24/7 bird listening station that buys nothing new, because the Pi only streams audio and my home cluster does the listening."
 ---
+import GitHubCard from '../../../src/components/GitHubCard.astro';
+
 It started with [Avian Visitors](https://theodore.net/projects/AvianVisitors/). That post made me realise the BirdNET model weights are open source, and that got me excited to do something with them myself. I knew the Cornell Lab of Ornithology, of course, the people behind the fantastic Merlin Bird ID app. I still use it sometimes when I'm out birding, for a second opinion.
 
 [BirdNET](https://birdnet.cornell.edu/), a neural network from the Cornell Lab and Chemnitz University of Technology, recognises thousands of species by sound, and projects like BirdNET-Pi turn a Raspberry Pi into a bird listening station. But they run the analysis on the Pi itself, so you need a Raspberry Pi 4 or 5, a decent microphone, maybe a fan, and a few hundred euros before you've heard a single robin.
@@ -30,7 +32,7 @@ Spending all that on a Raspberry Pi at today's inflated prices, just to listen t
 
 ![The junk pile on a dark table: a Raspberry Pi 2, a PoE splitter, a short network cable, and the Logitech headset with its microphone boom, still wrapped around its Ghost Recon: Jungle Storm case](junk-pile.jpg)
 
-<!-- TODO Daan: the EM272 microphone and Sound Blaster Play! 3, from a box or bought? That decides how strict the "buy nothing" line is. -->
+{/* TODO Daan: the EM272 microphone and Sound Blaster Play! 3, from a box or bought? That decides how strict the "buy nothing" line is. */}
 
 The Pi 2 was probably the weak spot, and unfortunately BirdNET-Go's own documentation calls it "marginal and RAM-limited". Sad, but true. It's already impressive that a deep learning model can run on cheap hardware at all. Then I realised my Pi 2 didn't have to do the analysis. I have a much more powerful homelab, and the only thing the Pi had to do for me was record. That changed things, and gave me hope.
 
@@ -50,7 +52,7 @@ Because the Pi only copies samples and never encodes or analyses anything, the 2
 
 Someone's going to pull the cable sooner or later (that'll be me), reboot the PoE switch (also me), or flip the wrong fuse and cut the power to the Pi (yes, most likely me). And when that happens mid-write, the microSD card is toast. That's why I have a difficult relationship with the early Raspberry Pis. Well, life teaches you these hard lessons, so this time I set the system up to run read-only. The OS runs from an overlay in RAM, the logs live in RAM, and there's no swap. Nothing gets written to the card in normal use, so you can pull the plug whenever you like.
 
-<!-- TODO Daan: result of the power-cut test. -->
+{/* TODO Daan: result of the power-cut test. */}
 
 The headset is a stopgap, and I wanted to plug in a real microphone later without rebuilding anything. The setup picks the sound card by name instead of by number and picks the best sample rate it supports. I was surprised the headset records natively at 48 kHz. A minute of the live stream showed no clipping, low rumble from wind and traffic, and a 50 Hz hum from its cable. Luckily no birds live down there, so BirdNET-Go's high-pass filter takes that out for free. For faint flight calls high in the night sky, I'll need a proper microphone.
 
@@ -101,3 +103,7 @@ On a grey Wednesday in November it heard thirteen species, from redwings passing
 My favourite so far is a firecrest. It showed up on four days in its first week, and one morning BirdNET was 95% sure of it.
 
 It didn't stay a bird station for long, though. A cheap trail camera moved in next to it, and an old ESP32 in the same box now empties that camera too. You can read all about that [here](/posts/birdbox-trail-camera/).
+
+The scripts that flash the card and set up the Pi, and my BirdNET-Go config, are on GitHub under the MIT license:
+
+<GitHubCard repo="daangeijs/birdstation" />
