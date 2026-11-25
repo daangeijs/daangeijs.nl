@@ -40,7 +40,7 @@ Luck was on my side, because BirdNET-Go already supports exactly that. The same 
 
 My homelab is a small Kubernetes cluster that runs all sorts of services, and one of its nodes is a 16-core mini PC. So the Pi became the ear and the cluster the brain. The Pi reads the microphone and puts the sound on the network as a stream, nothing else. The cluster pulls that stream, runs BirdNET, keeps the detections and short audio clips, and tells Home Assistant what it heard.
 
-The Pi runs no code I wrote. ffmpeg reads the microphone, and MediaMTX, a tiny media server, serves the audio as an RTSP stream, the same protocol IP cameras use. The Pi doesn't even know the cluster exists. If the stream drops, the cluster just reconnects.
+On the Pi it's all off-the-shelf software. ffmpeg reads the microphone, and MediaMTX, a tiny media server, serves the audio as an RTSP stream, the same protocol IP cameras use. The Pi doesn't even know the cluster exists. If the stream drops, the cluster just reconnects.
 
 I send uncompressed mono audio at 16-bit and 48 kHz. That's about 770 kbit/s, which is nothing for a home network. MP3 and friends save bandwidth by throwing away the high frequencies, and that's exactly where a lot of birdsong lives.
 
