@@ -1,6 +1,6 @@
 ---
 title: "Handing the build to a team of agents"
-date: 2026-10-27T09:00:00+01:00
+date: 2026-11-03T09:00:00+01:00
 draft: false
 
 tags:
@@ -41,11 +41,11 @@ The main Claude Code session was the coordinator, more or less the team lead. It
 
 Every change went through a pull request. Builders left their work uncommitted and reported back; the coordinator committed, opened the PR, ran the tests and merged. After two weeks that was 134 issues and 88 merged pull requests.
 
-Most rules in the project's instructions file have a date and an incident next to them, the way a team's working agreements grow. Two test runs on one emulator port tested the wrong firmware, so every builder got its own ports. One agent updated the shared toolchain and broke every parallel build, so toolchain changes moved to a private directory. Main was red for two days before anyone noticed, so now the coordinator checks the main build after every merge and nothing gets released while it's red.
+The rules the agents worked by weren't mine. Every time something went wrong, the coordinator added a rule to the project's instructions file, with the date and what had happened, the way a team's working agreements grow. Early on, two builders tested at the same time on the same simulated device, and each thought it was looking at its own work. From then on every builder got its own simulator.
 
 Anything with a visible change got a `verify` label with a short "how to check", and before each release I got a list of at most ten things to try. Work merged on the automated checks without waiting for me, except copy and design, which I wanted to see first.
 
-My corrections were mostly a sentence or two. The coordinator built "roll back a firmware update if it can't reach Home Assistant", and I pointed out that updates come from GitHub, so a Home Assistant outage should never undo a good update. The default screens turned out to be my own house, with my meters and my rooms, so I asked for a fresh display to build its screens from its owner's Home Assistant instead.
+My own part was mostly product calls of a sentence or two. The agents could only see my house, so the first version showed my meters and my rooms on every screen: perfect for me, useless for anyone else. I said a new display should build its screens from its owner's Home Assistant, and that became the next piece of work.
 
 ### Two weeks of emulators
 

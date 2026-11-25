@@ -1,7 +1,7 @@
 ---
 title: "A bird detector from a drawer of old electronics"
-date: 2026-11-20T09:00:00+01:00
-draft: true
+date: 2026-11-13T09:00:00+01:00
+draft: false
 
 tags:
 - homeautomation
@@ -11,7 +11,7 @@ tags:
 
 cover:
     image: "birdnet-dashboard.jpg"
-    alt: "The BirdNET-Go dashboard for 25 November: thirteen species by hour, with redwing, blue tit, blackbird, jackdaw, chaffinch, great tit and robin heard most"
+    alt: "The BirdNET-Go dashboard for one day: thirteen species by hour, with redwing, blue tit, blackbird, jackdaw, chaffinch, great tit and robin heard most"
 
 summary: "A Raspberry Pi 2 from 2015, an old headset and a PoE splitter from the attic: a 24/7 bird listening station that buys nothing new, because the Pi only streams audio and my home cluster does the listening."
 ---

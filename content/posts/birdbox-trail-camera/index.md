@@ -1,7 +1,7 @@
 ---
 title: "The birdbox gets eyes"
 date: 2026-11-25T18:00:00+01:00
-draft: true
+draft: false
 
 tags:
 - homeautomation
