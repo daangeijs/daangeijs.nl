@@ -17,7 +17,7 @@ summary: "A Raspberry Pi 2 from 2015, an old headset and a PoE splitter from the
 ---
 There is a long-eared owl living behind my house. I know, because I hear it. I wanted a machine that could hear it too, along with every other bird that passes, and tell me what it heard day and night.
 
-That idea isn't new. [BirdNET](https://birdnet.cornell.edu/), a neural network from the Cornell Lab of Ornithology and Chemnitz University of Technology, recognises thousands of species by sound, and projects like BirdNET-Pi and the lovely [Avian Visitors](https://theodore.net/projects/AvianVisitors/) turn a Raspberry Pi into a bird listening station. But they all run the analysis on the Pi itself, so you need a Raspberry Pi 4 or 5, a decent microphone, maybe a fan, and a few hundred euros before you've heard a single robin.
+That idea isn't new. [BirdNET](https://birdnet.cornell.edu/), a neural network from the Cornell Lab of Ornithology and Chemnitz University of Technology, recognises thousands of species by sound, and projects like BirdNET-Pi turn a Raspberry Pi into a bird listening station. But they run the analysis on the Pi itself, so you need a Raspberry Pi 4 or 5, a decent microphone, maybe a fan, and a few hundred euros before you've heard a single robin.
 
 I gave myself one rule. I'd buy nothing new. Whatever I built had to come out of the boxes of old electronics every tinkerer has in the attic.
 
