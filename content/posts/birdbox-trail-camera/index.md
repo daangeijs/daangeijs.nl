@@ -33,7 +33,7 @@ I never opened that app. Not once. And I didn't want to walk into the garden for
 
 ### How the camera talks
 
-So instead of using the app, I read it. The app's code, plus the work of people who had poked at the same family of cameras before, told me roughly how a phone gets the clips off:
+So instead of using the app, I took it apart. I pulled the Android APK of TrailCam Go and decompiled it: the Java side for the command numbers and the settings it can change, and its native library `libArLink.so` for the encryption key. Together with the work of people who had poked at the same family of cameras before, that told me exactly how a phone gets the clips off:
 
 - The camera sleeps, but it keeps a little Bluetooth beacon on (mine calls itself `TC100_9B39`).
 - The phone connects over Bluetooth and writes a magic value to it. The camera answers with the name and password of a Wi-Fi hotspot it just switched on.
