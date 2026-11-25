@@ -83,19 +83,9 @@ Adding a camera is a name and the address of its bridge. A camera in the front g
 
 ### Settings from a distance
 
-I still have no idea how big the battery in this camera is. It reports its charge in steps of 20%, whether it's charging, and whether that's the sun doing it, and that's all it says. At least I can now see that without walking over, and I can change things too.
+I still have no idea how big the battery in this camera is. It reports its charge in steps of 20%, whether it's charging, and whether that's the sun doing it, and that's all it says. At least I can now see that without walking over, and I can change things too. It also tells me the microSD card holds 255 MB, which can't be right: either I messed up formatting it, or I crammed in some ancient card. For now it's fine, since the birdbox empties it at every check.
 
 The camera burns a bar into every video: a Denver logo, a battery icon, the moon, the temperature and the date in American order. The command the app uses to change settings works for me as well, so the birdbox switched that bar off. Wildcam draws its own bar over the video instead: the camera's name on the left, date and time in the middle (ticking along while the clip plays), and on the right the sun or the moon, the weather of that hour and the temperature. The weather comes from Open-Meteo, and the moon is the actual phase for that night. When I download a clip I can choose whether that bar gets burnt in.
-
-### 255 MB
-
-The dashboard also showed me my own mistake. The camera reports 255 MB of storage on its microSD card. In a recording of the app that someone put on GitHub, a 32 GB card shows up as 30,196 MB. I'm fairly sure I messed up formatting the card before it went in, so the camera only sees a sliver of it.
-
-Practically, it doesn't matter much yet. 255 MB holds about 35 ten-second clips, and the birdbox empties the card at every check, so it would take a very busy night to fill it up. I'd still rather not leave it like that, and I'd also rather not take the camera off the tree again for it.
-
-While digging through the app I'd seen a command to format the card (number 518, if you're curious), and the camera reports a flag when it thinks its card is formatted wrong. So the plan is to let the birdbox format the card from a distance at the next check. If that doesn't fix it, the camera comes off the tree and the card goes into a card reader after all.
-
-<!-- TODO Daan: update this once the remote format has run (or the camera came off the tree). -->
 
 ### A tick in the bird recordings
 
