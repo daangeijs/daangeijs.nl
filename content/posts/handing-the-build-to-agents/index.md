@@ -21,7 +21,7 @@ The hardware idea came from work. A few colleagues had an Xteink X4 Pro, a 4.3-i
 
 That became [HA Paper](/projects/ha-paper/), firmware that turns the X4 Pro into a Home Assistant display. The project page shows what it does. I wrote almost none of the code.
 
-I also didn't have the device yet. It arrived two weeks after the first commit. Not ideal for a hardware project, you'd think. (Spoiler: it turned out fine.)
+I also didn't have the device yet. It arrived two weeks after the first commit.
 
 What I did have was an opinion about how it should be built. My day job is product discovery, and I'm fairly particular about how a team should work. Someone sets clear goals and the team does its homework before building. The work comes in small pieces anyone can pick up, every change gets checked, and a real user tries each release. I kept the product owner and user roles for myself and let Claude Code play everyone else.
 
@@ -47,7 +47,7 @@ My own part was mostly product calls of a sentence or two. The agents could only
 
 ### Two weeks of emulators
 
-With no hardware, everything ran in emulators. Two weeks of pretending, basically.
+With no hardware, everything ran in emulators.
 
 The first was an interactive mock-up made in Claude Design. It had the device screen, a web console and a panel of "what if" switches (never linked, token revoked, a broken firmware download). That mock-up ended up being the spec. Its config parser generated test cases, and the C++ firmware has to give the same answer for every one of them, down to the line number and the error message.
 
@@ -59,7 +59,7 @@ The firmware also ran in QEMU for a full day, with Home Assistant restarts, drop
 
 ### First flash
 
-The X4 Pro arrived at midnight on 26 October. I kept the plan dull, because bricking a hundred-euro e-reader on its first night is exactly the kind of thing I would do. I checked that the chip wasn't locked, backed up the full 16 MB of stock firmware (53 seconds, checked four ways) and flashed it.
+The X4 Pro arrived at midnight on 26 October. I kept the plan dull. I checked that the chip wasn't locked, backed up the full 16 MB of stock firmware (53 seconds, checked four ways) and flashed it.
 
 It booted, joined Wi-Fi and linked to my Home Assistant on the first try.
 
@@ -84,7 +84,7 @@ I went to bed and left the device on USB. The coordinator flashed each fix, read
 
 <!-- TODO Daan: what did you see when you picked it up that morning, and the first tap that felt fast? A line or two here would make this the best moment of the post. --> Navigation uses the fast refresh and only every tenth page change does a clean one. The clock fix is one extra write to the controller's memory. Free memory went from 7.6 KB to 23.9 KB at its lowest. The display boots straight to Home. The bigger text waited until I could look at it on the glass.
 
-The power button took a day and wasn't a bug at all. Xteink's quick start guide calls the button on the top edge, next to the microSD slot, Reset. On battery, a reset restarts the chip, the chip lets go of the line that keeps the power on, and the device stays off until you hold the real Power button on the right side. The stock firmware does exactly the same. So yes, I'd been pressing the wrong button. Read the manual first: another lesson life keeps teaching me.
+The power button took a day and wasn't a bug at all. Xteink's quick start guide calls the button on the top edge, next to the microSD slot, Reset. On battery, a reset restarts the chip, the chip lets go of the line that keeps the power on, and the device stays off until you hold the real Power button on the right side. The stock firmware does exactly the same.
 
 The speed was fixed by the next afternoon. A builder rewrote the drawing code in whole numbers, and all 408 test renders came out identical to the pixel. Home now draws in 262 ms, and a tap shows the new page in about a second, most of which is the panel itself.
 
