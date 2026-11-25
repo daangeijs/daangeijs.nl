@@ -19,19 +19,21 @@ A few weeks ago I turned a 2015 Raspberry Pi into a [bird listening station](/po
 
 Then I bought a trail camera.
 
-### Research first, then the camera
+### How it came together
 
-I'd been finding odd marks in the grass, and I really wanted to know what was roaming around the garden at night. The previous owners once spotted a fox here. High hopes, I know.
+I'd looked at trail cameras before, but they never convinced me. They looked cheap, came with cheap apps, and getting the footage off meant walking up to the camera and fighting with that app on your phone.
 
-This time I did the research before buying anything. Cheap trail cameras record to an SD card, and if you want the footage you walk up to them with your phone and an app. The expensive ones upload over 4G or Wi-Fi. I wanted the cheap kind, but with the clips pulled out of it automatically, from the garden, by an ESP32.
+Then, while building the bird station, I found an old ESP32 in a box. I'd used it about six years ago to read out moisture sensors in my plant pots. Wi-Fi and Bluetooth on one chip. What if that ESP32 could talk to a trail camera itself and pull the footage off, without me ever touching the app?
 
-That wasn't a crazy idea. Geek IT Guide had already shown in [Wifi BLE Trailcam Investigation](https://geekitguide.com/wifi-ble-trailcam-investigation-part-1/) that one of these cameras wakes up when you write `BT_KEY_ON` to it over Bluetooth, and then opens a Wi-Fi hotspot of its own ([Hackaday picked it up too](https://hackaday.com/2023/07/18/reverse-engineering-reveals-hidden-api-in-abandonware-trail-camera)). So I went looking for a camera in that family that also fit the garden, and ended up with the Denver WSW-8120. It charges over USB-C and has a small solar panel on the front, so I don't have to climb into the bushes every two weeks with a box of AA batteries. It's strapped to the apple tree now, which is why it's called Appelboom in the dashboard.
+Add to that I'd been finding odd marks in the grass, and I really wanted to know what was roaming around the garden at night. The previous owners once spotted a fox here. High hopes, I know. It all came together.
+
+This time I did the research before buying anything. Geek IT Guide had already shown in [Wifi BLE Trailcam Investigation](https://geekitguide.com/wifi-ble-trailcam-investigation-part-1/) that one of these cameras wakes up when you write `BT_KEY_ON` to it over Bluetooth, and then opens a Wi-Fi hotspot of its own ([Hackaday picked it up too](https://hackaday.com/2023/07/18/reverse-engineering-reveals-hidden-api-in-abandonware-trail-camera)). So I went looking for a camera in that family that also fit the garden, and ended up with the Denver WSW-8120. It charges over USB-C and has a small solar panel on the front, so I don't have to climb into the bushes every two weeks with a box of AA batteries. It's strapped to the apple tree now, which is why it's called Appelboom in the dashboard.
 
 ![The camouflage-green Denver trail camera strapped to the trunk of the apple tree, solar panel on top, autumn leaves on the grass around it](camera_mounted.jpg)
 
 <!-- TODO Daan: what did it cost? A line like "for about €XX" fits here. -->
 
-For the brain I had an old ESP32 dev board in a drawer, the same kind of board that already runs half my house through Home Assistant. Wi-Fi and Bluetooth on one chip, and another piece of old hardware with a new job. It looked like a good bet. (Spoiler: I didn't do my research quite as thoroughly here.)
+The plant sensor ESP32 would be the brain, and another piece of old hardware would get a new job. It looked like a good bet. (Spoiler: I didn't do my research quite as thoroughly there.)
 
 ### On the desk
 
@@ -48,7 +50,7 @@ Two projects saved me a lot of guessing as well: [TrailCamHub](https://github.co
 
 By the end of it, the Mac could wake the camera, pull every video off it, and read and change all of its settings. All that was left was to put that on the ESP32 and hang it in the garden.
 
-### The ESP32 in the drawer, again
+### Nowhere to put a clip
 
 That's where my research hadn't gone far enough. An ESP32 has one Wi-Fi radio, so it's either on my home network or on the camera's hotspot, never both. A clip has to sit somewhere while it switches back home, and my board has about 0.5 MB of RAM and no storage at all. A 10-second clip in 1080p is around 7 MB. Streaming the video through it to the house runs into the same wall: there's no second way out.
 
