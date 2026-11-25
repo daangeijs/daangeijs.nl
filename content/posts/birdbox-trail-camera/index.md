@@ -37,14 +37,12 @@ For the brain I had an old ESP32 dev board in a drawer, the same kind of board t
 
 Like with [HA Paper](/posts/handing-the-build-to-agents/), I wanted the software sorted out before anything went outside. Luckily the camera arrived the next day this time. I gave it some charge over USB-C, put it next to my MacBook, and started taking it apart from there.
 
-I never opened its app, TrailCam Go. Instead I used REA (Reverse Engineer Anything) on the Android APK of that app, and this time it really worked: the Java side gave up the command numbers and every setting it can change, and its native library `libArLink.so` the encryption key. Together with what others had found on the same family of cameras, that told me how a phone gets the clips off:
+I never opened its app, TrailCam Go. Instead I used [REA (Reverse Engineer Anything)](https://github.com/morluto/rea) on the Android APK of that app, and this time it really worked: the Java side gave up the command numbers and every setting it can change, and its native library `libArLink.so` the encryption key. Together with what others had found on the same family of cameras, that told me how a phone gets the clips off:
 
 - The camera sleeps, but keeps a little Bluetooth beacon on (mine calls itself `TC100_9B39`).
 - The phone connects over Bluetooth and writes the wake-up value. The camera answers with the name and password of a Wi-Fi hotspot it just switched on.
 - The phone joins that hotspot and talks to the camera over UDP, with commands as encrypted JSON: give me your status, list your files, send me this video, delete that one, change these settings.
 - The moment Bluetooth disconnects, the hotspot goes off again.
-
-<!-- TODO Daan: link to REA if there is a public page for it. -->
 
 Two projects saved me a lot of guessing as well: [TrailCamHub](https://github.com/HeikoGr/TrailCamHub), which wakes these cameras from an ESP32-S3, and [trailcam-automation](https://github.com/pwnb0t/trailcam-automation), a working Python client.
 
