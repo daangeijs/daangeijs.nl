@@ -36,7 +36,7 @@ The Pi 2 was probably the weak spot, and unfortunately BirdNET-Go's own document
 
 Luck was on my side, because BirdNET-Go already supports exactly that. The same page says the Pi 2 "works well as a dedicated RTSP mic feeding a Pi 4/5 that does the inference". I don't have a Pi 5, but my homelab will do.
 
-### An ear and a brain
+### Splitting the ear and the brain
 
 My homelab is a small Kubernetes cluster for things like photo backup and documents, and one of its nodes is a 16-core mini PC. So the Pi became the ear and the cluster the brain. The Pi reads the microphone and puts the sound on the network as a stream, nothing else. The cluster pulls that stream, runs BirdNET, keeps the detections and short audio clips, and tells Home Assistant what it heard.
 
