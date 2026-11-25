@@ -15,13 +15,15 @@ cover:
 
 summary: "A cheap trail camera has none of the premium features: no app sync, no cloud, no remote status. An old ESP32 and the Raspberry Pi in my birdbox fixed that. Clips now come in by themselves, from any number of cameras, into one dashboard. The first visitor was a very curious robin."
 ---
-A few weeks ago I turned a 2015 Raspberry Pi into a [bird listening station](/posts/birdstation/). It lives in a birdbox in the garden, streams what it hears to my home server, and that server tells me which birds were singing. I was pretty happy with that.
+A few weeks ago I turned a 2015 Raspberry Pi into a [bird listening station](/posts/birdstation/). It sits in a weatherproof box on a shelf in the garden, streams what it hears to my home server, and that server tells me which birds were singing. I was pretty happy with that.
 
 Then I bought a trail camera.
 
 ### A cheap camera with no tricks
 
-I wanted to see what walks through the garden at night, and I explicitly went for the **Denver WSW-8120**. Not because it has great specs, but because it charges over USB-C and has a small solar panel on the front to keep itself going. I don't want to climb into the bushes every two weeks with a box of AA batteries.
+I wanted to see what walks through the garden at night, and I explicitly went for the **Denver WSW-8120**. Not because it has great specs, but because it charges over USB-C and has a small solar panel on the front to keep itself going. I don't want to climb into the bushes every two weeks with a box of AA batteries. It's strapped to the apple tree now, which is why it's called Appelboom in the dashboard.
+
+![The camouflage-green Denver trail camera strapped to the trunk of the apple tree, solar panel on top, autumn leaves on the grass around it](camera_mounted.jpg)
 
 <!-- TODO Daan: what did it cost? A line like "for about €XX" fits here. -->
 
@@ -31,14 +33,14 @@ I never opened that app. Not once. And I didn't want to walk into the garden for
 
 ### How the camera talks
 
-So instead of using the app, I read it. The app's code, plus the notes of a few people who had poked at the same family of cameras before, told me roughly how a phone gets the clips off:
+So instead of using the app, I read it. The app's code, plus the work of people who had poked at the same family of cameras before, told me roughly how a phone gets the clips off:
 
 - The camera sleeps, but it keeps a little Bluetooth beacon on (mine calls itself `TC100_9B39`).
 - The phone connects over Bluetooth and writes a magic value to it. The camera answers with the name and password of a Wi-Fi hotspot it just switched on.
 - The phone joins that hotspot and talks to the camera over UDP, with commands as encrypted JSON: give me your status, list your files, send me this video, delete that one, change these settings.
 - The moment Bluetooth disconnects, the hotspot goes off again.
 
-<!-- TODO Daan: link the projects whose notes helped (the pi_trailcam repo and the others marked [HUB]/[PWN] in bridge/trailcam_bridge/camera.py). -->
+Two projects saved me a lot of guessing: [TrailCamHub](https://github.com/HeikoGr/TrailCamHub), which wakes these cameras from an ESP32-S3, and [trailcam-automation](https://github.com/pwnb0t/trailcam-automation), a working Python client.
 
 That last point turned out to be important. Whatever fetches the clips has to hold on to Bluetooth and sit on the camera's Wi-Fi at the same time.
 
@@ -67,9 +69,9 @@ Now each one does what it's good at:
 
 The cable runs at 921,600 baud, about 90 KB per second on paper. In practice a 10-second clip takes a bit over two minutes to come in. That sounds slow, but nobody is waiting for it. It's the middle of the night and the fox is long gone.
 
-<!-- TODO Daan: photo of the Bluetooth antenna sticking out of the birdbox, e.g. birdbox.jpg, alt text "The ESP32's antenna sticking out of the birdbox". -->
+![The white weatherproof box on a wooden shelf against the brick wall, a black antenna sticking out of one of its cable glands and a network cable going into another, a bag of straw next to it](birdbox.jpg)
 
-Which is also why I now call it **the birdbox**. It holds the logic for listening to birds and for collecting footage from the garden. The only thing that gives it away is a small antenna poking out of the side.
+Which is also why I now call that box **the birdbox**. It holds the logic for listening to birds and for collecting footage from the garden. The only thing that gives the new job away is a small antenna poking out of the side.
 
 ### One dashboard for every camera
 
@@ -99,7 +101,11 @@ The ESP32 was scanning for the camera's Bluetooth beacon almost all the time, an
 
 ### The first visitor
 
-The first clip that came in by itself was on 25 November at 10:37. Not a fox, not a marten. A robin, who walked straight up to the camera and looked right into the lens, as if checking who'd moved into its garden.
+The first clip came in on 25 November at 10:37, while I was still busy mounting that antenna on the birdbox. Not a fox, not a marten. A robin, who walked straight up to the camera and looked right into the lens, as if checking who'd moved into its garden.
+
+<video controls muted playsinline preload="metadata" poster="/posts/birdbox-trail-camera/roodborst-poster.jpg" src="/posts/birdbox-trail-camera/roodborst.mp4" style="width:100%;border-radius:8px"></video>
+
+That clip still has the camera's own bar burnt in; it came in just before the birdbox switched it off.
 
 The models said "bird, 98%". I filled in the rest.
 
