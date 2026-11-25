@@ -32,7 +32,7 @@ Spending all that on a Raspberry Pi at today's inflated prices, just to listen t
 
 <!-- TODO Daan: the EM272 microphone and Sound Blaster Play! 3, from a box or bought? That decides how strict the "buy nothing" line is. -->
 
-The Pi 2 was the obvious weak spot. BirdNET-Go's own documentation calls it "marginal and RAM-limited". I didn't care if it was slow, though. My homelab could do the analysis. All the Pi had to do was pick up the sound and send it on.
+The Pi 2 was probably the weak spot, and unfortunately BirdNET-Go's own documentation calls it "marginal and RAM-limited". Sad, but true. It's already impressive that a deep learning model can run on cheap hardware at all. Then I realised my Pi 2 didn't have to do the analysis. I have a much more powerful homelab, and the only thing the Pi had to do for me was record. That changed things, and gave me hope.
 
 Luck was on my side, because BirdNET-Go already supports exactly that. The same page says the Pi 2 "works well as a dedicated RTSP mic feeding a Pi 4/5 that does the inference". I don't have a Pi 5, but my homelab will do.
 
