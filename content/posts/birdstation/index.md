@@ -25,8 +25,10 @@ So I gave myself a rule: buy nothing new. Whatever this became had to come out o
 
 - A **Raspberry Pi 2 Model B** from 2015. Four slow ARM cores, 1 GB of RAM, no Wi-Fi, no Bluetooth. It can't run the modern BirdNET models at all.
 - A **PoE splitter**: network cable in, micro-USB power out. One cable for both.
-- A **Logitech USB headset** that came free with Ghost Recon on the PlayStation 2. I don't think I ever used it for the game. During covid it became my favourite headset for calls, until a webcam with a built-in mic made it redundant. A voice mic, not exactly a nature recording setup, but it has had a long life and here was another job for it.
+- A **Logitech USB headset** that came free with Ghost Recon: Jungle Storm on the PlayStation 2. I don't think I ever used it for the game. During covid it became my favourite headset for calls, until a webcam with a built-in mic made it redundant. A voice mic, not exactly a nature recording setup, but it has had a long life and here was another job for it.
 - A **32 GB microSD card** that still had a Proxmox installer on it.
+
+![The junk pile on a dark table: a Raspberry Pi 2, a PoE splitter, a short network cable, and the Logitech headset with its microphone boom, still wrapped around its Ghost Recon: Jungle Storm case](junk-pile.jpg)
 
 <!-- TODO Daan: the EM272 microphone and Sound Blaster Play! 3, from a box or bought? That decides how strict the "buy nothing" line is. -->
 
@@ -56,9 +58,9 @@ The headset is a stopgap, and I wanted to plug in a real microphone later withou
 
 Everything is scripted. One script writes the SD card, with checks so it can never touch the laptop's own disk, and an Ansible playbook does the rest. If the card ever dies, a new one is fifteen minutes away.
 
-It now lives in a white weatherproof box on a shelf in the garden, on its one network cable. I've started calling it the birdbox.
+It now lives in a white weatherproof box in the garden, on its one network cable, with the headset's microphone poking out of the bottom. I've started calling it the birdbox.
 
-![The white weatherproof box on a wooden shelf against the brick wall, a network cable going into one of its cable glands and an antenna that came later](birdbox.jpg)
+![The closed white weatherproof box held up against a brick pillar under the roof edge, a network cable going in at the top and the small black headset microphone hanging out of the bottom, autumn garden behind it](box-microphone.jpg)
 
 ### What it hears
 
