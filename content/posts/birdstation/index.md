@@ -15,9 +15,9 @@ cover:
 
 summary: "A Raspberry Pi 2 from 2015, an old headset and a PoE splitter from the attic: a 24/7 bird listening station that buys nothing new, because the Pi only streams audio and my home cluster does the listening."
 ---
-There is a long-eared owl living behind my house. I know, because I hear it. I wanted a machine that could hear it too, along with every other bird that passes, and tell me what it heard day and night.
+It started with [Avian Visitors](https://theodore.net/projects/AvianVisitors/). That post made me realise the BirdNET model weights are open source, and that got me excited to do something with them myself. I knew the Cornell Lab of Ornithology, of course, the people behind the fantastic Merlin Bird ID app. I still use it sometimes when I'm out birding, for a second opinion.
 
-That idea isn't new. [BirdNET](https://birdnet.cornell.edu/), a neural network from the Cornell Lab of Ornithology and Chemnitz University of Technology, recognises thousands of species by sound, and projects like BirdNET-Pi turn a Raspberry Pi into a bird listening station. But they run the analysis on the Pi itself, so you need a Raspberry Pi 4 or 5, a decent microphone, maybe a fan, and a few hundred euros before you've heard a single robin.
+[BirdNET](https://birdnet.cornell.edu/), a neural network from the Cornell Lab and Chemnitz University of Technology, recognises thousands of species by sound, and projects like BirdNET-Pi turn a Raspberry Pi into a bird listening station. But they run the analysis on the Pi itself, so you need a Raspberry Pi 4 or 5, a decent microphone, maybe a fan, and a few hundred euros before you've heard a single robin.
 
 Spending all that on a Raspberry Pi at today's inflated prices, just to listen to birds, felt like a bit much. It's not like I have piles of gold lying around. What I do have is piles of old electronics. So, almost in the spirit of Scrapyard Wars, I went through my stash and came out with a Raspberry Pi 2, a microphone and a PoE splitter. (If this had been Scrapyard Wars, I'd have dug up a "rusty" Raspberry Pi 5 that turned out to be brand new.)
 
@@ -88,7 +88,7 @@ BirdNET knows about 6,500 species, but it doesn't listen for all of them. A "ran
 
 I was curious about night migrants. On autumn nights thousands of birds fly over, calling to keep in touch, and a microphone pointed at the sky can pick them up. The ortolan bunting is a classic one. So I asked the range filter for its score in every week of the year. The highest was 0.0011, and the cut-off was 0.01. An ortolan could fly right over the microphone and the system would never say so. The same went for the nightjar, which breeds on the heath a few kilometres away.
 
-I checked the filter against five years of records from waarneming.nl, the Dutch observation platform. That's 17,333 bird observations of 181 species in the Renkum area. Even the long-eared owl behind my house would have been blocked in 51 of its 69 recorded sightings.
+I checked the filter against five years of records from waarneming.nl, the Dutch observation platform. That's 17,333 bird observations of 181 species in the Renkum area. Even the long-eared owl would have been blocked in 51 of its 69 recorded sightings.
 
 Those records leave some birds out. waarneming.nl hides observations of sensitive species like owls and nesting raptors to protect them, so the birds you'd most like to catch are exactly the ones the data hides.
 
@@ -100,7 +100,7 @@ The range model thought an American red squirrel and a trumpeter swan were just 
 
 On a grey Wednesday in November it heard thirteen species, from redwings passing through to the robin that walked up to a trail camera that same morning.
 
-<!-- TODO Daan: has it heard the long-eared owl by now? If so, that's the line to end on. -->
+<!-- TODO Daan: a nice detection to end on, if one comes along. -->
 
 It didn't stay a bird station for long, though. A cheap trail camera moved in next to it, and an old ESP32 in the same box now empties that camera too. That's [the next story](/posts/birdbox-trail-camera/).
 

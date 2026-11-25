@@ -14,7 +14,7 @@ tags:
 draft: true
 ---
 
-A white box on a shelf in the garden, with a microphone outside, a 2015 Raspberry Pi inside and a small antenna sticking out. It listens around the clock and tells me which birds were singing, including the long-eared owl that lives behind the house. Since the antenna, it also empties the trail cameras in the garden.
+A white box on a shelf in the garden, with a microphone outside, a 2015 Raspberry Pi inside and a small antenna sticking out. It listens around the clock and tells me which birds were singing. Since the antenna, it also empties the trail cameras in the garden.
 
 ## How it works
 
@@ -37,4 +37,4 @@ A Denver WSW-8120 trail camera (USB-C, solar panel) only hands over its clips to
 
 The stories: [A bird detector from a drawer of old electronics](/posts/birdstation/) and [The birdbox gets eyes](/posts/birdbox-trail-camera/).
 
-<!-- TODO Daan: check the numbers and the owl line; add a photo of the microphone outside if you have one. -->
+<!-- TODO Daan: check the numbers. -->
