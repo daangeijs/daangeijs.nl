@@ -76,9 +76,9 @@ A microphone in the garden also hears the neighbours and anyone walking past. I 
 
 BirdNET comes in two flavours: the classic v2.4 and the newer v3.0 with a regional model for Central Europe. At first I ran both on the same stream and let them merge their detections. Two models agreeing sounded like a good sign.
 
-Then I went through 156 detections by hand and marked each one right or wrong. Of the ones only v2.4 heard, 8% were right. Of the ones only v3.0 heard, 60% were right. When it was at least 70% sure, that went up to 92%. I dropped v2.4 and kept v3.0 at a 70% threshold, which saved the cluster a CPU core.
+Then I went through 156 detections by hand and marked each one right or wrong. That's where years of birding came in handy. Telling birds apart by sound was easier for me here than it is in the field, and also fun, because I'd never really spent much time just listening carefully. Sometimes I had to look up a variation of a call, and I got to know some birds better along the way. Of the ones only v2.4 heard, 8% were right. Of the ones only v3.0 heard, 60% were right. When it was at least 70% sure, that went up to 92%. I dropped v2.4 and kept v3.0 at a 70% threshold, which saved the cluster a CPU core.
 
-v3.0 also knows frogs, grasshoppers, crickets and bats, so the bird station is slowly becoming a garden sound station.
+v3.0 also knows frogs, grasshoppers, crickets and bats, but I switched most of those off, because they popped up on every weird noise.
 
 ### Why it couldn't hear an ortolan
 
