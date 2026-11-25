@@ -33,7 +33,7 @@ I always do some research before I start a project, a sort of feasibility check,
 
 <!-- TODO Daan: what did it cost? A line like "for about €XX" fits here. -->
 
-I figured the old ESP32 from the plant pots could run the whole thing, and another piece of old hardware would get a new job. (Spoiler: I didn't do my research quite as thoroughly there.)
+And the brain? That would be the ESP32 I'd dug up while building the bird station, left over from my old plant pot project. In my head it made perfect sense: Wi-Fi and Bluetooth on one chip, and another piece of old hardware with a new job. (Spoiler: I didn't do my research quite as thoroughly there.)
 
 ### On the desk
 
