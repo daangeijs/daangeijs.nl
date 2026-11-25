@@ -23,7 +23,7 @@ Then I bought a trail camera.
 
 I'd looked at trail cameras before, but they never convinced me. They looked cheap, came with cheap apps, and getting the footage off meant walking up to the camera and fighting with that app on your phone.
 
-Then, while building the bird station, I found an old ESP32 in a box. I'd used it about six years ago to read moisture sensors in my plant pots. Wi-Fi and Bluetooth on one chip. What if that ESP32 could talk to a trail camera itself and pull the footage off, without me ever touching the app? Then the clips could go straight to my homelab, into Robin, a small web app of mine for trail camera footage. And since the cluster was already doing the heavy lifting for the bird station, it could just as well run a few models on the clips to tell me which animal walked by.
+Then, while building the bird station, I found an old ESP32 in a box. I'd used it about six years ago to read moisture sensors in my plant pots. Wi-Fi and Bluetooth on one chip. What if that ESP32 could talk to a trail camera itself and pull the footage off, without me ever touching the app? Then the clips could go straight to my homelab, into [Robin](https://github.com/daangeijs/robin), a small web app of mine for trail camera footage. And since the cluster was already doing the heavy lifting for the bird station, it could just as well run a few models on the clips to tell me which animal walked by.
 
 I'd also been finding odd marks in the grass. I wanted to know what was roaming around the garden at night. The previous owners once spotted a fox here. High hopes, I know. It all came together.
 
@@ -109,4 +109,4 @@ That clip came in just before the birdbox switched off the camera's own bar, so 
 
 Next up is a second camera, and a real microphone for the birdbox, so it hears the birds better than it hears the ESP32.
 
-The code for the ESP32, the bridge on the Pi and Robin itself is on GitHub: [daangeijs/robin](https://github.com/daangeijs/robin).
+The code for the ESP32, the bridge on the Pi and Robin itself is on GitHub under the MIT license: [daangeijs/robin](https://github.com/daangeijs/robin).
