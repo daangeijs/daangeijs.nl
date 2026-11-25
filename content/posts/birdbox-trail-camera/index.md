@@ -23,7 +23,7 @@ Then I bought a trail camera.
 
 I'd looked at trail cameras before, but they never convinced me. They looked cheap, came with cheap apps, and getting the footage off meant walking up to the camera and fighting with that app on your phone.
 
-Then, while building the bird station, I found an old ESP32 in a box. I'd used it about six years ago to read moisture sensors in my plant pots. Wi-Fi and Bluetooth on one chip. What if that ESP32 could talk to a trail camera itself and pull the footage off, without me ever touching the app?
+Then, while building the bird station, I found an old ESP32 in a box. I'd used it about six years ago to read moisture sensors in my plant pots. Wi-Fi and Bluetooth on one chip. What if that ESP32 could talk to a trail camera itself and pull the footage off, without me ever touching the app? Then the clips could go straight to my homelab, into Robin, a small web app of mine for trail camera footage. And since the cluster was already doing the heavy lifting for the bird station, it could just as well run a few models on the clips to tell me which animal walked by.
 
 I'd also been finding odd marks in the grass. I wanted to know what was roaming around the garden at night. The previous owners once spotted a fox here. High hopes, I know. It all came together.
 
@@ -75,7 +75,7 @@ The only thing that gives away the birdbox's new job is a small Wi-Fi antenna po
 
 ### One dashboard for every camera
 
-The Pi has a small web API and waits for Robin to ask it to fetch clips. I'd already built Robin to sort trail camera footage on my home server.
+The Pi has a small web API and waits for Robin to ask it to fetch clips.
 
 - At set times, mostly at night, it asks the birdbox to start a session, waits until it's done, downloads the new clips and tells the Pi it can delete them. The camera's SD card never fills up.
 - Every clip gets looked at by three models: Google's SpeciesNet, DeepFaune (trained on European trail camera footage) and Claude. They vote, and I can correct them. Once I've approved a clip, it stays approved.
