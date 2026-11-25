@@ -13,17 +13,15 @@ cover:
     image: "cover.png"
     alt: "The Home page of HA Paper as the X4 Pro's framebuffer, read over the device's API: a black clock card and tiles for inside temperature, solar, home use, home battery, grid and outside temperature"
 
-summary: "I let Claude Code build the firmware for an e-ink display the way I think a team should work: goals, discovery, small issues on a board, pull requests with checks, and a user who tries every release. Every role except product owner and user was an agent, and most of it ran in emulators before the device even arrived."
+summary: "An agentic team approach to build something I normally couldn't have done: write an OS for a pocket e-reader that turns it into a Home Assistant display. Every role except product owner and user was an agent, and most of it ran in emulators before the device even arrived."
 ---
-Home Assistant has run my house for years. To see what it knows (the energy price, what the solar panels are doing, the temperature in every room) I pick up my phone or open a dashboard on a tablet. Both light up the living room in the evening, and both have every other app one swipe away. I wanted a small e-ink display on a shelf that shows those numbers and nothing else.
+Home Assistant has run my house for years, and I really like it. More and more it's becoming the general connector for all my data streams: the energy price, what the solar panels are doing, the temperature in every room. That gives me the chance to show useful data in an elegant way. I wanted a small e-ink display on a shelf that shows those numbers and nothing else.
 
-The hardware idea came from work. A few colleagues had an Xteink X4 Pro, a 4.3-inch e-reader that costs about a hundred euros, and one of them, [COLLEAGUE NAME], told me you can replace its software quite easily. He showed me his own firmware, [HIS PROJECT NAME + LINK], for reading books on the go. It also plays chess. If it can play chess, it can show my energy prices.
-
-<!-- TODO Daan: fill in [COLLEAGUE NAME] and [HIS PROJECT NAME + LINK], and check he is fine being named. -->
+The hardware idea came from work. A few colleagues had an Xteink X4 Pro, a 4.3-inch e-reader that costs about a hundred euros, and one of them told me you can replace its software quite easily. He showed me his own firmware for reading books on the go. It also plays chess. If it can play chess, it can show my energy prices.
 
 That became [HA Paper](/projects/ha-paper/), firmware that turns the X4 Pro into a Home Assistant display. The project page shows what it does. I wrote almost none of the code.
 
-I also didn't have the device yet. It arrived two weeks after the first commit.
+I also didn't have the device yet. It arrived two weeks after the first commit. Not ideal for a hardware project, you'd think. (Spoiler: it turned out fine.)
 
 What I did have was an opinion about how it should be built. My day job is product discovery, and I'm fairly particular about how a team should work. Someone sets clear goals and the team does its homework before building. The work comes in small pieces anyone can pick up, every change gets checked, and a real user tries each release. I kept the product owner and user roles for myself and let Claude Code play everyone else.
 
@@ -49,7 +47,7 @@ My own part was mostly product calls of a sentence or two. The agents could only
 
 ### Two weeks of emulators
 
-With no hardware, everything ran in emulators.
+With no hardware, everything ran in emulators. Two weeks of pretending, basically.
 
 The first was an interactive mock-up made in Claude Design. It had the device screen, a web console and a panel of "what if" switches (never linked, token revoked, a broken firmware download). That mock-up ended up being the spec. Its config parser generated test cases, and the C++ firmware has to give the same answer for every one of them, down to the line number and the error message.
 
@@ -61,7 +59,7 @@ The firmware also ran in QEMU for a full day, with Home Assistant restarts, drop
 
 ### First flash
 
-The X4 Pro arrived at midnight on 26 October. I kept the plan dull. I checked that the chip wasn't locked, backed up the full 16 MB of stock firmware (53 seconds, checked four ways) and flashed it.
+The X4 Pro arrived at midnight on 26 October. I kept the plan dull, because bricking a hundred-euro e-reader on its first night is exactly the kind of thing I would do. I checked that the chip wasn't locked, backed up the full 16 MB of stock firmware (53 seconds, checked four ways) and flashed it.
 
 It booted, joined Wi-Fi and linked to my Home Assistant on the first try.
 
@@ -86,7 +84,7 @@ I went to bed and left the device on USB. The coordinator flashed each fix, read
 
 <!-- TODO Daan: what did you see when you picked it up that morning, and the first tap that felt fast? A line or two here would make this the best moment of the post. --> Navigation uses the fast refresh and only every tenth page change does a clean one. The clock fix is one extra write to the controller's memory. Free memory went from 7.6 KB to 23.9 KB at its lowest. The display boots straight to Home. The bigger text waited until I could look at it on the glass.
 
-The power button took a day and wasn't a bug at all. Xteink's quick start guide calls the button on the top edge, next to the microSD slot, Reset. On battery, a reset restarts the chip, the chip lets go of the line that keeps the power on, and the device stays off until you hold the real Power button on the right side. The stock firmware does exactly the same.
+The power button took a day and wasn't a bug at all. Xteink's quick start guide calls the button on the top edge, next to the microSD slot, Reset. On battery, a reset restarts the chip, the chip lets go of the line that keeps the power on, and the device stays off until you hold the real Power button on the right side. The stock firmware does exactly the same. So yes, I'd been pressing the wrong button. Read the manual first: another lesson life keeps teaching me.
 
 The speed was fixed by the next afternoon. A builder rewrote the drawing code in whole numbers, and all 408 test renders came out identical to the pixel. Home now draws in 262 ms, and a tap shows the new page in about a second, most of which is the panel itself.
 
