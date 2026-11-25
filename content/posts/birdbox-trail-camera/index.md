@@ -75,7 +75,7 @@ The only thing that gives away the birdbox's new job is a small Wi-Fi antenna po
 
 ### One dashboard for every camera
 
-The Pi doesn't decide anything by itself. It has a small web API and waits until it's asked. The asking is done by Robin, a web app on my home server that I'd built earlier to sort trail camera footage. It started out as "Wildcam", which was a bit of a lame name, so it's named after its first visitor now:
+The Pi doesn't decide anything by itself. It has a small web API and waits until it's asked. The asking is done by Robin, a web app on my home server that I'd built earlier to sort trail camera footage:
 
 - At the check hours, mostly at night, it asks the birdbox to start a session, waits until it's done, downloads the new clips and tells the Pi it can delete them. The camera's SD card never fills up.
 - Every clip gets looked at by three models: Google's SpeciesNet, DeepFaune (trained on European trail camera footage) and Claude. They vote, and I can correct them. Once I've approved a clip, it stays approved.
@@ -105,6 +105,6 @@ The first clip came in on 25 November at 10:37, while I was still busy mounting 
 
 <video controls muted playsinline preload="metadata" poster="/posts/birdbox-trail-camera/roodborst-poster.jpg" src="/posts/birdbox-trail-camera/roodborst.mp4" style="width:100%;border-radius:8px"></video>
 
-That clip still has the camera's own bar burnt in; it came in just before the birdbox switched it off. The models said "bird, 98%". I filled in the rest.
+That clip still has the camera's own bar burnt in; it came in just before the birdbox switched it off. The models said "bird, 98%". I filled in the rest. The app was still called Wildcam then, which was a bit of a lame name. It's called Robin now.
 
 Next up is a second camera, and a real microphone for the birdbox, so it hears the birds better than it hears the ESP32.
