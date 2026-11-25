@@ -23,7 +23,7 @@ Spending all that on a Raspberry Pi at today's inflated prices, just to listen t
 
 ### The junk pile
 
-- A **Raspberry Pi 2 Model B** from 2015. Four slow ARM cores, 1 GB of RAM, no Wi-Fi, no Bluetooth. It can't run the modern BirdNET models at all.
+- A **Raspberry Pi 2 Model B** from 2015. Four slow ARM cores, 1 GB of RAM, no Wi-Fi, no Bluetooth.
 - A **PoE splitter**: network cable in, micro-USB power out. One cable for both.
 - A **Logitech USB headset** that came free with Ghost Recon: Jungle Storm on the PlayStation 2. I don't think I ever used it for the game. During covid it became my favourite headset for calls, until a webcam with a built-in mic made it redundant. It's a voice mic, so hardly the thing you'd take out to record birdsong. Still, it's had a long life, and here was another job for it.
 - A **32 GB microSD card** that still had a Proxmox installer on it.
@@ -34,19 +34,17 @@ Spending all that on a Raspberry Pi at today's inflated prices, just to listen t
 
 The Pi 2 was probably the weak spot, and unfortunately BirdNET-Go's own documentation calls it "marginal and RAM-limited". Sad, but true. It's already impressive that a deep learning model can run on cheap hardware at all. Then I realised my Pi 2 didn't have to do the analysis. I have a much more powerful homelab, and the only thing the Pi had to do for me was record. That changed things, and gave me hope.
 
-Luck was on my side, because BirdNET-Go already supports exactly that. The same page says the Pi 2 "works well as a dedicated RTSP mic feeding a Pi 4/5 that does the inference". I don't have a Pi 5, but my homelab will do.
+Luck was on my side, because BirdNET-Go already supports exactly that. The same page says the Pi 2 "works well as a dedicated RTSP mic feeding a Pi 4/5 that does the inference". I don't have a Pi 5, but I do have a homelab: a small Kubernetes cluster that runs all sorts of services, with a 16-core mini PC as one of its nodes.
 
 ### Splitting the ear and the brain
 
-My homelab is a small Kubernetes cluster that runs all sorts of services, and one of its nodes is a 16-core mini PC. So the Pi became the ear and the cluster the brain. The Pi reads the microphone and puts the sound on the network as a stream, nothing else. The cluster pulls that stream, runs BirdNET, keeps the detections and short audio clips, and tells Home Assistant what it heard.
+So the Pi became the ear and the cluster the brain. The cluster pulls the stream from the Pi, runs BirdNET, keeps the detections and short audio clips, and tells Home Assistant what it heard.
 
 On the Pi it's all off-the-shelf software. ffmpeg reads the microphone, and MediaMTX, a tiny media server, serves the audio as an RTSP stream, the same protocol IP cameras use. The Pi doesn't even know the cluster exists. If the stream drops, the cluster just reconnects.
 
 I send uncompressed mono audio at 16-bit and 48 kHz. That's about 770 kbit/s, which is nothing for a home network. MP3 and friends save bandwidth by throwing away the high frequencies, and that's exactly where a lot of birdsong lives.
 
 Because the Pi only copies samples and never encodes or analyses anything, the 2015 board barely notices. ffmpeg takes about a quarter of one core, and the load sits around 1 out of 4. The Pi uses 147 MB of its 920 MB of RAM, and it stays at 32 °C.
-
-If you have a NAS or an old laptop doing nothing, you can run the analysis there and use the cheapest thing in the drawer for the microphone.
 
 ### Built to be unplugged
 
