@@ -31,6 +31,8 @@ The catch is the usual one with cheap trail cameras. The expensive ones upload c
 
 I never opened that app. Not once. And I didn't want to walk into the garden for every fox.
 
+What gave me hope was a Hackaday story about someone who [found a hidden API in an abandoned trail camera](https://hackaday.com/2023/07/18/reverse-engineering-reveals-hidden-api-in-abandonware-trail-camera): wake it over Bluetooth, and it opens up. Mine turned out to be a close relative.
+
 ### How the camera talks
 
 So instead of using the app, I took it apart. I pulled the Android APK of TrailCam Go and decompiled it: the Java side for the command numbers and the settings it can change, and its native library `libArLink.so` for the encryption key. Together with the work of people who had poked at the same family of cameras before, that told me exactly how a phone gets the clips off:
