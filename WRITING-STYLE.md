@@ -14,6 +14,20 @@ tone: [Avian Visitors by Teddy Warner](https://theodore.net/projects/AvianVisito
 - **Headings are short and a bit playful** ("The junk pile", "Two models walk into a garden"), as H3. No "Introduction" or "Conclusion".
 - **Endings just stop.** Say where it stands and what's next, in a few lines. No moral of the story.
 
+## Daan's voice
+
+What his own drafts do, and what edits must keep:
+
+- **He's the butt of the joke.** Self-deprecating asides in brackets that build up: "(that'll be me)", "(also me)", "(yes, most likely me)". The humour comes from honesty about himself, not from neat one-liners.
+- **He admits things:** "I was a bit lazy", "I didn't do my research thoroughly", "I probably messed up the formatting". Mistakes are part of the story.
+- **His own references:** Scrapyard Wars, the Ghost Recon headset, the plant-sensor ESP32 from six years ago. Real history, not generic comparisons.
+- **Set-ups where the reader gets the punchline:** "If only there was one device in my garden with a USB port… what could that be!"
+- **Thinking out loud:** "Well", "Sad, but true", "Spoiler:", "Luckily". Feelings said plainly: curious, hope, satisfying, a difficult relationship with early Pis.
+- **In the order he thought it:** the problem, then "then I realised…", then what changed. That's where the natural transitions come from.
+- **Credit for others' work:** "it's already impressive that a deep learning model runs on cheap hardware".
+
+When editing: his wording comes first. Fix the English, keep the jokes and asides as they are, don't add quips of your own, and don't smooth his sentences into tidy ones. A flat, neat sentence is worse than a slightly rough one in his voice.
+
 ## Things that make text sound generated (avoid)
 
 - **Announcing instead of telling:** "There were two catches.", "Here's the thing:", "The catch:", "This is where it gets interesting.", "That's the point I want to make:". Just say the catch.
