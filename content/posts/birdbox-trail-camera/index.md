@@ -39,20 +39,20 @@ And the brain? That would be the ESP32 I'd dug up while building the bird statio
 
 As with [HA Paper](/posts/handing-the-build-to-agents/), I started with the software. I wanted it working before anything went outside. Unlike the e-ink reader for HA Paper, which took two weeks, the camera arrived the next day, but I'd already put some code together so I could start testing right away. I gave it some charge over USB-C, put it next to my MacBook, and started taking it apart from there.
 
-Instead of installing its app, TrailCam Go, I installed something else: [REA (Reverse Engineer Anything)](https://github.com/morluto/rea). I pointed it at the Android APK of that app, and it helped a lot in quickly figuring out the protocol and how to write software that talks to the camera. The Java side gave up the command numbers and every setting it can change, and I found the encryption key in its native library `libArLink.so`. Together with what others had found on the same family of cameras, that told me how a phone gets the clips off:
+Instead of installing its app, TrailCam Go, I installed something else: [REA (Reverse Engineer Anything)](https://github.com/morluto/rea). I pointed it at the Android APK of that app, and it helped a lot in quickly figuring out the protocol and how to write software that talks to the camera. The Java side gave up the command numbers and every setting it can change, and I found the encryption key in its native library `libArLink.so`. Together with what others had found on the same family of cameras, that told me how a phone gets the video clips off:
 
 - The camera sleeps, but keeps a little Bluetooth beacon on (mine calls itself `TC100_9B39`).
 - The phone connects over Bluetooth and writes the wake-up value. The camera answers with the name and password of a Wi-Fi hotspot it just switched on.
-- The phone joins that hotspot and talks to the camera over UDP, with commands as encrypted JSON: give me your status, list your files, send me this video, delete that one, change these settings.
+- The phone joins that hotspot and talks to the camera over UDP, with commands as encrypted JSON: give me your status, list your files, send me this clip, delete that one, change these settings.
 - The moment Bluetooth disconnects, the hotspot goes off again.
 
 Two projects saved me a lot of guessing as well: [TrailCamHub](https://github.com/HeikoGr/TrailCamHub), which wakes these cameras from an ESP32-S3, and [trailcam-automation](https://github.com/pwnb0t/trailcam-automation), a working Python client.
 
-By the end of it, the Mac could wake the camera, pull every video off it, and read and change all of its settings. All that was left was to put that on the ESP32 and hang it in the garden.
+By the end of it, the Mac could wake the camera, pull every clip off it, and read and change all of its settings. All that was left was to put that on the ESP32 and hang it in the garden.
 
 ### Where to store the video
 
-That's where my research hadn't gone far enough. An ESP32 has one Wi-Fi radio, so it's either on my home network or on the camera's hotspot, never both. A clip has to sit somewhere while it switches back home, and my board has about 0.5 MB of RAM and no storage at all. A 10-second clip in 1080p is around 7 MB. I couldn't stream the video through it to the house either, with the radio tied up on the camera's hotspot.
+That's where my research hadn't gone far enough. An ESP32 has one Wi-Fi radio, so it's either on my home network or on the camera's hotspot, never both. A clip has to sit somewhere while it switches back home, and my board has about 0.5 MB of RAM and no storage at all. A 10-second clip in 1080p is around 7 MB. I couldn't stream the clips through it to the house either, with the radio tied up on the camera's hotspot.
 
 If only there was one device in my garden with a USB port to dump the files on, that was also on my network...
 
@@ -89,7 +89,7 @@ To add a camera, I give it a name and enter the address of its bridge. A camera 
 
 I still have no idea how big the battery in this camera is. I can see the charge in steps of 20%, whether it's charging and whether the sun is doing the work. I can check all that and change settings without walking over. It also tells me the microSD card holds 255 MB, which can't be right: either I messed up formatting it, or I crammed in some ancient card. For now it's fine, since the birdbox empties it at every check.
 
-The camera burns a bar into every video: a Denver logo, a battery icon, the moon, the temperature and the date in American order. The command the app uses to change settings works for me as well, so the birdbox switched that bar off. Robin draws its own bar over the video instead: the camera's name on the left, date and time in the middle (ticking along while the clip plays), and on the right the sun or the moon, the weather for that hour and the temperature. The weather comes from Open-Meteo, and the moon is the actual phase for that night. When I download a clip I can choose whether that bar gets burnt in.
+The camera burns a bar into every clip: a Denver logo, a battery icon, the moon, the temperature and the date in American order. The command the app uses to change settings works for me as well, so the birdbox switched that bar off. Robin draws its own bar over the clip instead: the camera's name on the left, date and time in the middle (ticking along while the clip plays), and on the right the sun or the moon, the weather for that hour and the temperature. The weather comes from Open-Meteo, and the moon is the actual phase for that night. When I download a clip I can choose whether that bar gets burnt in.
 
 ### A tick in the bird recordings
 
