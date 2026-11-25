@@ -13,106 +13,110 @@ cover:
     image: "cover.png"
     alt: "The Home page of HA Paper as the X4 Pro's framebuffer, read over the device's API: a black clock card and tiles for inside temperature, solar, home use, home battery, grid and outside temperature"
 
-summary: "I let Claude Code build firmware for an e-ink display the way I think a product team should work: goals, discovery, small issues on a board, pull requests with checks, a user who tests every release. Every role except product owner and user was an agent. Most of it was tested in emulators before the device arrived. This is how that went, and what it says about how product gets built."
+summary: "I let Claude Code build the firmware for an e-ink display the way I think a team should work: goals, discovery, small issues on a board, pull requests with checks, and a user who tries every release. Every role except product owner and user was an agent, and most of it ran in emulators before the device even arrived."
 ---
-Home Assistant has run my house for years. To see what it knows, the energy price, the solar panels, the temperature in every room, I pick up my phone or open a dashboard on a tablet. Both light up the room in the evening, and both have every other app one swipe away. I wanted a small e-ink display on a shelf that shows those numbers and nothing else.
+Home Assistant has run my house for years. To see what it knows (the energy price, the solar panels, the temperature in every room) I pick up my phone or open a dashboard on a tablet. Both light up the living room in the evening, and both have every other app one swipe away. I wanted a small e-ink display on a shelf that shows those numbers and nothing else.
 
-The idea for the hardware came from work. A few colleagues had an Xteink X4 Pro, a 4.3-inch e-reader of about a hundred euros, and one of them, [COLLEAGUE NAME], told me you can replace its operating system quite easily. He showed me what he had built himself: [HIS PROJECT NAME + LINK], his own firmware for reading books on the go, which also plays chess. If it can play chess, it can show my energy prices.
+The hardware idea came from work. A few colleagues had an Xteink X4 Pro, a 4.3-inch e-reader of about a hundred euros, and one of them, [COLLEAGUE NAME], told me you can replace its software quite easily. He showed me his own firmware, [HIS PROJECT NAME + LINK], for reading books on the go. It also plays chess. If it can play chess, it can show my energy prices.
 
 <!-- TODO Daan: fill in [COLLEAGUE NAME] and [HIS PROJECT NAME + LINK], and check he is fine being named. -->
 
-That became [HA Paper](/projects/ha-paper/), firmware that turns the X4 Pro into a Home Assistant dashboard. The current release is v0.3.0, the first one out of beta. What it does is on the project page. This post is about how it was built, because I wrote almost none of the code. HA Paper is the first project I built this way.
+That became [HA Paper](/projects/ha-paper/), firmware that turns the X4 Pro into a Home Assistant display. What it does is on the project page. This post is about how it got built, because I wrote almost none of the code.
 
-There were two catches. I didn't have the device yet; it arrived two weeks after the first commit. And I wasn't going to write the firmware myself. I had an opinion about how it should be built, though. My day job is product discovery, and I have fairly fixed ideas about how a product team should work: a product owner with clear goals, discovery before building, small pieces of work that anyone can pick up, checks on every change, and a real user who tries each release. I wanted to see what happens if you take that literally and let Claude Code play every role except two.
+I also didn't have the device yet. It arrived two weeks after the first commit.
 
-### Handing the build to a team of agents
+What I did have was an opinion about how it should be built. My day job is product discovery, and I have fairly fixed ideas about how a team should work: someone with clear goals, discovery before building, small pieces of work anyone can pick up, checks on every change, and a real user who tries each release. I wanted to see what happens if you take that literally and let Claude Code play every role except two.
 
-So I set the project up the way I would set up a small team, and on day three it looked like this. Every piece of work is a GitHub issue. A GitHub Project board holds them with a status, a priority and a size, and the milestones are the releases. I wrote down what the thing is for: easy to install, easy to set up, easy to configure, a connection that stays up, long battery life, and a calm object that looks good in the house. Every plan gets judged against that list.
+### A team on a board
 
-The main Claude Code session is the coordinator, in effect the team lead. It owns the board and hands work to subagents, each with one job:
+By day three the project looked like a small team's. Every piece of work was a GitHub issue on a project board, with a status, a priority and a size, and the milestones were releases. I wrote down what the thing is for: easy to install, easy to set up, a connection that stays up, long battery life, and a calm object that looks good in the house. Every plan got held against that list.
 
-- **Discovery agents** read other people's code (CrossPoint, TRMNL, Home Assistant's own sign-in code, datasheets) or dig into a stuck issue, and post what they find and a proposal on the issue. Building starts after that.
-- **Builders** take one issue each, in their own git worktree, with their own pair of emulator ports. Four or five can test at the same time without testing each other's firmware.
-- **Reviewers** audit merged work for security, concurrency and flasher safety before a release. In the first audit one of eleven findings was real, so the coordinator checks each finding before anyone acts on it.
-- **A council** of three strategy agents (product, onboarding, visual design) proposes themes, exit criteria and issues before each sprint, like a planning session. The coordinator decides. Anything that is my call gets a `decision` label and a question instead of a guess.
-- **A writer** keeps a build log in the repo. This post started there.
+The main Claude Code session was the coordinator, more or less the team lead. It owned the board and handed work to subagents, each with one job:
 
-Every change reaches `main` through a pull request. Builders leave their work uncommitted and report back. The coordinator commits, opens the PR, runs the full test list and merges. In two weeks that added up to 134 issues and 88 merged pull requests.
+- **Discovery agents** read other people's code (CrossPoint, TRMNL, Home Assistant's own sign-in, datasheets) or dug into a stuck issue, and posted what they found on the issue before anyone started building.
+- **Builders** took one issue each, in their own git worktree with their own emulator ports, so four or five could test at once without testing each other's firmware.
+- **Reviewers** audited merged work for security, concurrency and flasher safety before a release. In the first audit, one of eleven findings was real, so the coordinator now checks every finding before anyone acts on it.
+- **A council** of three agents (product, onboarding, visual design) proposed themes and issues before each sprint. The coordinator decided, and anything that was my call got a `decision` label and a question instead of a guess.
+- **A writer** kept a build log in the repo. This post started there.
 
-Most of the rules in the project's instructions file have a date and an incident next to them, the way a team's working agreements grow. Two test runs on one emulator port made the contract suite test the wrong firmware image, so every builder now gets its own port pair. One agent updated the shared PlatformIO toolchain and broke every parallel build for minutes, so toolchain changes go in a private directory. The agent git guard tripped halfway through commits, so builders stopped committing. Main was red for two days before anyone noticed, so the coordinator now checks the main build after every merge and no release is tagged while it is red.
+Every change went through a pull request. Builders left their work uncommitted and reported back; the coordinator committed, opened the PR, ran the tests and merged. After two weeks that was 134 issues and 88 merged pull requests.
 
-I kept two roles: product owner and user. Anything with a visible change gets a `verify` label and a short "how to verify", and before each release I get one checklist of at most ten items to try on a test device. Work merges on the automated checks and doesn't wait for me, except for copy and design, which I asked to see first. My corrections were mostly one or two sentences. The coordinator built "roll back a firmware update if it can't reach Home Assistant". I pointed out that updates come from GitHub, so a Home Assistant outage should never undo a good update. The default screens turned out to be my own house, with my meters and my rooms. I asked that a fresh display builds its screens from the owner's Home Assistant instead. Both are product calls, not code.
+Most rules in the project's instructions file have a date and an incident next to them, the way a team's working agreements grow. Two test runs on one emulator port tested the wrong firmware, so every builder got its own ports. One agent updated the shared toolchain and broke every parallel build, so toolchain changes moved to a private directory. Main was red for two days before anyone noticed, so now the coordinator checks the main build after every merge and nothing gets released while it's red.
+
+I kept two roles: product owner and user. Anything with a visible change got a `verify` label with a short "how to check", and before each release I got a list of at most ten things to try. Work merged on the automated checks without waiting for me, except copy and design, which I wanted to see first.
+
+My corrections were mostly a sentence or two. The coordinator built "roll back a firmware update if it can't reach Home Assistant", and I pointed out that updates come from GitHub, so a Home Assistant outage should never undo a good update. The default screens turned out to be my own house, with my meters and my rooms, so I asked for a fresh display to build its screens from its owner's Home Assistant instead.
 
 ### Two weeks of emulators
 
-Without hardware, everything ran in emulators.
+With no hardware, everything ran in emulators.
 
-The first one was a design: an interactive mock-up made in Claude Design, with the device screen, a web console and a panel of "what if" switches (never linked, Home Assistant token revoked, a broken firmware download). It became the specification. Its config parser generated test cases, and the C++ firmware has to give the same answer for each one: same line number, same error message.
+The first was a design: an interactive mock-up made in Claude Design, with the device screen, a web console and a panel of "what if" switches (never linked, token revoked, a broken firmware download). It became the specification. Its config parser generated test cases, and the C++ firmware has to give the same answer for every one of them, down to the line number and the error message.
 
-The second was the real firmware in Espressif's QEMU fork, which emulates the ESP32-S3 on a Mac. It has no Wi-Fi and no e-ink panel, but it does emulate the CPU, flash, PSRAM and an Ethernet controller. That is enough to run the web server, the API, the Home Assistant connection and firmware updates against a fake Home Assistant with OAuth, a WebSocket, TLS and faults on purpose. The contract suite that runs against it is now 88 tests. A copy of the firmware in QEMU, linked to my real Home Assistant, was my test device for two weeks.
+The second was the real firmware in Espressif's QEMU fork, which emulates the ESP32-S3 on a Mac. No Wi-Fi and no e-ink panel, but the CPU, flash, PSRAM and an Ethernet controller are there. That's enough to run the web server, the API, the Home Assistant connection and firmware updates against a fake Home Assistant that fails on purpose. The test suite against it is 88 tests now, and a copy of the firmware in QEMU, linked to my real Home Assistant, was my test device for two weeks.
 
-It found two bugs that every unit test had passed. Firmware rollback had never worked: the function that tells Arduino to wait before trusting a new image was declared in C++ instead of C, so the linker never matched it and every update was accepted on first boot. The fix was two words, `extern "C"`. And Home Assistant sends its entity list as one 74 KB string, while the JSON library on a 32-bit chip caps a string at 65,535 bytes. On a big house the list came back empty.
+It found two bugs every unit test had missed. Firmware rollback had never worked: one function was declared in C++ instead of C, so the linker never matched it and every update was trusted on first boot. The fix was two words, `extern "C"`. And Home Assistant sends its list of entities as one 74 KB string, while the JSON library on a 32-bit chip stops at 65,535 bytes, so on a big house the list came back empty.
 
-On top of that runs an endurance harness: the firmware in QEMU for a full day while it injects Home Assistant restarts, dropped WebSockets, a two-hour clock jump and network drops. The run before v0.1.0-alpha.6 did 1440 polls with 273 injected faults, recovered from every one within 94 seconds, and the heap stayed flat. We shipped six alpha releases before the device existed.
+On top of that ran an endurance test: the firmware in QEMU for a full day, with Home Assistant restarts, dropped connections, a two-hour clock jump and network drops thrown at it. The run before the sixth alpha did 1440 polls with 273 faults, recovered from every one within 94 seconds, and the memory stayed flat. Six alpha releases went out before the device existed.
 
-### It booted on the first try
+### First flash
 
-The X4 Pro came in at midnight on 26 October. The plan was boring on purpose: check that the chip isn't locked, back up the full 16 MB of stock firmware (53 seconds, checked four ways), flash.
+The X4 Pro arrived at midnight on 26 October. I kept the plan dull: check that the chip isn't locked, back up the full 16 MB of stock firmware (53 seconds, checked four ways), flash.
 
 It booted, joined Wi-Fi and linked to my Home Assistant on the first try.
 
-### What the emulators could not show
+### What QEMU couldn't see
 
-Then I used it for a while and wrote down what I saw. None of it had shown up in QEMU, which has no panel, no radio, and a Mac's CPU underneath.
+Then I used it for an evening and wrote down what I saw. None of it had shown up in the emulator, which has no panel, no radio and a Mac's CPU underneath.
 
-- **Every page change flashed three or four times.** Navigation used the full refresh waveform: 77 full refreshes in 23 minutes of use.
-- **A clock tick turned the screen black.** The panel controller keeps two RAM planes and compares them on every partial refresh, even for a one-line window. The driver left gray data in one of them, so a clock update drove every pixel where the planes differed.
-- **The internal heap fell to 10.9 KB.** QEMU had shown about 117 KB. The Wi-Fi driver asks for 64 buffers in internal RAM, and QEMU's Ethernet card never does.
-- **Every boot showed the setup screens**, three full refreshes before Home. The real panel's boot refresh takes longer than a 1.6-second timer, so the app decided it was a new display before the stored Wi-Fi settings had loaded.
+- **Every page change flashed three or four times.** Navigation used the full refresh: 77 of them in 23 minutes.
+- **A clock tick turned the screen black.** The panel controller compares two memory planes on every partial refresh, and the driver left grey data in one of them.
+- **Free memory dropped to 10.9 KB.** QEMU had shown about 117 KB. The Wi-Fi driver claims 64 buffers on the real chip, and QEMU's Ethernet never does.
+- **Every boot showed the setup screens.** The real panel's first refresh takes longer than a 1.6-second timer, so the app decided it was new before it had read its Wi-Fi settings.
 - **The text was too small.** 14 px on this panel is about 1.1 mm. The browser preview scales the image up, and for two weeks that hid it.
-- **It was slow.** A tap cost 1.7 seconds of panel refreshes (565 ms to invert the pressed button, 1092 ms for the new page) before the render time was even added. Rendering the Home page took 7.8 seconds; on my Mac the same code takes about 2 ms. The worst I saw was 22.6 seconds for one page change, while I kept tapping, and every extra tap was queued and replayed afterwards.
+- **It was slow.** Drawing the Home page took 7.8 seconds; the same code takes about 2 ms on my Mac. The worst page change I saw took 22.6 seconds, while I kept tapping, and every extra tap got replayed afterwards.
 
-A discovery agent found the cause of the last one. The rounded corners of every card were computed with `double` math, per pixel. The ESP32-S3's FPU only does single precision, so every one of those operations became a software call.
+A discovery agent found the cause of that last one. The rounded corners of every card were computed with `double` maths, per pixel, and the chip's floating-point unit only does single precision, so every one of those became a slow software call.
 
-Later that day I pressed the power button, and the device switched off so hard that only plugging in USB brought it back.
+Later that evening I pressed the power button and the device switched off so hard that only plugging in USB brought it back.
 
-### The agents on the device
+### Overnight
 
-I went to bed and left the device on USB. The coordinator flashed each fix overnight, read the device's log, and only then merged the pull request. By the morning four were merged. Navigation uses the fast waveform and only every tenth page change does a clean refresh. The clock fix is one extra 48 KB write to the controller's RAM after each gray render. The heap low point went from 7.6 KB to 23.9 KB. The display boots straight to Home. The larger text waited until I could look at it on the glass.
+I went to bed and left the device on USB. The coordinator flashed each fix, read the device's log, and only then merged the pull request. By morning four were in. Navigation uses the fast refresh and only every tenth page change does a clean one. The clock fix is one extra write to the controller's memory. Free memory went from 7.6 KB to 23.9 KB at its lowest. The display boots straight to Home. The bigger text waited until I could look at it on the glass.
 
-The power button took a day of debugging and turned out not to be a bug. The button on the top edge, next to the microSD slot, is Reset, not Power; Xteink's quick start guide says so. On battery a reset restarts the chip, the chip lets go of the line that holds the power on, and the device is off until you hold the real Power button, the small one at the top of the right side. The stock firmware does the same.
+The power button took a day and wasn't a bug at all. The button on the top edge, next to the microSD slot, is Reset; Xteink's quick start guide says so. On battery, a reset restarts the chip, the chip lets go of the line that keeps the power on, and the device stays off until you hold the real Power button on the right side. The stock firmware does exactly the same.
 
-The speed was fixed by the next afternoon. A builder rewrote the drawing code in integers, and all 408 host renders came out byte-identical to before. Home now renders in 262 ms, and a tap shows the new page in about one second, most of which is the panel's own waveform.
+The speed was fixed by the next afternoon. A builder rewrote the drawing code in whole numbers, and all 408 test renders came out identical to the pixel. Home now draws in 262 ms, and a tap shows the new page in about a second, most of which is the panel itself.
 
-To measure that without me tapping, I asked for two API endpoints: one that injects input, one that returns the framebuffer. The device already served its boot history, heap low point and log over the API. With input and the framebuffer added, the coordinator paged through the screens itself, read the timings from the log and looked at what was on the glass. My verdict after trying it: "speed is now perfect".
+To measure that without me tapping, I asked for two API endpoints: one that injects a tap and one that returns what's on the screen. With those, the coordinator paged through the screens itself, read the timings from the log and looked at the result. My verdict after trying it: "speed is now perfect".
 
 ![The Solar and battery page, as the framebuffer of the real X4 Pro](solar-battery.png)
 
-The screenshots in this post come from that framebuffer: 800 × 480 pixels in four gray levels, the same image that is on the glass. The comparison below is how I approved the larger text sizes: two framebuffers side by side, then a look at the device itself.
+The screenshots here come from that endpoint: 800 × 480 pixels in four shades of grey, the same image that's on the glass. Below is how I approved the bigger text: two of those side by side, then a look at the device on the shelf.
 
 ![The page overview before (left) and after (right) the larger text sizes](text-size.png)
 
-### What changed for me
+### Looking back
 
-The emulators gave me firmware that booted, linked and drew the right things on its first flash. They could not show waveforms, the controller's RAM, the Wi-Fi driver's memory or how long the real panel takes to refresh, and every bug of the first night was one of those. Next time I would build the emulators first again, and plan a night with the real device.
+The emulators gave me firmware that booted, linked and showed the right things on its first flash. What they couldn't show was everything physical: the refresh behaviour, the controller's memory, the Wi-Fi driver, how long the real panel takes. Every problem of that first evening was one of those. Next time I'd build the emulators first again, and plan an evening with the real device much earlier.
 
-The team setup held up better than I expected, and mostly for boring reasons. The agents needed what a human team needs: one place for the plan, goals to judge it against, small pieces of work, discovery before anyone builds, someone who decides, and a user who uses the thing every day. The working agreements that make a human team function did the same here, and the agents broke them in the same ways people do.
+The team setup held up better than I expected, and for unexciting reasons. The agents needed the same things a human team needs, and they broke the working agreements in the same ways people do. What changed was the speed of a loop. From "I see a bug" to "fix flashed, checked on the device and merged" took a night instead of a sprint.
 
-What changed is where the work sits and how long a cycle takes. Discovery, building, reviewing and writing the log were done by agents. A loop from "I see a bug" to "fix flashed, checked on the device and merged" took a night instead of a sprint. The part that stayed with me was the part I would have called product ownership anyway: setting the goals, making the calls filed under `decision`, judging copy and design, and using the device. The few times the project really needed me were for things only a person in the room could do: plugging in the hardware, pressing the power button, looking at 14 px text from a meter away and saying it was too small.
+The part that stayed with me was the part I'd have called product ownership anyway: setting the goals, making the calls marked `decision`, judging copy and design, and living with the device. The few times the project really needed a person were things only someone in the room could do. Plug in the hardware, press the power button, look at 14 px text from a metre away and say it's too small.
 
-I don't know yet how far that carries beyond a one-person project with one user. But I didn't expect an agent to flash a device on my desk, read its log, tap it through the API, check its framebuffer, and then fix what it saw.
+I don't know yet how far this carries beyond a one-person project with one user. I didn't expect an agent to flash a device on my desk, read its log, tap through it, look at the screen and fix what it saw, though.
 
-Parts of this are still rough:
+Some of it is still rough:
 
-- **Reviews need checking.** One in eleven findings of the first audit was real. Without the coordinator verifying them, the other ten would have become work.
-- **Some numbers come from paper.** The sleep screen estimates the days of battery left from a power model that moves toward the drain the device measures. The standby step, where Wi-Fi stays on, costs an estimated 25 to 38 mA. Nobody has put a current meter on the device yet.
-- **One crash is unexplained.** The device stored a core dump from the mDNS task while it parsed an incoming packet, on an older build, on my network with its VLANs. It could not be decoded exactly, so we cleared it and are waiting to see if it comes back on a build we can decode.
-- **The emulator job in CI is flaky.** On GitHub's runners a different contract test times out each run, and a rerun passes. The release of v0.3.0 needed one rerun before it could be tagged.
-- **The browser flasher has only run against my own X4.**
+- **Reviews need checking.** One in eleven findings of the first audit was real. Without the coordinator checking, the other ten would have become work.
+- **Some numbers come from paper.** The battery estimate comes from a power model, and nobody has put a current meter on the device yet.
+- **One crash is unexplained.** An older build stored a crash dump from the network name service on my network, and it couldn't be decoded. We're waiting to see if it comes back on a build that can be.
+- **The emulator job in CI is flaky.** On GitHub's runners a different test times out each run, and a rerun passes.
+- **The web flasher has only run against my own X4.**
 
-The 55-minute HTTP stall from the endurance runs turned out to be name lookups: the device's `.local` name stopped resolving while it answered fine by IP. It now answers IPv6 lookups too, and since then the name has kept answering.
+The 55-minute stall from the endurance runs turned out to be name lookups: the device's `.local` name stopped answering while it was fine by IP address. It now answers IPv6 lookups too, and the name has kept working since.
 
-<!-- TODO Daan: the "my day job is product discovery" framing and the reflection in "What changed for me" are written from your brief; check they say what you think, in your words. -->
+<!-- TODO Daan: the "my day job is product discovery" framing and the "Looking back" section are written from your brief; check they say what you think, in your words. -->
 
 This post was drafted by the project's writer agent from its own build log, and edited by me.
 

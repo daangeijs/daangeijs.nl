@@ -27,7 +27,7 @@ This is what came out:
 
 - A **Raspberry Pi 2 Model B** from 2015. Four slow ARM cores, 1 GB of RAM, no Wi-Fi, no Bluetooth. It can't run the modern BirdNET models at all.
 - A **PoE splitter**: network cable in, micro-USB power out. One cable for both.
-- An old **Logitech USB headset**. A voice mic, not exactly a nature recording setup.
+- A **Logitech USB headset** that came free with Ghost Recon on the PlayStation 2. I don't think I ever used it for the game. During covid it became my favourite headset for calls, until a webcam with a built-in mic made it redundant. A voice mic, not exactly a nature recording setup, but it has had a long life and here was another job for it.
 - A **32 GB microSD card** that still had a Proxmox installer on it.
 
 <!-- TODO Daan: the EM272 microphone and Sound Blaster Play! 3, from a box or bought? That decides how strict the "buy nothing" line is. -->
