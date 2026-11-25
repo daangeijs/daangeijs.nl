@@ -54,7 +54,7 @@ Someone's going to pull the cable sooner or later (that'll be me), reboot the sw
 
 <!-- TODO Daan: result of the power-cut test. -->
 
-The headset is a stopgap, and I wanted to plug in a real microphone later without rebuilding anything. The setup picks the sound card by name instead of by number and picks the best sample rate it supports. I was surprised the headset records natively at 48 kHz. A minute of the live stream showed no clipping, low rumble from wind and traffic, and a 50 Hz hum from its cable. No bird lives down there, so BirdNET-Go's high-pass filter takes that out for free. For faint flight calls high in the night sky, I'll need a proper microphone.
+The headset is a stopgap, and I wanted to plug in a real microphone later without rebuilding anything. The setup picks the sound card by name instead of by number and picks the best sample rate it supports. I was surprised the headset records natively at 48 kHz. A minute of the live stream showed no clipping, low rumble from wind and traffic, and a 50 Hz hum from its cable. Luckily no birds live down there, so BirdNET-Go's high-pass filter takes that out for free. For faint flight calls high in the night sky, I'll need a proper microphone.
 
 I was a bit lazy here, too. I wanted to write the SD card, plug in the Pi and SSH straight into it with most of it already set up. I've always hated the usual Raspberry Pi fiddling: an HDMI cable to a monitor, a keyboard, cables everywhere, and a USB charger that's always just too short, so you end up with the Pi on your lap, being drawn and quartered by its own cables.
 
