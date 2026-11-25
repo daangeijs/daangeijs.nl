@@ -32,13 +32,13 @@ So I gave myself a rule: buy nothing new. Whatever this became had to come out o
 
 <!-- TODO Daan: the EM272 microphone and Sound Blaster Play! 3, from a box or bought? That decides how strict the "buy nothing" line is. -->
 
-On paper, the Pi 2 is the problem. BirdNET-Go's own documentation calls it "marginal and RAM-limited". But the same paragraph has the hint that made the whole thing work: it "works well as a dedicated RTSP mic feeding a Pi 4/5 that does the inference".
+On paper, the Pi 2 is the problem. BirdNET-Go's own documentation calls it "marginal and RAM-limited". I didn't care if it was slow, though. I have a homelab that can do all the heavy lifting, so the Pi only needs one job: record and send it on.
 
-I don't have a Pi 5. I do have a home server that's bored most of the day.
+Luck was on my side, because BirdNET-Go already supports exactly that. The same page says the Pi 2 "works well as a dedicated RTSP mic feeding a Pi 4/5 that does the inference". I don't have a Pi 5, but my homelab will do.
 
 ### An ear and a brain
 
-It's a small Kubernetes cluster for things like photo backup and documents, and one of its nodes is a 16-core mini PC. So the Pi became the ear and the cluster the brain. The Pi reads the microphone and puts the sound on the network as a stream, nothing else. The cluster pulls that stream, runs BirdNET, keeps the detections and short audio clips, and tells Home Assistant what it heard.
+My homelab is a small Kubernetes cluster for things like photo backup and documents, and one of its nodes is a 16-core mini PC. So the Pi became the ear and the cluster the brain. The Pi reads the microphone and puts the sound on the network as a stream, nothing else. The cluster pulls that stream, runs BirdNET, keeps the detections and short audio clips, and tells Home Assistant what it heard.
 
 The Pi runs no code I wrote. ffmpeg reads the microphone, and MediaMTX, a tiny media server, serves the audio as an RTSP stream, the same protocol IP cameras use. The Pi doesn't even know the cluster exists. If the stream drops, the cluster just reconnects.
 
