@@ -71,7 +71,7 @@ The cable runs at 921,600 baud, about 90 KB per second on paper. In practice a 1
 
 ![The white weatherproof box on a wooden shelf against the brick wall, a black antenna sticking out of one of its cable glands and a network cable going into another, a bag of straw next to it](birdbox.jpg)
 
-The only thing that gives away the birdbox's new job is a small antenna poking out of the side.
+The only thing that gives away the birdbox's new job is a small Wi-Fi antenna poking out of the side, which was very satisfying to mount, actually.
 
 ### One dashboard for every camera
 
