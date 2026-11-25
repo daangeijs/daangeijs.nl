@@ -21,7 +21,7 @@ Then I bought a trail camera.
 
 ### Research first, then the camera
 
-I wanted to see what moves through the garden at night.
+I'd been finding odd marks in the grass, and I really wanted to know what was roaming around the garden at night. The previous owners once spotted a fox here. High hopes, I know.
 
 This time I did the research before buying anything. Cheap trail cameras record to an SD card, and if you want the footage you walk up to them with your phone and an app. The expensive ones upload over 4G or Wi-Fi. I wanted the cheap kind, but with the clips pulled out of it automatically, from the garden, by an ESP32.
 
