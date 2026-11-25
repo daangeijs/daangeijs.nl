@@ -75,13 +75,13 @@ The only thing that gives away the birdbox's new job is a small Wi-Fi antenna po
 
 ### One dashboard for every camera
 
-The Pi doesn't decide anything by itself. It has a small web API and waits until it's asked. The asking is done by Wildcam, a web app on my home server that I'd built earlier to sort trail camera footage:
+The Pi doesn't decide anything by itself. It has a small web API and waits until it's asked. The asking is done by Robin, a web app on my home server that I'd built earlier to sort trail camera footage. It started out as "Wildcam", which was a bit of a lame name, so it's named after its first visitor now:
 
 - At the check hours, mostly at night, it asks the birdbox to start a session, waits until it's done, downloads the new clips and tells the Pi it can delete them. The camera's SD card never fills up.
 - Every clip gets looked at by three models: Google's SpeciesNet, DeepFaune (trained on European trail camera footage) and Claude. They vote, and I can correct them. Once I've approved a clip, it stays approved.
 - A side panel shows each camera with its Bluetooth signal, battery, whether the sun is charging it, temperature, free space on the card, and when it was last and next checked. A "check now" button shows which clip is coming in.
 
-![The Wildcam timeline with the camera panel open: camera Appelboom in range, signal -67 dBm, battery 60% charging from the sun, 2 °C, 255 of 255 MB free, last check 14:00, next check 18:00](dashboard.jpg)
+![The Robin timeline with the camera panel open: camera Appelboom in range, signal -67 dBm, battery 60% charging from the sun, 2 °C, 255 of 255 MB free, last check 14:00, next check 18:00](dashboard.jpg)
 
 Adding a camera is a name and the address of its bridge. A camera in the front garden would be another ESP32 next to another Pi, and its clips land in the same timeline. A cheap camera now does what the expensive ones do, and a second or third one just shows up next to it.
 
@@ -89,7 +89,7 @@ Adding a camera is a name and the address of its bridge. A camera in the front g
 
 I still have no idea how big the battery in this camera is. It reports its charge in steps of 20%, whether it's charging, and whether that's the sun doing it, and that's all it says. At least I can now see that without walking over, and I can change things too. It also tells me the microSD card holds 255 MB, which can't be right: either I messed up formatting it, or I crammed in some ancient card. For now it's fine, since the birdbox empties it at every check.
 
-The camera burns a bar into every video: a Denver logo, a battery icon, the moon, the temperature and the date in American order. The command the app uses to change settings works for me as well, so the birdbox switched that bar off. Wildcam draws its own bar over the video instead: the camera's name on the left, date and time in the middle (ticking along while the clip plays), and on the right the sun or the moon, the weather of that hour and the temperature. The weather comes from Open-Meteo, and the moon is the actual phase for that night. When I download a clip I can choose whether that bar gets burnt in.
+The camera burns a bar into every video: a Denver logo, a battery icon, the moon, the temperature and the date in American order. The command the app uses to change settings works for me as well, so the birdbox switched that bar off. Robin draws its own bar over the video instead: the camera's name on the left, date and time in the middle (ticking along while the clip plays), and on the right the sun or the moon, the weather of that hour and the temperature. The weather comes from Open-Meteo, and the moon is the actual phase for that night. When I download a clip I can choose whether that bar gets burnt in.
 
 ### A tick in the bird recordings
 

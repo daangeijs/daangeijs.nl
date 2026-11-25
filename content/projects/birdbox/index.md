@@ -1,6 +1,6 @@
 ---
 title: "The birdbox: a garden that reports what lives in it"
-summary: "A 2015 Raspberry Pi in a weatherproof box in the garden that listens for birds and, with an old ESP32, collects footage from cheap trail cameras. Everything lands on my home server: BirdNET names the birds it hears, Wildcam the animals on camera."
+summary: "A 2015 Raspberry Pi in a weatherproof box in the garden that listens for birds and, with an old ESP32, collects footage from cheap trail cameras. Everything lands on my home server: BirdNET names the birds it hears, Robin the animals on camera."
 description: "The birdbox: a Raspberry Pi 2 audio streamer in the garden feeding BirdNET-Go on a home Kubernetes cluster, built from old hardware without buying anything new."
 role: "Builder, only listener"
 timeframe: "2026"
@@ -29,11 +29,11 @@ BirdNET only listens for species that are plausible for the place and the week. 
 
 ## Trail cameras without the app
 
-A Denver WSW-8120 trail camera (USB-C, solar panel) only hands over its clips to a phone standing next to it. An old ESP32 on the Pi's USB now does that from the birdbox: it wakes the camera over Bluetooth, joins its hotspot and passes the packets to the Pi, which downloads the clips, deletes them from the camera and serves them to Wildcam.
+A Denver WSW-8120 trail camera (USB-C, solar panel) only hands over its clips to a phone standing next to it. An old ESP32 on the Pi's USB now does that from the birdbox: it wakes the camera over Bluetooth, joins its hotspot and passes the packets to the Pi, which downloads the clips, deletes them from the camera and serves them to Robin.
 
-- **Wildcam** decides when each camera is checked, pulls the clips and lets three models vote on the species (SpeciesNet, DeepFaune and Claude).
+- **Robin**, my multi wildlife camera app, decides when each camera is checked, pulls the clips and lets three models vote on the species (SpeciesNet, DeepFaune and Claude).
 - **One dashboard** for every camera, with signal, battery, solar charging, temperature and free space, and a check-now button.
-- **Settings from a distance**, like switching off the camera's own date stamp. Wildcam draws its own bar with the weather and the moon instead.
+- **Settings from a distance**, like switching off the camera's own date stamp. Robin draws its own bar with the weather and the moon instead.
 
 The stories: [A bird detector from a drawer of old electronics](/posts/birdstation/) and [The birdbox gets eyes](/posts/birdbox-trail-camera/).
 
