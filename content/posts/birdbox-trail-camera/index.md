@@ -39,7 +39,7 @@ The plant sensor ESP32 would be the brain, and another piece of old hardware wou
 
 Like with [HA Paper](/posts/handing-the-build-to-agents/), I wanted the software sorted out before anything went outside. Luckily the camera arrived the next day this time. I gave it some charge over USB-C, put it next to my MacBook, and started taking it apart from there.
 
-Instead of installing its app, TrailCam Go, I installed something else: [REA (Reverse Engineer Anything)](https://github.com/morluto/rea). I pointed it at the Android APK of that app, and this time it really worked: the Java side gave up the command numbers and every setting it can change, and its native library `libArLink.so` the encryption key. Together with what others had found on the same family of cameras, that told me how a phone gets the clips off:
+Instead of installing its app, TrailCam Go, I installed something else: [REA (Reverse Engineer Anything)](https://github.com/morluto/rea). I pointed it at the Android APK of that app, and it helped a lot in quickly figuring out the protocol and how to write software that talks to the camera. The Java side gave up the command numbers and every setting it can change, and its native library `libArLink.so` the encryption key. Together with what others had found on the same family of cameras, that told me how a phone gets the clips off:
 
 - The camera sleeps, but keeps a little Bluetooth beacon on (mine calls itself `TC100_9B39`).
 - The phone connects over Bluetooth and writes the wake-up value. The camera answers with the name and password of a Wi-Fi hotspot it just switched on.
