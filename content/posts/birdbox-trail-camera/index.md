@@ -56,7 +56,9 @@ That's where my research hadn't gone far enough. An ESP32 has one Wi-Fi radio, s
 
 If only there was one device in my garden with a USB port to dump the files on, that was also on my network...
 
-Right. The birdbox. The Pi is on a network cable, it's in the garden anyway, and it has USB ports. So the ESP32 went into the birdbox, on a USB cable to the Pi:
+Oh. [The birdbox](/posts/birdstation/).
+
+A Pi that's already in the garden, already on a network cable, and has three USB ports doing nothing. The ESP32 moved in with it:
 
 ```
 camera ──Bluetooth + Wi-Fi── ESP32 ──USB serial── Pi 2 ──network cable── home server
