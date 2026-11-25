@@ -25,7 +25,7 @@ A white box on a shelf in the garden, with a microphone outside and a 2015 Raspb
 
 ## Tuned on real detections
 
-BirdNET only listens for species that are plausible for the place and the week. I checked that filter against five years of local observations from waarneming.nl and a few hundred of my own reviewed detections, then kept the newer BirdNET v3.0 model alone at a 70% threshold, and let a short list of local rarities through with a stricter bar.
+BirdNET only listens for species that are plausible for the place and the week. I checked that filter against five years of local observations from waarneming.nl and about 150 of my own reviewed detections, then kept the newer BirdNET v3.0 model alone at a 70% threshold, and let a short list of local rarities through with a stricter bar.
 
 The full story is in [A bird detector from a drawer of old electronics](/posts/birdstation/).
 
