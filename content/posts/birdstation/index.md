@@ -19,7 +19,7 @@ There is a long-eared owl living behind my house. I know, because I hear it. I w
 
 That idea isn't new. [BirdNET](https://birdnet.cornell.edu/), a neural network from the Cornell Lab of Ornithology and Chemnitz University of Technology, recognises thousands of species by sound, and projects like BirdNET-Pi turn a Raspberry Pi into a bird listening station. But they run the analysis on the Pi itself, so you need a Raspberry Pi 4 or 5, a decent microphone, maybe a fan, and a few hundred euros before you've heard a single robin.
 
-Spending all that on a Raspberry Pi at today's inflated prices, just to listen to birds, felt like a bit much. It's not like I have piles of gold lying around. What I do have is piles of old electronics. So, almost in the spirit of [Scrapyard Wars](https://www.youtube.com/playlist?list=PL8mG-RkN2uTw7PhlnAr4pZZz2QubIbujH), I went through my stash and came out with a Raspberry Pi 2, a microphone and a PoE splitter. (If this had been Scrapyard Wars, I'd have dug up a "rusty" Raspberry Pi 5 that turned out to be brand new.)
+Spending all that on a Raspberry Pi at today's inflated prices, just to listen to birds, felt like a bit much. It's not like I have piles of gold lying around. What I do have is piles of old electronics. So, almost in the spirit of Scrapyard Wars, I went through my stash and came out with a Raspberry Pi 2, a microphone and a PoE splitter. (If this had been Scrapyard Wars, I'd have dug up a "rusty" Raspberry Pi 5 that turned out to be brand new.)
 
 ### The junk pile
 
