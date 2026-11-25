@@ -37,7 +37,7 @@ And the brain? While building the bird station I'd found an old ESP32 in a box. 
 
 ### On the desk
 
-As with [HA Paper](/posts/handing-the-build-to-agents/), I started with the software. I wanted to get as much as possible working before the camera arrived and went outside. Unlike the e-ink reader for HA Paper, which took two weeks, the camera arrived the next day, but I'd already put enough code together that I could start testing right away. I gave it some charge over USB-C, put it next to my MacBook, and started taking it apart from there.
+As with HA Paper, my e-ink display project, I started with the software. I wanted to get as much as possible working before the camera arrived and went outside. Unlike the e-ink reader for HA Paper, which took two weeks, the camera arrived the next day, but I'd already put enough code together that I could start testing right away. I gave it some charge over USB-C, put it next to my MacBook, and started taking it apart from there.
 
 Instead of installing its app, TrailCam Go, I installed something else: [REA (Reverse Engineer Anything)](https://github.com/morluto/rea). I pointed it at the Android APK of that app, and it helped a lot in quickly figuring out the protocol and how to write software that talks to the camera. The Java side gave up the command numbers and every setting it can change, and I found the encryption key in its native library `libArLink.so`. Together with what others had found on the same family of cameras, that told me how a phone gets the video clips off:
 
