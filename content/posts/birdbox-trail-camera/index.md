@@ -21,7 +21,7 @@ Then I bought a trail camera.
 
 ### Research first, then the camera
 
-I wanted to see what moves through the garden at night. The previous owners once spotted a fox here, so you never know.
+I wanted to see what moves through the garden at night.
 
 This time I did the research before buying anything. Cheap trail cameras record to an SD card, and if you want the footage you walk up to them with your phone and an app. The expensive ones upload over 4G or Wi-Fi. I wanted the cheap kind, but with the clips pulled out of it automatically, from the garden, by an ESP32.
 
@@ -65,7 +65,7 @@ camera ──Bluetooth + Wi-Fi── ESP32 ──USB serial── Pi 2 ──net
 - The **ESP32** wakes the camera over Bluetooth, keeps the connection open, joins the camera's hotspot, and from then on just passes packets. Every UDP packet from the camera goes down the USB cable to the Pi, and every packet from the Pi goes back up. It doesn't understand a byte of it and doesn't store anything.
 - The **Pi** speaks the camera's protocol over that cable as if it were a network: log in, list the files, download them, glue the video and audio into an MP4, check it, and delete it from the camera.
 
-The cable runs at 921,600 baud, about 90 KB per second on paper. In practice a 10-second clip takes a bit over two minutes to come in. That sounds slow, but nobody's waiting. The checks run at night, mostly.
+The cable runs at 921,600 baud, about 90 KB per second on paper. In practice a 10-second clip takes a bit over two minutes to come in. That's slow, but it doesn't matter: the clips are safe on the camera's SD card until they're fetched, and they're only deleted there once they've come in.
 
 ![The white weatherproof box on a wooden shelf against the brick wall, a black antenna sticking out of one of its cable glands and a network cable going into another, a bag of straw next to it](birdbox.jpg)
 
