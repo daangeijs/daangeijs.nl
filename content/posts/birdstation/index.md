@@ -38,7 +38,7 @@ Luck was on my side, because BirdNET-Go already supports exactly that. The same 
 
 ### Splitting the ear and the brain
 
-My homelab is a small Kubernetes cluster for things like photo backup and documents, and one of its nodes is a 16-core mini PC. So the Pi became the ear and the cluster the brain. The Pi reads the microphone and puts the sound on the network as a stream, nothing else. The cluster pulls that stream, runs BirdNET, keeps the detections and short audio clips, and tells Home Assistant what it heard.
+My homelab is a small Kubernetes cluster that runs all sorts of services, and one of its nodes is a 16-core mini PC. So the Pi became the ear and the cluster the brain. The Pi reads the microphone and puts the sound on the network as a stream, nothing else. The cluster pulls that stream, runs BirdNET, keeps the detections and short audio clips, and tells Home Assistant what it heard.
 
 The Pi runs no code I wrote. ffmpeg reads the microphone, and MediaMTX, a tiny media server, serves the audio as an RTSP stream, the same protocol IP cameras use. The Pi doesn't even know the cluster exists. If the stream drops, the cluster just reconnects.
 
