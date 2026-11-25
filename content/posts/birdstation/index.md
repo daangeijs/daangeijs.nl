@@ -50,7 +50,7 @@ If you have a NAS or an old laptop doing nothing, you can run the analysis there
 
 ### Built to be unplugged
 
-Someone's going to pull the cable sooner or later (that'll be me), reboot the switch (also me), or flip the wrong fuse and cut the power to the Pi (yes, most likely me). And when that happens mid-write, the microSD card is toast. That's why I have a difficult relationship with the early Raspberry Pis. I set the system up to run read-only. The OS runs from an overlay in RAM, the logs live in RAM, and there's no swap. Nothing gets written to the card in normal use, so you can pull the plug whenever you like.
+Someone's going to pull the cable sooner or later (that'll be me), reboot the PoE switch (also me), or flip the wrong fuse and cut the power to the Pi (yes, most likely me). And when that happens mid-write, the microSD card is toast. That's why I have a difficult relationship with the early Raspberry Pis. Well, life teaches you these hard lessons, so this time I set the system up to run read-only. The OS runs from an overlay in RAM, the logs live in RAM, and there's no swap. Nothing gets written to the card in normal use, so you can pull the plug whenever you like.
 
 <!-- TODO Daan: result of the power-cut test. -->
 
