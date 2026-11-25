@@ -58,7 +58,7 @@ The headset is a stopgap, and I wanted to plug in a real microphone later withou
 
 I was a bit lazy here, too. I wanted to write the SD card, plug in the Pi and SSH straight into it with most of it already set up. I've always hated the usual Raspberry Pi fiddling: an HDMI cable to a monitor, a keyboard, cables everywhere, and a USB charger that's always just too short, so you end up with the Pi on your lap, being drawn and quartered by its own cables.
 
-So everything is scripted. One script writes the SD card, with checks so it can never touch the laptop's own disk, and the Pi comes up on the network ready to log in. An Ansible playbook does the rest. If the card ever dies, a new one is fifteen minutes away.
+So everything is scripted. One script writes the SD card, and the Pi comes up on the network ready to log in. An Ansible playbook does the rest. And when I break the card anyway (and we both know I will), a new one is fifteen minutes away.
 
 It now lives in a white weatherproof box in the garden, on its one network cable, with the headset's microphone poking out of the bottom. I've started calling it the birdbox.
 
