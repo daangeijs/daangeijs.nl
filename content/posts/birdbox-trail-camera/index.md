@@ -93,9 +93,9 @@ The dashboard also showed me my own mistake. The camera reports 255 MB of storag
 
 Practically, it doesn't matter much yet. 255 MB holds about 35 ten-second clips, and the birdbox empties the card at every check, so it would take a very busy night to fill it up. I'd still rather not leave it like that, and I'd also rather not take the camera off the tree again for it.
 
-While digging through the app I'd seen a command to format the card (number 518, if you're curious), and the camera reports a flag when it thinks its card is formatted wrong. So the plan is to let the birdbox format the card from a distance at the next check. If that doesn't fix it, it's the ladder and a card reader after all.
+While digging through the app I'd seen a command to format the card (number 518, if you're curious), and the camera reports a flag when it thinks its card is formatted wrong. So the plan is to let the birdbox format the card from a distance at the next check. If that doesn't fix it, the camera comes off the tree and the card goes into a card reader after all.
 
-<!-- TODO Daan: update this once the remote format has run (or the ladder came out). -->
+<!-- TODO Daan: update this once the remote format has run (or the camera came off the tree). -->
 
 ### A tick in the bird recordings
 
